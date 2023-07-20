@@ -3,10 +3,17 @@
 #include <stdlib.h>
 int main()
 {
-    int temp = 0, sum = 0;
-    FILE * f = fopen("tests/test1.txt", "rt");
-    while ( fscanf(f, "%d", &temp) == 1 )
+    long temp = 0;
+    int sum = 0;
+    FILE * f = fopen("../tests/test1.txt", "rt");
+    if( f == NULL ) {
+        perror("Error: ");
+        return(-1);
+    }
+    while ( fscanf(f, "%ld", &temp) == 1 ) {
         sum += temp;
+    }
+        
     fclose(f);
     
     FILE * o = fopen("output.txt", "w");
