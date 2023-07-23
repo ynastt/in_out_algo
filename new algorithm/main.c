@@ -35,7 +35,7 @@ void slice(const char* str, char* result, size_t start, size_t end)
 char* mul_x_2(char* code, long n) {
     printf("    code %s\n", code );
     char c;
-    long digit, dec;
+    long digit, dec, res;
     long carry = 0;
     for (int i = n - 1; i >= 0; i--) {
         c = code[i];
@@ -43,14 +43,23 @@ char* mul_x_2(char* code, long n) {
         digit = (long)atoi(pChar); 
         printf("digit %ld\n", digit);
         digit = digit * 2;
-        printf("digit2 %ld\n", digit);
+        printf("digitx2 %ld\n", digit);
         dec = digit / 10;
-        code[i] = (digit%10 + carry) + '0';
+        res = digit%10 + carry;
+        if (res > 9) {
+            dec = res /8;
+            code[i] = (res%10) + '0';
+        } else {
+            code[i] = res + '0';
+        }
+
         printf("digit code %c\n", code[i]);
         if (dec > 0) {
             carry = dec;
-            printf("carry %ld, ost: %ld\n", dec, digit%10);
+        } else {
+            carry = 0;
         }
+        printf("carry %ld, ost: %ld\n", dec, digit%10);
     }
     code[n] = '\0';
     printf(" code %s\n", code );
