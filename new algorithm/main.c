@@ -32,17 +32,75 @@ void slice(const char* str, char* result, size_t start, size_t end)
     strncpy(result, str + start, end - start);
 }
 
-char * my_octal_add(code1, digits) {
-    char *code;
-
+char* mul_x_2(char* code, long n) {
+    printf("    code %s\n", code );
+    char c;
+    long digit, dec;
+    long carry = 0;
+    for (int i = n - 1; i >= 0; i--) {
+        c = code[i];
+        char *pChar = &c;
+        digit = (long)atoi(pChar); 
+        printf("digit %ld\n", digit);
+        digit = digit * 2;
+        printf("digit2 %ld\n", digit);
+        dec = digit / 10;
+        code[i] = (digit%10 + carry) + '0';
+        printf("digit code %c\n", code[i]);
+        if (dec > 0) {
+            carry = dec;
+            printf("carry %ld, ost: %ld\n", dec, digit%10);
+        }
+    }
+    code[n] = '\0';
+    printf(" code %s\n", code );
     return code;
 }
 
-int main()
-{
-    unsigned long temp = 0;
-    clock_t t;
+char* my_octal_add(char* code1, char* code2, long n) {
+    char *code;
+    char c1, c2;
+    int digit, digit1, digit2, sd, dec, res, carry = 0;
+    code = malloc(n);
+    printf("OCTAL ADD: first: %s\n", code1);
+    printf("OCTAL ADD: second: %s\n", code2);
+
+    c1 = code1[0];
+    // printf("OCTAL ADD: first char from start: %c\n", c1);
+    sd = c1-'0';
+    printf("OCTAL ADD: first digit from start: %d\n", sd);  
+    code[0] = sd + '0';
+    for (int i = n - 1; i > 0; i--) {
+        c1 = code1[i];
+        // printf("OCTAL ADD: first char: %c\n", c1);
+        c2 = code2[i - 1];
+        // printf("OCTAL ADD: second char: %c\n", c2);
+        digit1 = c1-'0'; 
+        digit2 = c2-'0'; 
+        printf("OCTAL ADD: first digit: %d\n", digit1);
+        printf("OCTAL ADD: second digit: %d\n", digit2);
+        digit = digit1 + digit2;
+        dec = digit / 8;
+        res = digit%8 + carry;
+        code[i] = (digit%8 + carry) + '0';
+        printf("OCTAL ADD: digit code %c\n", code[i]);
+        if (dec > 0) {
+            carry = dec;
+            printf("OCTAL ADD: carry %d, ost: %d\n", dec, digit%8);
+        }
+        if (dec > 0 && i == 1) {
+            code[0] = sd + carry + '0';
+        }
+    } 
     
+    code[n] = '\0';
+    printf("OCTAL ADD: code %s\n", code);
+    return code;
+}
+
+int main() {
+    clock_t t;
+    t = clock();
     FILE * f = fopen("../tests/test1.txt", "rt");
     char *code;
     char *code1;
@@ -77,27 +135,30 @@ int main()
         char* todigits;
         todigits = malloc(f_size);
         slice(code1, todigits, 0, cursor);
+        todigits[cursor] = '\0';
         printf("%s\n", code1);
-        printf("%s\n", todigits);
-        unsigned long long digits = (unsigned long long)atoi(todigits); 
-        printf("digit long: %lld\n", digits);
+        printf("%s\n", todigits);;
         if (cursor == f_size) {
             break;
         }
-        digits = digits * 2 * powl(10, (f_size - 1 - cursor));
-        printf("digit * 2 step: %lld\n", digits);
-        code1 = my_octal_add(code1, digits); //todo
+        char* tmp;
+        tmp = malloc(f_size-1);
+        tmp = mul_x_2(todigits, f_size - 1);
+        printf("tmp: %s\n", tmp);
+        
+        code1 = my_octal_add(code1, tmp, f_size);
+        free(todigits);
 
     }
      
     fclose(f);
     printf("whole number: %s\n", code);
-    
+    printf("res number: %s\n", code1);
     FILE * o = fopen("output.txt", "w");
-    fputs(code, o);
+    fputs(code1, o);
     fclose(o);    
 
-    t = clock();
+    
     
     t = clock() - t;
     double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
