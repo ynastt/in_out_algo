@@ -82,12 +82,19 @@ char* my_octal_add(char* code1, char* code2, long n) {
         digit = digit1 + digit2;
         dec = digit / 8;
         res = digit%8 + carry;
-        code[i] = (digit%8 + carry) + '0';
+        if (res > 7) {
+            dec = res /8;
+            code[i] = (res%8) + '0';
+        } else {
+            code[i] = res + '0';
+        }
         printf("OCTAL ADD: digit code %c\n", code[i]);
         if (dec > 0) {
             carry = dec;
-            printf("OCTAL ADD: carry %d, ost: %d\n", dec, digit%8);
+        } else {
+            carry = 0;
         }
+        printf("OCTAL ADD: carry %d, ost: %d\n", dec, digit%8);
         if (dec > 0 && i == 1) {
             code[0] = sd + carry + '0';
         }
