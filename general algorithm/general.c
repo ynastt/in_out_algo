@@ -34,7 +34,7 @@ char* find_remainder(char* code, long n) {
     bool new_step = false;
     char* result;
     result = malloc(n);
-    int j = 0, d;
+    int j, d;
     char* code1;
     char* first_two_digits;
     first_two_digits = malloc(2);
@@ -49,7 +49,7 @@ char* find_remainder(char* code, long n) {
     rem = digits - quot * 8;
     printf("quot and rem: %ld, %ld\n", quot, rem);
 
-    while (j != n) {
+    for (j = 0; j < n; j++) {
         if (new_step) {
             new_step = false;
             slice(code, first_two_digits, 0, 2);
@@ -80,7 +80,6 @@ char* find_remainder(char* code, long n) {
         printf("current res: %s\n\n", result);
         strcpy(code, code1);
         printf("current number: %s\n\n", code);
-        j = j + 1;
         new_step = true;
     }
     free(first_two_digits);
@@ -108,10 +107,6 @@ int main() {
     fseek(f, 0, SEEK_SET);
     printf("size of file: %ld\n", f_size);
 
-    // unsigned long long decimalnum = 0, remainder, quotient, octalnum=0;
-    // size_t i = 1, j;
-    // unsigned long long *octalNumber;
-    // octalNumber = malloc(f_size);
     res = malloc(f_size);
     code = malloc(f_size);
     code1 = malloc(f_size);
@@ -124,19 +119,25 @@ int main() {
     code1[m] = '\0'; 
 
     res = find_remainder(code1, f_size);
+    char* result;
+    result = malloc(f_size);
+    result[f_size] = '\0';
+    for (int i = 0; i < f_size; i++) {
+        result[i] = res[f_size - 1 - i];
+    }
     fclose(f);
-    // printf("\nRESULT\ndecimal number: %lld\n", decimalnum);
-    // printf("octal number: %lld\n", octalnum);
     printf("\nRESULT\ndecimal number: %s\n", code);
-    printf("octal number: %s\n", res);
+    printf("octal number: %s\n", result);
     FILE * o = fopen("output.txt", "w");
-    fputs(res, o);
+    fputs(result, o);
     fclose(o);    
 
     t = clock() - t;
     double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
     printf("algorithm took %f seconds to execute \n", time_taken);
     free(code);
+    free(code1);
     free(res);
+    free(result);
     return 0;
 }
