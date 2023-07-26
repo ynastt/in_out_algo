@@ -4,7 +4,6 @@
 #include <time.h>
 #include <math.h>
 
-
 /*** Refal structures. ***/
 typedef struct link {
     char ptype; /* type of the link */  
@@ -24,8 +23,6 @@ typedef struct link {
 #define NEXT(q)    ((q)->foll)
 #define PREV(q)    ((q)->prec)
 #define TYPE(q)    ((q)->ptype)
-
-
 
 void slice(const char* str, char* result, size_t start, size_t end)
 {
@@ -117,15 +114,24 @@ char* my_octal_add(char* code1, char* code2, long n) {
             code[0] = sd + carry + '0';
         }
     } 
-    
-    // if () {
-    //     code[0] = sd + '0';
-    // } else {
-    //     code[0] = sd + '0';
-    // }
     code[n] = '\0';
     printf("\tcode %s\n", code);
     return code;
+}
+
+char* convert_to_binary(char* code, char* map[]) {
+    char* res;
+    int len = strlen(code);
+    res = malloc(len * 3);
+    strcpy(res, "");
+    for (int i = 0; i < len; i++) {
+        printf("%d - %c\n", i, (char)code[i]);
+        int c = code[i] - '0';
+        printf("oct: %d; bin: %s\n", c, map[c-1]);
+        strcat(res, map[c-1]);
+        printf("cur res: %s\n", res);
+    }
+    return res;
 }
 
 int main() {
@@ -190,7 +196,13 @@ int main() {
     fputs(code1, o);
     fclose(o);    
 
-    
+    char* map[] = {"001", "010", "011", "100", "101", "110", "111"};
+    // printf("octal to binary map:\n");
+    // for (int i = 0; i < 7; i++) {
+    //     printf("%d -> %s\n", i + 1, map[i]);
+    // }
+    code1 = convert_to_binary(code1, map);
+    printf("binary: %s\n", code1);
     
     t = clock() - t;
     double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
