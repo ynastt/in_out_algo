@@ -127,8 +127,8 @@ char* convert_to_binary(char* code, char* map[]) {
     for (int i = 0; i < len; i++) {
         printf("%d - %c\n", i, (char)code[i]);
         int c = code[i] - '0';
-        printf("oct: %d; bin: %s\n", c, map[c-1]);
-        strcat(res, map[c-1]);
+        printf("oct: %d; bin: %s\n", c, map[c]);
+        strcat(res, map[c]);
         printf("cur res: %s\n", res);
     }
     return res;
@@ -137,7 +137,7 @@ char* convert_to_binary(char* code, char* map[]) {
 int main() {
     clock_t t;
     t = clock();
-    FILE * f = fopen("../tests/test1.txt", "rt");
+    FILE * f = fopen("../tests/test2.txt", "rt");
     char *code;
     char *code1;
     size_t n = 0, m = 1;
@@ -172,8 +172,8 @@ int main() {
         todigits = malloc(f_size);
         slice(code1, todigits, 1, cursor);
         todigits[cursor] = '\0';
-        printf("%s\n", code1);
-        printf("%s\n", todigits);
+        // printf("%s\n", code1);
+        // printf("%s\n", todigits);
         if (cursor == f_size + 1) {
             if (code1[0] == '0') {
                 code1++;
@@ -196,10 +196,10 @@ int main() {
     fputs(code1, o);
     fclose(o);    
 
-    char* map[] = {"001", "010", "011", "100", "101", "110", "111"};
+    char* map[] = { "000", "001", "010", "011", "100", "101", "110", "111"};
     // printf("octal to binary map:\n");
-    // for (int i = 0; i < 7; i++) {
-    //     printf("%d -> %s\n", i + 1, map[i]);
+    // for (int i = 0; i < 8; i++) {
+    //     printf("%d -> %s\n", i, map[i]);
     // }
     code1 = convert_to_binary(code1, map);
     printf("binary: %s\n", code1);
