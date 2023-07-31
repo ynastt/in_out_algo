@@ -4,6 +4,7 @@
 #include <time.h>
 #include <math.h>
 #include <stdbool.h>
+#include <ctype.h>
 
 
 /*** Refal structures. ***/
@@ -30,15 +31,25 @@ void slice(const char* str, char* result, size_t start, size_t end) {
     strncpy(result, str + start, end - start);
 }
 
+unsigned int my_strlen(const char *s)
+{
+    unsigned int count = 0;
+    while(*s!='\0') {
+        if (isdigit(*s)) count++;
+        s++;
+    }
+    return count;
+}
+
 char* find_remainder(char* code, long n) {
     bool new_step = false;
     char* result;
-    result = malloc(n);
+    result = malloc(n + 2);
     int j, d;
     char* code1;
     char* first_two_digits;
     first_two_digits = malloc(2);
-    long digits, rem, quot;
+    long digits, rem, quot, len = strlen(code);
     int first_digit = code[0] - '0', flag = 0;
     if (first_digit < 8) {
         slice(code, first_two_digits, 0, 2);
@@ -76,58 +87,90 @@ char* find_remainder(char* code, long n) {
                 quot = first_digit / 8; // 1;
                 rem = first_digit - quot * 8; //0;
                 printf("quot and rem: %ld, %ld\n", quot, rem);
+                flag = 0;
             }
         }
         int k = 0;
-        code1 = malloc(n - j - 1);
+        code1 = malloc(len - 1);
         code1[k++] = (int)quot + '0';
-        for (int i = 1; i < n - j; i++) {
+        for (int i = 1; i < len; i++) {
+            printf("i: %d\n", i);
             if (flag == 1) {
                 i++;
-                if (i == n-j) break;
+                if (i == len) {
+                    printf("here\n");
+                    break;
+                }
             } 
             d = code[i] - '0';
             printf("next digit: %d\n", d);
-            if (d < 8) {
-                if (rem != 0) {
-                    digits = rem * 10 + d;
-                    printf("next 2 digits: %ld\n", digits);
-                } else {
+            flag = 0;
+            if (rem != 0) {
+                digits = rem * 10 + d;
+                printf(" next 2 digits: %ld\n", digits);
+                quot = digits / 8;
+                rem = digits - quot * 8;
+                printf("quot and rem: %ld, %ld\n", quot, rem);
+                // flag = 1;
+            } else {
+                if (d < 8) {
+                    code1[k++] = '0';
                     slice(code, first_two_digits, i, i + 2);
                     first_two_digits[i+2] = '\0';
                     digits = atol(first_two_digits);
                     printf("next 2 digits: %ld\n", digits);
+                    quot = digits / 8;
+                    rem = digits - quot * 8;
+                    printf("quot and rem: %ld, %ld\n", quot, rem);
                     i++;
-                    flag = 1;
-                }
-                quot = digits / 8;
-                rem = digits - quot * 8;
-                printf("quot and rem: %ld, %ld\n", quot, rem);
-            } else {
-                printf("first one digit: %d\n", first_digit);
-                quot = first_digit / 8; // 1;
-                rem = first_digit - quot * 8; //0;
-                printf("quot and rem: %ld, %ld\n", quot, rem);
+                    // flag = 1;
+                } else {
+                    printf("next 1 digit: %d\n", d);
+                    quot = d / 8; // 1;
+                    rem = d - quot * 8; //0;
+                    printf("quot and rem: %ld, %ld\n", quot, rem); 
+                    // flag = 0; 
+                }  
             }
             code1[k++] = (int)quot + '0';
         }
-        
         result[j] =  (int)rem + '0';
+        new_step = true;
         printf("j remainder: %c\n", result[j]);
         printf("current res: %s\n\n", result);
         strcpy(code, code1);
-        printf("current number: %s\n\n", code);
-        new_step = true;
+        printf("current number: %s\n", code1);
+        printf("old len: %ld\n", len);
+        len = my_strlen(code1);
+        printf("len: %ld\n\n", len);      
     }
     free(first_two_digits);
-    result[n] =  '\0';
+    if (len == 1) {
+        d = code[0] - '0';
+        while (d != 0) {
+            printf("last digit: %d\n", d);
+            if (d < 8) {
+                result[j++] = d +'0';   
+            }
+            if (d == 8) {
+                quot = d / 8;
+                rem = d % 8;
+                printf("quot and rem: %ld, %ld\n", quot, rem);
+                result[j++] = (int)rem + '0';
+            }
+            d = d/8;
+            printf("current res: %s\n\n", result);
+            }
+    }  
+    result[j++] =  '\0';
+    printf("res: %s\n\n", result);
     return result;
 }
 
 int main() {
     clock_t t;
     t = clock();
-    FILE * f = fopen("../tests/test2.txt", "rt");
+    FILE * f = fopen("../tests/test1.txt", "rt");
     char *code;
     char *res;
     char *code1;
@@ -156,11 +199,12 @@ int main() {
     code1[m] = '\0'; 
 
     res = find_remainder(code1, f_size);
+    long s = strlen(res);
     char* result;
-    result = malloc(f_size);
-    result[f_size] = '\0';
-    for (int i = 0; i < f_size; i++) {
-        result[i] = res[f_size - 1 - i];
+    result = malloc(s);
+    result[s] = '\0';
+    for (int i = 0; i < s; i++) {
+        result[i] = res[s - 1 - i];
     }
     fclose(f);
     printf("\nRESULT\ndecimal number: %s\n", code);
