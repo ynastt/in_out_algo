@@ -170,7 +170,7 @@ char* find_remainder(char* code, long n) {
 int main() {
     clock_t t;
     t = clock();
-    FILE * f = fopen("../tests/test1.txt", "rt");
+    FILE * f = fopen("../tests/test2.txt", "rt");
     char *code;
     char *res;
     char *code1;
