@@ -172,8 +172,8 @@ int main() {
         todigits = malloc(f_size);
         slice(code1, todigits, 1, cursor);
         todigits[cursor] = '\0';
-        // printf("%s\n", code1);
-        // printf("%s\n", todigits);
+        printf("%s\n", code1);
+        printf("%s\n", todigits);
         if (cursor == f_size + 1) {
             if (code1[0] == '0') {
                 code1++;
