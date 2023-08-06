@@ -148,11 +148,30 @@ unsigned long convert_to_2_in_32_system(char* code) {
     return res;
 }
 
+// Поскольку я заполняю структуры в направлении с конца в начало,
+// то при печати в направлении с начала в конец испольщуется PREV, а не NEXT
+// но это можно поправить и сделать наоборот, если критично.
 void print_Link(LINK* l){
-    printf("\nis link null:%u\n", l == NULL);
+    // printf("\nis link null:%u\n", l == NULL);
     if (l != NULL) {
         printf("%ld\n", PAIR(l).n);
         print_Link(PREV(l));
+    }
+}
+
+void print_Link_64(LINK* l) {
+    if (l != NULL && PREV(l) != NULL) {
+        unsigned long senior = l->pair.n;
+        unsigned long junior = l->prec->pair.n;
+        printf("link: %ld\n", senior);
+        printf("prev: %ld\n", junior);
+        char* macrodigit = malloc(40);
+        char* jun = malloc(20);
+        sprintf(macrodigit, "%ld", senior);
+        sprintf(jun, "%ld", junior);
+        strcat(macrodigit, jun);
+        printf("%s",macrodigit);
+        print_Link_64(l->prec->prec);
     }
 }
 
@@ -278,9 +297,13 @@ int main() {
     }
     printf("\nLINKS:\n");
     print_Link(start_number);
+
+    printf("\n2^64:\n");
+    print_Link_64(start_number);
+
     t = clock() - t;
     double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
-    printf("algorithm took %f seconds to execute \n", time_taken);
+    printf("\nalgorithm took %f seconds to execute \n", time_taken);
     free(code);
     fclose(o);
     return 0;
