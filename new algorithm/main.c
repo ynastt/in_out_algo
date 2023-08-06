@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#include <stdbool.h>
 
 /*** Refal structure. ***/
 typedef struct link {
@@ -135,50 +136,30 @@ unsigned long convert_to_2_in_32_system(char* code) {
     unsigned long cur;
     int deg = 0;
     int len = strlen(code);
-    printf("\tlen: %d\n", len);
+    printf("\tlen of binary: %d\n", len);
     for (int i = len - 1; i >= 0; i--) {
         cur = code[i] - '0';
-        printf("\tcur: %ld", cur);
+        // printf("\tcur: %ld", cur);
         res += cur * pow(2, deg);
         ++deg;
-        printf("\tcurrent res: %ld", res);
+        // printf("\tcurrent res: %ld", res);
     }
+    printf("\tres: %ld\n", res);
     return res;
 }
 
 void print_Link(LINK* l){
+    printf("\nis link null:%u\n", l == NULL);
     if (l != NULL) {
         printf("%ld\n", PAIR(l).n);
-        print_Link(NEXT(l));
+        print_Link(PREV(l));
     }
-}
-
-LINK* fill_struct(LINK* p,char* binary,int i,bool flag_chetn,bool flag_enter_0){
-    unsigned long long multiplier=1;
-    p=(LINK*)malloc(sizeof(LINK));
-    p->foll=NULL;
-    p->prec=NULL;
-    p->ptype='d';
-    if (flag_enter_0){
-        p->pair.n=0;
-        return p;
-    }
-    unsigned long num=0;
-    int dop_i=i;
-    for (i;(i<dop_i+32)&&(i<strlen(binary));i++){
-        num+=(binary[i]-'0')*multiplier;
-        multiplier=multiplier<<1;
-    }
-    p->pair.n=num;
-    if (i<(strlen(binary)-1)) p->foll=fill_struct(p->foll,binary,i,!flag_chetn,false);
-    else if (!flag_chetn) p->foll=fill_struct(p->foll,binary,i,!flag_chetn,true);
-    return p;
 }
 
 int main() {
     clock_t t;
     t = clock();
-    FILE * f = fopen("../tests/test4.txt", "rt");
+    FILE * f = fopen("../tests/test3.txt", "rt");
     char *code;
     char *code1;
     size_t n = 0, m = 1;
@@ -246,21 +227,57 @@ int main() {
     fputs(code1, o);
     fputs("\n", o);
     printf("2^32:\n");
-    LINK* first_number;
-    first_number=NULL;
-
+    LINK* start_number = (LINK*)malloc(sizeof(LINK));;
+    LINK* prev_number;
+    prev_number = NULL;
+    bool flag_chetn = false;
     unsigned long long len = strlen(code1);
-    while (len != 0) {
+    while (len > 0) {
+        printf("\nlen: %lld\n", len);
         LINK* number;
-        if (len <= 64) {
-            // если 64 и менее символов, берем все двоичное число
-            number = fill_struct()
-        } else {
-            // slice of len 64 and update len
+        number = (LINK*)malloc(sizeof(LINK));
+        if (prev_number != NULL) {
+            NEXT(prev_number) = number;
+            printf("link nxt of prev: %ld\n", prev_number->foll->pair.n);
         }
-        PREV(number) = first_number;
-        PAIR(number).n = convert_to_2_in_32_system(str)
+        TYPE(number) = 'd';
+        PREV(number) = prev_number;
+        char* str = malloc(32 * sizeof(char));
+        if (len >= 32) {
+            slice(code1, str, len-32, len);
+            len -= 32;
+        } else {
+            slice(code1, str, 0, len);
+            len -= len;
+        }
+        
+        printf("str: %s\n", str);
+        PAIR(number).n = convert_to_2_in_32_system(str);
+        printf("link type: %c\n", number->ptype);
+        printf("link n:%ld\n", number->pair.n);
+        printf("link prec is null?:%u\n", number->prec == NULL);
+        prev_number = number;
+        printf("\nis prev_link null_1:%u\n", prev_number == NULL);
+        
+        flag_chetn = !flag_chetn;
     }
+    
+    if (len == 0) {
+        if (flag_chetn) {
+            LINK* number = (LINK*)malloc(sizeof(LINK));
+            if (prev_number != NULL) {
+                NEXT(prev_number) = number;
+            }
+            TYPE(number) = 'd';
+            PREV(number) = prev_number;
+            PAIR(number).n = 0;
+            start_number = number;
+        } else {
+            start_number = prev_number;
+        }
+    }
+    printf("\nLINKS:\n");
+    print_Link(start_number);
     t = clock() - t;
     double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
     printf("algorithm took %f seconds to execute \n", time_taken);
