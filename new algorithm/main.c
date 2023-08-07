@@ -33,7 +33,7 @@ void slice(const char* str, char* result, size_t start, size_t end)
 }
 
 char* mul_x_2(char* code, long n) {
-    // printf("\nMULX2: code %s\n", code );
+    printf("\nMULX2: code %s\n", code );
     char c;
     char* code1;
     code1 = malloc(n + 1);
@@ -45,9 +45,9 @@ char* mul_x_2(char* code, long n) {
         // printf("\tchar: %c\n", c);
         char *pChar = &c;
         digit = (long)atoi(pChar); 
-        // printf("\tdigit %ld\n", digit);
+        printf("\tdigit %ld\n", digit);
         digit = digit * 2;
-        // printf("\tdigitx2 %ld\n", digit);
+        printf("\tdigitx2 %ld\n", digit);
         dec = digit / 10;
         res = digit%10 + carry;
         if (res > 9) {
@@ -62,10 +62,10 @@ char* mul_x_2(char* code, long n) {
         } else {
             carry = 0;
         }
-        // printf("\tcarry %ld, ost: %ld\n", dec, digit%10);
+        printf("\tcarry %ld, ost: %ld\n", dec, digit%10);
     }
     code1[n+1] = '\0';
-    // printf("\tcode %s\n", code1);
+    printf("\tcode %s\n", code1);
     return code1;
 }
 
@@ -115,7 +115,8 @@ char* my_octal_add(char* code1, char* code2, long n) {
     return code;
 }
 
-char* convert_to_binary(char* code, char* map[]) {
+// из 8-й в 2-ю с.с 
+char* convert_from_octal_to_binary(char* code, char* map[]) {
     char* res;
     int len = strlen(code);
     res = malloc(len * 3);
@@ -175,6 +176,98 @@ void print_Link_64(LINK* l) {
     }
 }
 
+// для перевода макроцифр в с.с 2^32 в 2-ю с.с 
+char* convert_to_binary(LINK* l) {
+    char* res;
+    long k = 1;
+    res = malloc(1 * sizeof(char));
+    strcpy(res, "");
+    while (l != NULL ) {
+        res = (char*)realloc(res, k + 1);
+        unsigned long digit = l->pair.n;
+        // printf("digit is: %ld\n", digit);
+        char* b = malloc(32);
+        if (digit == 0) {
+            b[0] = '0';
+        }
+        for (int i = 0; digit > 0; i++) {    
+            b[i]= (digit % 2) + '0';    
+            digit = digit / 2;    
+        }    
+        long s = strlen(b);
+        char* binary = malloc(s);
+        binary[s] = '\0';
+        for (int i = 0; i < s; i++) {
+            binary[i] = b[s - 1 - i];
+        } 
+        // printf("current binary is: %s\n", binary);  
+        strcat(res, binary);
+        // printf("current res: %s\n", res);
+        l = l->prec;
+    }
+    return res;
+}
+
+int octal_digit(char* map[], char* bin) {
+    int res = -1;
+    for (int i = 0; i < 8; i++) {
+        if (strcmp(bin, map[i]) == 0) return i;
+    }
+    return res;
+}
+
+// из 2-й в 8-ю с.с 
+char* convert_from_binary_to_octal(char* code, char* map[]) {
+    char* res;
+    int len = strlen(code);
+    res = malloc(len / 3);
+    strcpy(res, "");
+    int d;
+    char* bin = malloc(3 * sizeof(char));
+    for (int i = 0; i < len; i+=3) {
+        slice(code, bin, i, i + 3);
+        d = octal_digit(map, bin);
+        // printf("%s - %d\n", bin, d);
+        char digit[2];
+        sprintf(digit, "%d", d);
+        strcat(res, digit);
+    }
+    return res;
+}
+
+char* my_decimal_sub(char* code1, char* code2, long n) {
+    char *code;
+    int digit, digit1, digit2, sd, dec, res, carry = 0;
+    code = malloc(n);
+    printf("\nDEC SUB: first: %s\n", code1);
+    printf("DEC SUB: second: %s\n", code2);
+    sd = code1[0] - '0';
+    printf("\tfirst digit from start: %d\n", sd);  
+    code[0] = sd + '0';
+    for (int i = n - 1; i > 0; i--) {
+        digit1 = code1[i]-'0'; 
+        digit2 = code2[i]-'0'; 
+        printf("\tfirst digit: %d\n", digit1);
+        printf("\tsecond digit: %d\n", digit2);
+        digit = digit1 - digit2 - carry;
+        if (digit < 0) {
+            carry = 1;
+            code[i] = (digit + 10) + '0';
+        } else {
+            carry = 0;
+            code[i] = digit + '0';
+        }
+        printf("\tdigit code %c\n", code[i]);
+        // printf("\tcarry %d, ost: %d\n", dec, digit%8);
+        if (carry != 0 && i == 1) {
+            code[0] = sd - carry + '0';
+        }
+    } 
+    code[n] = '\0';
+    printf("\tcode %s\n", code);
+    return code;
+}
+
 int main() {
     clock_t t;
     t = clock();
@@ -192,6 +285,7 @@ int main() {
     fseek(f, 0, SEEK_END);
     long f_size = ftell(f);
     fseek(f, 0, SEEK_SET);
+    printf("==== IN ALGORITHM ====\n");
     printf("size of file: %ld\n", f_size);
 
     code = malloc(f_size);
@@ -241,7 +335,7 @@ int main() {
     // for (int i = 0; i < 8; i++) {
     //     printf("%d -> %s\n", i, map[i]);
     // }
-    code1 = convert_to_binary(code1, map);
+    code1 = convert_from_octal_to_binary(code1, map);
     printf("binary: %s\n", code1);
     fputs(code1, o);
     fputs("\n", o);
@@ -303,8 +397,40 @@ int main() {
 
     t = clock() - t;
     double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
-    printf("\nalgorithm took %f seconds to execute \n", time_taken);
+    printf("\nin algorithm took %f seconds to execute \n", time_taken);
+    printf("\n==== OUT ALGORITHM ====\n");
+    t = clock();
+    code1 = convert_to_binary(start_number);
+    printf("binary: %s\n", code1);
+    code1 = convert_from_binary_to_octal(code1, map);
+    printf("octal: %s\n", code1);
+    size_t size = strlen(code1);
+    printf("size: %ld", size);
+    for (int i = 0; i < size; i++) {
+        cursor = i + 1;
+        if (cursor == size) {
+            break;
+        }
+        printf("\ncurrent digit char: %c\n", code1[i]);
+        char* todigits;
+        todigits = malloc(size);
+        slice(code1, todigits, 0, cursor);
+        todigits[cursor] = '\0';
+        printf("cur: %s\n", todigits);
+        char* tmp;
+        tmp = malloc(size);
+        tmp = mul_x_2(todigits, size - 1);
+        printf("tmp: %s\n", tmp);
+        code1 = my_decimal_sub(code1, tmp, size);
+        free(todigits);
+    }
+
+    printf("decimal: %s\n", code1);
+    t = clock() - t;
+    time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
+    printf("\nout algorithm took %f seconds to execute \n", time_taken);
     free(code);
+    free(code1);
     fclose(o);
     return 0;
 }
