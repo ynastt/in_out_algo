@@ -446,28 +446,28 @@ int main() {
     printf("binary: %s\n", code1);
     code1 = convert_from_binary_to_octal(code1, map);
     printf("octal: %s\n", code1);
-    // size_t size = strlen(code1);
-    // // printf("size: %ld\n", size);
-    // for (int i = 0; i < size; i++) {
-    //     cursor = i + 1;
-    //     if (cursor == size) {
-    //         break;
-    //     }
-    //     // printf("\ncurrent digit char: %c\n", code1[i]);
-    //     char* todigits;
-    //     todigits = malloc(size);
-    //     slice(code1, todigits, 0, cursor);
-    //     todigits[cursor] = '\0';
-    //     // printf("cur: %s\n", todigits);
-    //     char* tmp;
-    //     tmp = malloc(size);
-    //     tmp = mul_x_2(todigits, size - 1);
-    //     // printf("tmp: %s\n", tmp);
-    //     code1 = my_decimal_sub(code1, tmp, size);
-    //     free(todigits);
-    // }
+    size_t size = strlen(code1);
+    // printf("size: %ld\n", size);
+    for (int i = 0; i < size; i++) {
+        cursor = i + 1;
+        if (cursor == size) {
+            break;
+        }
+        // printf("\ncurrent digit char: %c\n", code1[i]);
+        char* todigits;
+        todigits = malloc(size);
+        slice(code1, todigits, 0, cursor);
+        todigits[cursor] = '\0';
+        // printf("cur: %s\n", todigits);
+        char* tmp;
+        tmp = malloc(size);
+        tmp = mul_x_2(todigits, size - 1);
+        // printf("tmp: %s\n", tmp);
+        code1 = my_decimal_sub(code1, tmp, size);
+        free(todigits);
+    }
 
-    // printf("decimal: %s\n", code1);
+    printf("decimal: %s\n", code1);
     t = clock() - t;
     time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
     printf("\nout algorithm took %f seconds to execute \n", time_taken);
