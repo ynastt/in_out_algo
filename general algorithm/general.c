@@ -249,7 +249,7 @@ char* convert_to_binary(LINK* l) {
     while (l != NULL ) {
         res = (char*)realloc(res, k + 32);
         unsigned long digit = l->pair.n;
-        printf("digit is: %ld\n", digit);
+        // printf("digit is: %ld\n", digit);
         if (digit == 0) {
             strcat(res, "0");
         } else {
@@ -258,7 +258,7 @@ char* convert_to_binary(LINK* l) {
                 b[i]= (digit % 2) + '0';    
                 digit = digit / 2;    
             }
-            printf("b: %s\n", b);
+            // printf("b: %s\n", b);
             long s = strlen(b);
             char* binary = (char*)malloc(s * sizeof(char));
             binary[s] = '\0';
@@ -266,9 +266,9 @@ char* convert_to_binary(LINK* l) {
                 binary[i] = b[s - 1 - i];
             } 
             free(b);
-            printf("current binary is: %s\n", binary);
+            // printf("current binary is: %s\n", binary);
             long long len = strlen(binary);
-            printf("len: %lld\n", len);
+            // printf("len: %lld\n", len);
             if (l->foll != NULL && l->foll->pair.n != 0) {
                 binary = my_reverse(binary);
                 while (len % 32 != 0) {
@@ -279,10 +279,10 @@ char* convert_to_binary(LINK* l) {
             } else {
                 binary = my_reverse(binary);
             }
-            printf("binary is: %s\n", binary);
+            // printf("binary is: %s\n", binary);
             strcat(res, binary);
         }   
-        printf("current res: %s\n", res);
+        // printf("current res: %s\n", res);
         l = l->foll;
     }
     return res;
@@ -304,18 +304,104 @@ char* convert_from_binary_to_octal(char* code, char* map[]) {
     int d;
     char bin[3];
     for (long i = len; i > 0; i -= 3) {
-        printf("i: %ld\n", i);
+        // printf("i: %ld\n", i);
         slice(code, bin, i - 3, i);
         d = octal_digit(map, bin);
-        printf("%s - %d\n", bin, d);
+        // printf("%s - %d\n", bin, d);
         char digit[2];
         sprintf(digit, "%d", d);
         res[j] = (digit[0] -'0') + '0';
         j++;
-        printf("cur res: %s\n", res);
+        // printf("cur res: %s\n", res);
     }
     res = my_reverse(res);
     res[j] = '\0';
+    return res;
+}
+
+// функция для сложения столбиком
+char* large_addition(char* num1, char* num2) {
+    char* num_1;
+    char* num_2;
+    unsigned long len1 = strlen(num1);
+    unsigned long len2 = strlen(num2);
+    unsigned long i, j, len = 0;
+    char* help;
+    if (len1 > len2){
+        len = len1 - len2;
+        help = (char*)malloc((len1 + 1) * sizeof(char));
+        help[len1] = '\0';
+        for (i = 0; i < len; i++) {
+            help[i] = '0';
+        }
+        for (i = len, j = 0; i < len2 + len; i++, j++) {
+            help[i] = num2[j];
+        }
+        num_2 = (char*)malloc((len1 + 1) * sizeof(char));
+        num_2[len1] = '\0';
+        for (i = 0; i < len1; i++) {
+            num_2[i] = help[i];
+        }
+        num_1 =(char*)malloc((len1 + 1) * sizeof(char));
+        num_1[len1] = '\0';
+        for (i = 0; i < len1; i++) {
+            num_1[i] = num1[i];
+        }
+        free(help);
+    } else if (len2 > len1) {
+        len = len2 - len1;
+        help = (char*)malloc((len2 + 1) * sizeof(char));
+        help[len2] = '\0';
+        for (i = 0; i < len; i++) {
+            help[i] = '0';
+        }
+        for (i = len, j = 0; i < len1 + len; i++, j++) {
+            help[i] = num1[j];
+        }
+        num_1 = (char*)malloc((len2 + 1) * sizeof(char));
+        num_1[len2] = '\0';
+        for (i = 0; i < len2; i++) {
+            num_1[i] = help[i];
+        }    
+        num_2 =(char*)malloc((len2 + 1) * sizeof(char));
+        num_2[len2] = '\0';
+        for (i = 0; i < len2; i++) {
+            num_2[i] = num2[i];
+        }
+        free(help);
+    } else {
+        num_1 = (char*)malloc((len1 + 1) * sizeof(char));
+        num_1[len1] = '\0';
+        num_2 = (char*)malloc((len2 + 1) * sizeof(char));
+        num_2[len2] = '\0';
+        for (i = 0; i < len1; i++) {
+            num_1[i] = num1[i];
+        }
+        for (i = 0; i < len2; i++) {
+            num_2[i] = num2[i];
+        }
+    }
+    len = strlen(num_1);
+    char* res = (char*)malloc((len + 2) * sizeof(char));
+    res[len + 1] = '\0';
+    for (i = 0; i < len + 1; i++) {
+        res[i] = '0';
+    }
+    for (i = len, j = len - 1; i > 0; i--, j--) {
+        int num = (num_1[j] - '0') + (num_2[j] - '0');
+        int dop = (res[i] - '0') + num;
+        res[i] = ((((res[i]-'0') + num) % 10) + '0');
+        res[i-1] = ((((res[i - 1] - '0') + dop) / 10) + '0');
+    }
+    if (res[0] == '0') {
+        len = strlen(res);
+        help = (char*)malloc(len * sizeof(char));
+        help[len - 1] = '\0';
+        for (j = 1; j < len; j++) {
+            help[j - 1] = res[j];
+        }
+        return help;
+    }
     return res;
 }
 
@@ -447,16 +533,14 @@ int main() {
     char* dec = (char*) malloc((size + 1) * sizeof(char));
     for (int i = size - 1; i >= 0; i--) {
         cur = (code1[i] - '0') * pow(8, deg);
-        printf("\tcur: %ld, cur_len: %d, deg = %d\n", cur, cur_len, deg);
-        printf("here\n");
-        // char* num = (char*)malloc( cur_len* sizeof(char));
-        // printf("here\n");
-        // sprintf(num, "%ld", cur);
-        // printf("num: %s", num);
-        // ++deg;
-        // // dec = my_add(dec, num);
-        // // printf("\tcurrent res: %s\n", dec);
-        // free(num);
+        // printf("\tcur: %ld, deg = %d\n", cur, deg);
+        char* num = (char*)malloc(size * sizeof(char));
+        sprintf(num, "%ld", cur);
+        // printf("\tnum: %s\n", num);
+        ++deg;
+        dec = large_addition(dec, num); 
+        // printf("\tcurrent res: %s\n", dec);
+        free(num);
     }
     printf("decimal: %s\n", dec);
     t = clock() - t;
