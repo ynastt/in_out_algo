@@ -1,0 +1,1395 @@
+==== IN ALGORITHM ====
+size of file: 20
+
+first two digits: 36
+first 2 digits: 36
+quot and rem: 4, 4
+here11
+here22
+i: 1
+next digit: 2
+check quot and rem: 4, 4
+ next 2 digits: 42
+ quot and rem: 5, 2
+i: 3
+next digit: 9
+check quot and rem: 5, 2
+ next 2 digits: 29
+ quot and rem: 3, 5
+i: 4
+next digit: 2
+check quot and rem: 3, 5
+ next 2 digits: 52
+ quot and rem: 6, 4
+i: 5
+next digit: 8
+check quot and rem: 6, 4
+ next 2 digits: 48
+ quot and rem: 6, 0
+i: 6
+next digit: 3
+check quot and rem: 6, 0
+ next 2 digits: 38
+ quot and rem: 4, 6
+i: 8
+next digit: 7
+check quot and rem: 4, 6
+ next 2 digits: 67
+ quot and rem: 8, 3
+i: 9
+next digit: 3
+check quot and rem: 8, 3
+ next 2 digits: 33
+ quot and rem: 4, 1
+i: 10
+next digit: 7
+check quot and rem: 4, 1
+ next 2 digits: 17
+ quot and rem: 2, 1
+i: 11
+next digit: 3
+check quot and rem: 2, 1
+ next 2 digits: 13
+ quot and rem: 1, 5
+i: 12
+next digit: 7
+check quot and rem: 1, 5
+ next 2 digits: 57
+ quot and rem: 7, 1
+i: 13
+next digit: 3
+check quot and rem: 7, 1
+ next 2 digits: 13
+ quot and rem: 1, 5
+i: 14
+next digit: 5
+check quot and rem: 1, 5
+ next 2 digits: 55
+ quot and rem: 6, 7
+i: 15
+next digit: 4
+check quot and rem: 6, 7
+ next 2 digits: 74
+ quot and rem: 9, 2
+i: 16
+next digit: 3
+check quot and rem: 9, 2
+ next 2 digits: 23
+ quot and rem: 2, 7
+i: 17
+next digit: 6
+check quot and rem: 2, 7
+ next 2 digits: 76
+ quot and rem: 9, 4
+i: 18
+next digit: 2
+check quot and rem: 9, 4
+ next 2 digits: 42
+ quot and rem: 5, 2
+i: 19
+next digit: 1
+check quot and rem: 5, 2
+ next 2 digits: 21
+ quot and rem: 2, 5
+current res: 5
+
+k: 19
+---current number: 4536604842171692952---
+old len: 20
+len: 19
+
+first 2 digits: 45
+quot and rem: 5, 5
+here11
+here22
+i: 1
+next digit: 3
+check quot and rem: 5, 5
+ next 2 digits: 53
+ quot and rem: 6, 5
+i: 3
+next digit: 6
+check quot and rem: 6, 5
+ next 2 digits: 56
+ quot and rem: 7, 0
+i: 4
+next digit: 6
+check quot and rem: 7, 0
+ next 2 digits: 60
+ quot and rem: 7, 4
+i: 6
+next digit: 4
+check quot and rem: 7, 4
+ next 2 digits: 44
+ quot and rem: 5, 4
+i: 7
+next digit: 8
+check quot and rem: 5, 4
+ next 2 digits: 48
+ quot and rem: 6, 0
+i: 8
+next digit: 4
+check quot and rem: 6, 0
+ next 2 digits: 42
+ quot and rem: 5, 2
+i: 10
+next digit: 1
+check quot and rem: 5, 2
+ next 2 digits: 21
+ quot and rem: 2, 5
+i: 11
+next digit: 7
+check quot and rem: 2, 5
+ next 2 digits: 57
+ quot and rem: 7, 1
+i: 12
+next digit: 1
+check quot and rem: 7, 1
+ next 2 digits: 11
+ quot and rem: 1, 3
+i: 13
+next digit: 6
+check quot and rem: 1, 3
+ next 2 digits: 36
+ quot and rem: 4, 4
+i: 14
+next digit: 9
+check quot and rem: 4, 4
+ next 2 digits: 49
+ quot and rem: 6, 1
+i: 15
+next digit: 2
+check quot and rem: 6, 1
+ next 2 digits: 12
+ quot and rem: 1, 4
+i: 16
+next digit: 9
+check quot and rem: 1, 4
+ next 2 digits: 49
+ quot and rem: 6, 1
+i: 17
+next digit: 5
+check quot and rem: 6, 1
+ next 2 digits: 15
+ quot and rem: 1, 7
+i: 18
+next digit: 2
+check quot and rem: 1, 7
+ next 2 digits: 72
+ quot and rem: 9, 0
+current res: 50
+
+k: 18
+---current number: 567075605271461619---
+old len: 19
+len: 18
+
+first 2 digits: 56
+quot and rem: 7, 0
+here11
+here22
+i: 1
+next digit: 7
+check quot and rem: 7, 0
+ next 2 digits: 70
+ quot and rem: 8, 6
+i: 4
+next digit: 7
+check quot and rem: 8, 6
+ next 2 digits: 67
+ quot and rem: 8, 3
+i: 5
+next digit: 5
+check quot and rem: 8, 3
+ next 2 digits: 35
+ quot and rem: 4, 3
+i: 6
+next digit: 6
+check quot and rem: 4, 3
+ next 2 digits: 36
+ quot and rem: 4, 4
+i: 7
+next digit: 0
+check quot and rem: 4, 4
+ next 2 digits: 40
+ quot and rem: 5, 0
+i: 8
+next digit: 5
+check quot and rem: 5, 0
+ next 2 digits: 52
+ quot and rem: 6, 4
+i: 10
+next digit: 7
+check quot and rem: 6, 4
+ next 2 digits: 47
+ quot and rem: 5, 7
+i: 11
+next digit: 1
+check quot and rem: 5, 7
+ next 2 digits: 71
+ quot and rem: 8, 7
+i: 12
+next digit: 4
+check quot and rem: 8, 7
+ next 2 digits: 74
+ quot and rem: 9, 2
+i: 13
+next digit: 6
+check quot and rem: 9, 2
+ next 2 digits: 26
+ quot and rem: 3, 2
+i: 14
+next digit: 1
+check quot and rem: 3, 2
+ next 2 digits: 21
+ quot and rem: 2, 5
+i: 15
+next digit: 6
+check quot and rem: 2, 5
+ next 2 digits: 56
+ quot and rem: 7, 0
+i: 16
+next digit: 1
+check quot and rem: 7, 0
+ next 2 digits: 19
+ quot and rem: 2, 3
+current res: 503
+
+k: 17
+---current number: 70884450658932702---
+old len: 18
+len: 17
+
+first 2 digits: 70
+quot and rem: 8, 6
+here11
+here22
+i: 1
+next digit: 8
+check quot and rem: 8, 6
+ next 2 digits: 68
+ quot and rem: 8, 4
+i: 3
+next digit: 8
+check quot and rem: 8, 4
+ next 2 digits: 48
+ quot and rem: 6, 0
+i: 4
+next digit: 4
+check quot and rem: 6, 0
+ next 2 digits: 44
+ quot and rem: 5, 4
+i: 6
+next digit: 5
+check quot and rem: 5, 4
+ next 2 digits: 45
+ quot and rem: 5, 5
+i: 7
+next digit: 0
+check quot and rem: 5, 5
+ next 2 digits: 50
+ quot and rem: 6, 2
+i: 8
+next digit: 6
+check quot and rem: 6, 2
+ next 2 digits: 26
+ quot and rem: 3, 2
+i: 9
+next digit: 5
+check quot and rem: 3, 2
+ next 2 digits: 25
+ quot and rem: 3, 1
+i: 10
+next digit: 8
+check quot and rem: 3, 1
+ next 2 digits: 18
+ quot and rem: 2, 2
+i: 11
+next digit: 9
+check quot and rem: 2, 2
+ next 2 digits: 29
+ quot and rem: 3, 5
+i: 12
+next digit: 3
+check quot and rem: 3, 5
+ next 2 digits: 53
+ quot and rem: 6, 5
+i: 13
+next digit: 2
+check quot and rem: 6, 5
+ next 2 digits: 52
+ quot and rem: 6, 4
+i: 14
+next digit: 7
+check quot and rem: 6, 4
+ next 2 digits: 47
+ quot and rem: 5, 7
+i: 15
+next digit: 0
+check quot and rem: 5, 7
+ next 2 digits: 70
+ quot and rem: 8, 6
+i: 16
+next digit: 2
+check quot and rem: 8, 6
+ next 2 digits: 62
+ quot and rem: 7, 6
+current res: 5036
+
+k: 16
+---current number: 8860556332366587---
+old len: 17
+len: 16
+first 1 digit: 8
+quot and rem: 1, 0
+here11
+here22
+i: 1
+next digit: 8
+check quot and rem: 1, 0
+ next 1 digit: 8
+ quot and rem: 1, 0
+i: 2
+next digit: 6
+check quot and rem: 1, 0
+ next 2 digits: 60
+ quot and rem: 7, 4
+i: 4
+next digit: 5
+check quot and rem: 7, 4
+ next 2 digits: 45
+ quot and rem: 5, 5
+i: 5
+next digit: 5
+check quot and rem: 5, 5
+ next 2 digits: 55
+ quot and rem: 6, 7
+i: 6
+next digit: 6
+check quot and rem: 6, 7
+ next 2 digits: 76
+ quot and rem: 9, 4
+i: 7
+next digit: 3
+check quot and rem: 9, 4
+ next 2 digits: 43
+ quot and rem: 5, 3
+i: 8
+next digit: 3
+check quot and rem: 5, 3
+ next 2 digits: 33
+ quot and rem: 4, 1
+i: 9
+next digit: 2
+check quot and rem: 4, 1
+ next 2 digits: 12
+ quot and rem: 1, 4
+i: 10
+next digit: 3
+check quot and rem: 1, 4
+ next 2 digits: 43
+ quot and rem: 5, 3
+i: 11
+next digit: 6
+check quot and rem: 5, 3
+ next 2 digits: 36
+ quot and rem: 4, 4
+i: 12
+next digit: 6
+check quot and rem: 4, 4
+ next 2 digits: 46
+ quot and rem: 5, 6
+i: 13
+next digit: 5
+check quot and rem: 5, 6
+ next 2 digits: 65
+ quot and rem: 8, 1
+i: 14
+next digit: 8
+check quot and rem: 8, 1
+ next 2 digits: 18
+ quot and rem: 2, 2
+i: 15
+next digit: 7
+check quot and rem: 2, 2
+ next 2 digits: 27
+ quot and rem: 3, 3
+current res: 50363
+
+k: 16
+---current number: 1107569541545823---
+old len: 16
+len: 16
+
+first 2 digits: 11
+quot and rem: 1, 3
+here11
+here22
+i: 1
+next digit: 0
+check quot and rem: 1, 3
+ next 2 digits: 30
+ quot and rem: 3, 6
+i: 3
+next digit: 7
+check quot and rem: 3, 6
+ next 2 digits: 67
+ quot and rem: 8, 3
+i: 4
+next digit: 5
+check quot and rem: 8, 3
+ next 2 digits: 35
+ quot and rem: 4, 3
+i: 5
+next digit: 6
+check quot and rem: 4, 3
+ next 2 digits: 36
+ quot and rem: 4, 4
+i: 6
+next digit: 9
+check quot and rem: 4, 4
+ next 2 digits: 49
+ quot and rem: 6, 1
+i: 7
+next digit: 5
+check quot and rem: 6, 1
+ next 2 digits: 15
+ quot and rem: 1, 7
+i: 8
+next digit: 4
+check quot and rem: 1, 7
+ next 2 digits: 74
+ quot and rem: 9, 2
+i: 9
+next digit: 1
+check quot and rem: 9, 2
+ next 2 digits: 21
+ quot and rem: 2, 5
+i: 10
+next digit: 5
+check quot and rem: 2, 5
+ next 2 digits: 55
+ quot and rem: 6, 7
+i: 11
+next digit: 4
+check quot and rem: 6, 7
+ next 2 digits: 74
+ quot and rem: 9, 2
+i: 12
+next digit: 5
+check quot and rem: 9, 2
+ next 2 digits: 25
+ quot and rem: 3, 1
+i: 13
+next digit: 8
+check quot and rem: 3, 1
+ next 2 digits: 18
+ quot and rem: 2, 2
+i: 14
+next digit: 2
+check quot and rem: 2, 2
+ next 2 digits: 22
+ quot and rem: 2, 6
+i: 15
+next digit: 3
+check quot and rem: 2, 6
+ next 2 digits: 63
+ quot and rem: 7, 7
+current res: 503637
+
+k: 15
+---current number: 138446192693227---
+old len: 16
+len: 15
+
+first 2 digits: 13
+quot and rem: 1, 5
+here11
+here22
+i: 1
+next digit: 8
+check quot and rem: 1, 5
+ next 2 digits: 58
+ quot and rem: 7, 2
+i: 3
+next digit: 4
+check quot and rem: 7, 2
+ next 2 digits: 24
+ quot and rem: 3, 0
+i: 4
+next digit: 4
+check quot and rem: 3, 0
+ next 2 digits: 46
+ quot and rem: 5, 6
+i: 6
+next digit: 1
+check quot and rem: 5, 6
+ next 2 digits: 61
+ quot and rem: 7, 5
+i: 7
+next digit: 9
+check quot and rem: 7, 5
+ next 2 digits: 59
+ quot and rem: 7, 3
+i: 8
+next digit: 2
+check quot and rem: 7, 3
+ next 2 digits: 32
+ quot and rem: 4, 0
+i: 9
+next digit: 6
+check quot and rem: 4, 0
+ next 2 digits: 69
+ quot and rem: 8, 5
+i: 11
+next digit: 3
+check quot and rem: 8, 5
+ next 2 digits: 53
+ quot and rem: 6, 5
+i: 12
+next digit: 2
+check quot and rem: 6, 5
+ next 2 digits: 52
+ quot and rem: 6, 4
+i: 13
+next digit: 2
+check quot and rem: 6, 4
+ next 2 digits: 42
+ quot and rem: 5, 2
+i: 14
+next digit: 7
+check quot and rem: 5, 2
+ next 2 digits: 27
+ quot and rem: 3, 3
+current res: 5036373
+
+k: 14
+---current number: 17305774086653---
+old len: 15
+len: 14
+
+first 2 digits: 17
+quot and rem: 2, 1
+here11
+here22
+i: 1
+next digit: 3
+check quot and rem: 2, 1
+ next 2 digits: 13
+ quot and rem: 1, 5
+i: 3
+next digit: 0
+check quot and rem: 1, 5
+ next 2 digits: 50
+ quot and rem: 6, 2
+i: 4
+next digit: 5
+check quot and rem: 6, 2
+ next 2 digits: 25
+ quot and rem: 3, 1
+i: 5
+next digit: 7
+check quot and rem: 3, 1
+ next 2 digits: 17
+ quot and rem: 2, 1
+i: 6
+next digit: 7
+check quot and rem: 2, 1
+ next 2 digits: 17
+ quot and rem: 2, 1
+i: 7
+next digit: 4
+check quot and rem: 2, 1
+ next 2 digits: 14
+ quot and rem: 1, 6
+i: 8
+next digit: 0
+check quot and rem: 1, 6
+ next 2 digits: 60
+ quot and rem: 7, 4
+i: 9
+next digit: 8
+check quot and rem: 7, 4
+ next 2 digits: 48
+ quot and rem: 6, 0
+i: 10
+next digit: 6
+check quot and rem: 6, 0
+ next 2 digits: 66
+ quot and rem: 8, 2
+i: 12
+next digit: 5
+check quot and rem: 8, 2
+ next 2 digits: 25
+ quot and rem: 3, 1
+i: 13
+next digit: 3
+check quot and rem: 3, 1
+ next 2 digits: 13
+ quot and rem: 1, 5
+current res: 50363735
+
+k: 13
+---current number: 2163221760831---
+old len: 14
+len: 13
+
+first 2 digits: 21
+quot and rem: 2, 5
+here11
+here22
+i: 1
+next digit: 6
+check quot and rem: 2, 5
+ next 2 digits: 56
+ quot and rem: 7, 0
+i: 3
+next digit: 3
+check quot and rem: 7, 0
+ next 2 digits: 32
+ quot and rem: 4, 0
+i: 5
+next digit: 2
+check quot and rem: 4, 0
+ next 2 digits: 21
+ quot and rem: 2, 5
+i: 7
+next digit: 7
+check quot and rem: 2, 5
+ next 2 digits: 57
+ quot and rem: 7, 1
+i: 8
+next digit: 6
+check quot and rem: 7, 1
+ next 2 digits: 16
+ quot and rem: 2, 0
+i: 9
+next digit: 0
+check quot and rem: 2, 0
+ next 2 digits: 8
+ quot and rem: 1, 0
+i: 11
+next digit: 3
+check quot and rem: 1, 0
+ next 2 digits: 31
+ quot and rem: 3, 7
+current res: 503637357
+
+k: 12
+---current number: 270402720103---
+old len: 13
+len: 12
+
+first 2 digits: 27
+quot and rem: 3, 3
+here11
+here22
+i: 1
+next digit: 0
+check quot and rem: 3, 3
+ next 2 digits: 30
+ quot and rem: 3, 6
+i: 3
+next digit: 4
+check quot and rem: 3, 6
+ next 2 digits: 64
+ quot and rem: 8, 0
+i: 4
+next digit: 0
+check quot and rem: 8, 0
+ next 2 digits: 2
+ quot and rem: 0, 2
+i: 6
+next digit: 7
+check quot and rem: 0, 2
+ next 2 digits: 27
+ quot and rem: 3, 3
+i: 7
+next digit: 2
+check quot and rem: 3, 3
+ next 2 digits: 32
+ quot and rem: 4, 0
+i: 8
+next digit: 0
+check quot and rem: 4, 0
+ next 2 digits: 1
+ quot and rem: 0, 1
+i: 10
+next digit: 0
+check quot and rem: 0, 1
+ next 2 digits: 10
+ quot and rem: 1, 2
+i: 11
+next digit: 3
+check quot and rem: 1, 2
+ next 2 digits: 23
+ quot and rem: 2, 7
+current res: 5036373577
+
+k: 11
+---current number: 33800340012---
+old len: 12
+len: 11
+
+first 2 digits: 33
+quot and rem: 4, 1
+here11
+here22
+i: 1
+next digit: 8
+check quot and rem: 4, 1
+ next 2 digits: 18
+ quot and rem: 2, 2
+i: 3
+next digit: 0
+check quot and rem: 2, 2
+ next 2 digits: 20
+ quot and rem: 2, 4
+i: 4
+next digit: 0
+check quot and rem: 2, 4
+ next 2 digits: 40
+ quot and rem: 5, 0
+i: 5
+next digit: 3
+check quot and rem: 5, 0
+ next 2 digits: 34
+ quot and rem: 4, 2
+i: 7
+next digit: 0
+check quot and rem: 4, 2
+ next 2 digits: 20
+ quot and rem: 2, 4
+i: 8
+next digit: 0
+check quot and rem: 2, 4
+ next 2 digits: 40
+ quot and rem: 5, 0
+i: 9
+next digit: 1
+check quot and rem: 5, 0
+ next 2 digits: 12
+ quot and rem: 1, 4
+current res: 50363735774
+
+k: 10
+---current number: 4225042501---
+old len: 11
+len: 10
+
+first 2 digits: 42
+quot and rem: 5, 2
+here11
+here22
+i: 1
+next digit: 2
+check quot and rem: 5, 2
+ next 2 digits: 22
+ quot and rem: 2, 6
+i: 3
+next digit: 5
+check quot and rem: 2, 6
+ next 2 digits: 65
+ quot and rem: 8, 1
+i: 4
+next digit: 0
+check quot and rem: 8, 1
+ next 2 digits: 10
+ quot and rem: 1, 2
+i: 5
+next digit: 4
+check quot and rem: 1, 2
+ next 2 digits: 24
+ quot and rem: 3, 0
+i: 6
+next digit: 2
+check quot and rem: 3, 0
+ next 2 digits: 25
+ quot and rem: 3, 1
+i: 8
+next digit: 0
+check quot and rem: 3, 1
+ next 2 digits: 10
+ quot and rem: 1, 2
+i: 9
+next digit: 1
+check quot and rem: 1, 2
+ next 2 digits: 21
+ quot and rem: 2, 5
+current res: 503637357745
+
+k: 9
+---current number: 528130312---
+old len: 10
+len: 9
+
+first 2 digits: 52
+quot and rem: 6, 4
+here11
+here22
+i: 1
+next digit: 8
+check quot and rem: 6, 4
+ next 2 digits: 48
+ quot and rem: 6, 0
+i: 3
+next digit: 1
+check quot and rem: 6, 0
+ next 2 digits: 13
+ quot and rem: 1, 5
+i: 5
+next digit: 0
+check quot and rem: 1, 5
+ next 2 digits: 50
+ quot and rem: 6, 2
+i: 6
+next digit: 3
+check quot and rem: 6, 2
+ next 2 digits: 23
+ quot and rem: 2, 7
+i: 7
+next digit: 1
+check quot and rem: 2, 7
+ next 2 digits: 71
+ quot and rem: 8, 7
+i: 8
+next digit: 2
+check quot and rem: 8, 7
+ next 2 digits: 72
+ quot and rem: 9, 0
+current res: 5036373577450
+
+k: 8
+---current number: 66016289---
+old len: 9
+len: 8
+
+first 2 digits: 66
+quot and rem: 8, 2
+here11
+here22
+i: 1
+next digit: 0
+check quot and rem: 8, 2
+ next 2 digits: 20
+ quot and rem: 2, 4
+i: 3
+next digit: 1
+check quot and rem: 2, 4
+ next 2 digits: 41
+ quot and rem: 5, 1
+i: 4
+next digit: 6
+check quot and rem: 5, 1
+ next 2 digits: 16
+ quot and rem: 2, 0
+i: 5
+next digit: 2
+check quot and rem: 2, 0
+ next 2 digits: 28
+ quot and rem: 3, 4
+i: 7
+next digit: 9
+check quot and rem: 3, 4
+ next 2 digits: 49
+ quot and rem: 6, 1
+current res: 50363735774501
+
+k: 7
+---current number: 8252036---
+old len: 8
+len: 7
+first 1 digit: 8
+quot and rem: 1, 0
+here11
+here22
+i: 1
+next digit: 2
+check quot and rem: 1, 0
+ next 2 digits: 25
+ quot and rem: 3, 1
+i: 3
+next digit: 2
+check quot and rem: 3, 1
+ next 2 digits: 12
+ quot and rem: 1, 4
+i: 4
+next digit: 0
+check quot and rem: 1, 4
+ next 2 digits: 40
+ quot and rem: 5, 0
+i: 5
+next digit: 3
+check quot and rem: 5, 0
+ next 2 digits: 36
+ quot and rem: 4, 4
+current res: 503637357745014
+
+k: 7
+---current number: 1031504---
+old len: 7
+len: 7
+
+first 2 digits: 10
+quot and rem: 1, 2
+here11
+here22
+i: 1
+next digit: 3
+check quot and rem: 1, 2
+ next 2 digits: 23
+ quot and rem: 2, 7
+i: 3
+next digit: 1
+check quot and rem: 2, 7
+ next 2 digits: 71
+ quot and rem: 8, 7
+i: 4
+next digit: 5
+check quot and rem: 8, 7
+ next 2 digits: 75
+ quot and rem: 9, 3
+i: 5
+next digit: 0
+check quot and rem: 9, 3
+ next 2 digits: 30
+ quot and rem: 3, 6
+i: 6
+next digit: 4
+check quot and rem: 3, 6
+ next 2 digits: 64
+ quot and rem: 8, 0
+current res: 5036373577450140
+
+k: 6
+---current number: 128938---
+old len: 7
+len: 6
+
+first 2 digits: 12
+quot and rem: 1, 4
+here11
+here22
+i: 1
+next digit: 8
+check quot and rem: 1, 4
+ next 2 digits: 48
+ quot and rem: 6, 0
+i: 3
+next digit: 9
+check quot and rem: 6, 0
+ next 1 digit: 9
+ quot and rem: 1, 1
+i: 4
+next digit: 3
+check quot and rem: 1, 1
+ next 2 digits: 13
+ quot and rem: 1, 5
+i: 5
+next digit: 8
+check quot and rem: 1, 5
+ next 2 digits: 58
+ quot and rem: 7, 2
+current res: 50363735774501402
+
+k: 5
+---current number: 16117---
+old len: 6
+len: 5
+
+first 2 digits: 16
+quot and rem: 2, 0
+here11
+here22
+i: 1
+next digit: 1
+check quot and rem: 2, 0
+ next 2 digits: 11
+ quot and rem: 1, 3
+i: 4
+next digit: 7
+check quot and rem: 1, 3
+ next 2 digits: 37
+ quot and rem: 4, 5
+current res: 503637357745014025
+
+k: 4
+---current number: 2014---
+old len: 5
+len: 4
+
+first 2 digits: 20
+quot and rem: 2, 4
+here11
+here22
+i: 1
+next digit: 1
+check quot and rem: 2, 4
+ next 2 digits: 41
+ quot and rem: 5, 1
+i: 3
+next digit: 4
+check quot and rem: 5, 1
+ next 2 digits: 14
+ quot and rem: 1, 6
+current res: 5036373577450140256
+
+k: 3
+---current number: 251---
+old len: 4
+len: 3
+
+first 2 digits: 25
+quot and rem: 3, 1
+here11
+here22
+i: 1
+next digit: 1
+check quot and rem: 3, 1
+ next 2 digits: 11
+ quot and rem: 1, 3
+current res: 50363735774501402563
+
+k: 2
+---current number: 31---
+old len: 3
+len: 2
+
+first 2 digits: 31
+quot and rem: 3, 7
+here11
+here22
+i: 1
+here
+current res: 503637357745014025637
+
+k: 1
+---current number: 3---
+old len: 2
+len: 1
+last digit: 3
+current res: 5036373577450140256373
+
+res: 5036373577450140256373
+
+
+decimal number: 36292838737373543621
+octal number: 3736520410547753736305
+0 - 3
+oct: 3; bin: 011
+cur res: 011
+1 - 7
+oct: 7; bin: 111
+cur res: 011111
+2 - 3
+oct: 3; bin: 011
+cur res: 011111011
+3 - 6
+oct: 6; bin: 110
+cur res: 011111011110
+4 - 5
+oct: 5; bin: 101
+cur res: 011111011110101
+5 - 2
+oct: 2; bin: 010
+cur res: 011111011110101010
+6 - 0
+oct: 0; bin: 000
+cur res: 011111011110101010000
+7 - 4
+oct: 4; bin: 100
+cur res: 011111011110101010000100
+8 - 1
+oct: 1; bin: 001
+cur res: 011111011110101010000100001
+9 - 0
+oct: 0; bin: 000
+cur res: 011111011110101010000100001000
+10 - 5
+oct: 5; bin: 101
+cur res: 011111011110101010000100001000101
+11 - 4
+oct: 4; bin: 100
+cur res: 011111011110101010000100001000101100
+12 - 7
+oct: 7; bin: 111
+cur res: 011111011110101010000100001000101100111
+13 - 7
+oct: 7; bin: 111
+cur res: 011111011110101010000100001000101100111111
+14 - 5
+oct: 5; bin: 101
+cur res: 011111011110101010000100001000101100111111101
+15 - 3
+oct: 3; bin: 011
+cur res: 011111011110101010000100001000101100111111101011
+16 - 7
+oct: 7; bin: 111
+cur res: 011111011110101010000100001000101100111111101011111
+17 - 3
+oct: 3; bin: 011
+cur res: 011111011110101010000100001000101100111111101011111011
+18 - 6
+oct: 6; bin: 110
+cur res: 011111011110101010000100001000101100111111101011111011110
+19 - 3
+oct: 3; bin: 011
+cur res: 011111011110101010000100001000101100111111101011111011110011
+20 - 0
+oct: 0; bin: 000
+cur res: 011111011110101010000100001000101100111111101011111011110011000
+21 - 5
+oct: 5; bin: 101
+cur res: 011111011110101010000100001000101100111111101011111011110011000101
+binary: 011111011110101010000100001000101100111111101011111011110011000101
+2^32:
+0
+1
+4155117707
+1068481733
+
+2^64:
+0141551177071068481733
+in algorithm took 0.000155 seconds to execute 
+
+==== OUT ALGORITHM ====
+digit is: 1068481733
+digit: 534240866, ost: 1
+digit: 267120433, ost: 0
+digit: 133560216, ost: 1
+digit: 66780108, ost: 0
+digit: 33390054, ost: 0
+digit: 16695027, ost: 0
+digit: 8347513, ost: 1
+digit: 4173756, ost: 1
+digit: 2086878, ost: 0
+digit: 1043439, ost: 0
+digit: 521719, ost: 1
+digit: 260859, ost: 1
+digit: 130429, ost: 1
+digit: 65214, ost: 1
+digit: 32607, ost: 0
+digit: 16303, ost: 1
+digit: 8151, ost: 1
+digit: 4075, ost: 1
+digit: 2037, ost: 1
+digit: 1018, ost: 1
+digit: 509, ost: 0
+digit: 254, ost: 1
+digit: 127, ost: 0
+digit: 63, ost: 1
+digit: 31, ost: 1
+digit: 15, ost: 1
+digit: 7, ost: 1
+digit: 3, ost: 1
+digit: 1, ost: 1
+digit: 0, ost: 1
+b: 101000110011110111110101111111
+current binary is: 111111101011111011110011000101
+binary is: 00111111101011111011110011000101
+current res: 10100011001111011111010111111100
+digit is: 4155117707
+digit: 2077558853, ost: 1
+digit: 1038779426, ost: 1
+digit: 519389713, ost: 0
+digit: 259694856, ost: 1
+digit: 129847428, ost: 0
+digit: 64923714, ost: 0
+digit: 32461857, ost: 0
+digit: 16230928, ost: 1
+digit: 8115464, ost: 0
+digit: 4057732, ost: 0
+digit: 2028866, ost: 0
+digit: 1014433, ost: 0
+digit: 507216, ost: 1
+digit: 253608, ost: 0
+digit: 126804, ost: 0
+digit: 63402, ost: 0
+digit: 31701, ost: 0
+digit: 15850, ost: 1
+digit: 7925, ost: 0
+digit: 3962, ost: 1
+digit: 1981, ost: 0
+digit: 990, ost: 1
+digit: 495, ost: 0
+digit: 247, ost: 1
+digit: 123, ost: 1
+digit: 61, ost: 1
+digit: 30, ost: 1
+digit: 15, ost: 0
+digit: 7, ost: 1
+digit: 3, ost: 1
+digit: 1, ost: 1
+digit: 0, ost: 1
+b: 11010001000010000101010111101111
+current binary is: 11110111101010100001000010001011
+binary is: 11110111101010100001000010001011
+current res: 1010001100111101111101011111110011010001000010000101010111101111
+digit is: 1
+digit: 0, ost: 1
+b: 1
+current binary is: 1
+binary is: 1
+current res: 10100011001111011111010111111100110100010000100001010101111011111
+digit is: 0
+current res: 101000110011110111110101111111001101000100001000010101011110111110
+binary: 011111011110101010000100001000101100111111101011111011110011000101
+octal: 3736520410547753736305
+size: 22
+	d: 5
+	pow(8, deg): 1
+	cur: 5, deg = 0
+	num: 5
+FIRST: 
+SECOND 5
+		current res: 5
+	d: 0
+	pow(8, deg): 8
+	cur: 0, deg = 1
+	num: 0
+FIRST: 5
+SECOND 0
+		current res: 5
+	d: 3
+	pow(8, deg): 64
+	cur: 192, deg = 2
+	num: 192
+FIRST: 5
+SECOND 192
+		current res: 197
+	d: 6
+	pow(8, deg): 512
+	cur: 3072, deg = 3
+	num: 3072
+FIRST: 197
+SECOND 3072
+		current res: 3269
+	d: 3
+	pow(8, deg): 4096
+	cur: 12288, deg = 4
+	num: 12288
+FIRST: 3269
+SECOND 12288
+		current res: 15557
+	d: 7
+	pow(8, deg): 32768
+	cur: 229376, deg = 5
+	num: 229376
+FIRST: 15557
+SECOND 229376
+		current res: 244933
+	d: 3
+	pow(8, deg): 262144
+	cur: 786432, deg = 6
+	num: 786432
+FIRST: 244933
+SECOND 786432
+		current res: 1031365
+	d: 5
+	pow(8, deg): 2097152
+	cur: 10485760, deg = 7
+	num: 10485760
+FIRST: 1031365
+SECOND 10485760
+		current res: 11517125
+	d: 7
+	pow(8, deg): 16777216
+	cur: 117440512, deg = 8
+	num: 117440512
+FIRST: 11517125
+SECOND 117440512
+		current res: 128957637
+	d: 7
+	pow(8, deg): 134217728
+	cur: 939524096, deg = 9
+	num: 939524096
+FIRST: 128957637
+SECOND 939524096
+		current res: 1068481733
+	d: 4
+	pow(8, deg): 1073741824
+	cur: 4294967296, deg = 10
+	num: 4294967296
+FIRST: 1068481733
+SECOND 4294967296
+		current res: 5363449029
+	d: 5
+	pow(8, deg): 8589934592
+	cur: 42949672960, deg = 11
+	num: 42949672960
+FIRST: 5363449029
+SECOND 42949672960
+		current res: 48313121989
+	d: 0
+	pow(8, deg): 68719476736
+	cur: 0, deg = 12
+	num: 0
+FIRST: 48313121989
+SECOND 0
+		current res: 48313121989
+	d: 1
+	pow(8, deg): 549755813888
+	cur: 549755813888, deg = 13
+	num: 549755813888
+FIRST: 48313121989
+SECOND 549755813888
+		current res: 598068935877
+	d: 4
+	pow(8, deg): 4398046511104
+	cur: 17592186044416, deg = 14
+	num: 17592186044416
+FIRST: 598068935877
+SECOND 17592186044416
+		current res: 18190254980293
+	d: 0
+	pow(8, deg): 35184372088832
+	cur: 0, deg = 15
+	num: 0
+FIRST: 18190254980293
+SECOND 0
+		current res: 18190254980293
+	d: 2
+	pow(8, deg): 281474976710656
+	cur: 562949953421312, deg = 16
+	num: 562949953421312
+FIRST: 18190254980293
+SECOND 562949953421312
+		current res: 581140208401605
+	d: 5
+	pow(8, deg): 2251799813685248
+	cur: 11258999068426240, deg = 17
+	num: 11258999068426240
+FIRST: 581140208401605
+SECOND 11258999068426240
+		current res: 11840139276827845
+	d: 6
+	pow(8, deg): 18014398509481984
+	cur: 108086391056891904, deg = 18
+	num: 108086391056891904
+FIRST: 11840139276827845
+SECOND 108086391056891904
+		current res: 119926530333719749
+	d: 3
+	pow(8, deg): 144115188075855872
+	cur: 432345564227567616, deg = 19
+	num: 432345564227567616
+FIRST: 119926530333719749
+SECOND 432345564227567616
+		current res: 552272094561287365
+	d: 7
+	pow(8, deg): 1152921504606846976
+	cur: 8070450532247928832, deg = 20
+	num: 8070450532247928832
+FIRST: 552272094561287365
+SECOND 8070450532247928832
+		current res: 8622722626809216197
+	d: 3
+	pow(8, deg): -9223372036854775808
+	cur: -9223372036854775808, deg = 21
+	num: -9223372036854775808
+FIRST: 8622722626809216197
+SECOND -9223372036854775808
+		current res: .7846094663663992005
+decimal: .7846094663663992005
+
+out algorithm took 0.000037 seconds to execute 

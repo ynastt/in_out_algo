@@ -52,15 +52,15 @@ char* my_reverse(char* code) {
     return result;
 }
 
-char* find_remainder(char* code, long n) {
+char* convert_from_decimal_to_octal(char* code, long n) {
     bool new_step = false;
     char* result;
-    result = malloc(n + 2);
-    int j, d;
+    result = (char*)malloc((n + 1) * sizeof(char));
+    int j = 0, d;
     char* code1;
     char* first_two_digits;
     first_two_digits = malloc(2);
-    long digits, rem, quot, len = strlen(code);
+    long digits, rem, quot, len = n;
     int first_digit = code[0] - '0', flag = 0;
     if (first_digit < 8) {
         slice(code, first_two_digits, 0, 2);
@@ -78,7 +78,8 @@ char* find_remainder(char* code, long n) {
         rem = first_digit - quot * 8; //0;
         printf("quot and rem: %ld, %ld\n", quot, rem);
     }
-    for (j = 0; j < n; j++) {
+    // for (j = 0; j < n - 1; j++) {
+    while( len != 1) {    
         if (new_step) {
             new_step = false;
             first_digit = code[0] - '0',
@@ -102,7 +103,9 @@ char* find_remainder(char* code, long n) {
             }
         }
         int k = 0;
-        code1 = malloc(len - 1);
+        printf("here11\n");
+        code1 = malloc(len);
+        printf("here22\n");
         code1[k++] = (int)quot + '0';
         for (int i = 1; i < len; i++) {
             printf("i: %d\n", i);
@@ -115,45 +118,48 @@ char* find_remainder(char* code, long n) {
             } 
             d = code[i] - '0';
             printf("next digit: %d\n", d);
+            printf("check quot and rem: %ld, %ld\n", quot, rem);
             flag = 0;
             if (rem != 0) {
                 digits = rem * 10 + d;
                 printf(" next 2 digits: %ld\n", digits);
                 quot = digits / 8;
                 rem = digits - quot * 8;
-                printf("quot and rem: %ld, %ld\n", quot, rem);
+                printf(" quot and rem: %ld, %ld\n", quot, rem);
                 // flag = 1;
             } else {
-                if (d < 8) {
+                if (d < 8 && i != len - 1) {
                     code1[k++] = '0';
                     slice(code, first_two_digits, i, i + 2);
                     first_two_digits[i+2] = '\0';
                     digits = atol(first_two_digits);
-                    printf("next 2 digits: %ld\n", digits);
+                    printf(" next 2 digits: %ld\n", digits);
                     quot = digits / 8;
                     rem = digits - quot * 8;
-                    printf("quot and rem: %ld, %ld\n", quot, rem);
+                    printf(" quot and rem: %ld, %ld\n", quot, rem);
                     i++;
                     // flag = 1;
                 } else {
-                    printf("next 1 digit: %d\n", d);
+                    printf(" next 1 digit: %d\n", d);
                     quot = d / 8; // 1;
                     rem = d - quot * 8; //0;
-                    printf("quot and rem: %ld, %ld\n", quot, rem); 
+                    printf(" quot and rem: %ld, %ld\n", quot, rem); 
                     // flag = 0; 
                 }  
             }
             code1[k++] = (int)quot + '0';
         }
-        result[j] =  (int)rem + '0';
+        result[j++] =  (int)rem + '0';
         new_step = true;
-        printf("j remainder: %c\n", result[j]);
         printf("current res: %s\n\n", result);
-        strcpy(code, code1);
-        printf("current number: %s\n", code1);
+        code1[k] = '\0';
+        printf("k: %d\n", k);
+        memcpy(code, code1, k);
+        printf("---current number: %s---\n", code1);
         printf("old len: %ld\n", len);
-        len = my_strlen(code1);
-        printf("len: %ld\n\n", len);      
+        len = k;
+        printf("len: %ld\n", len);
+              
     }
     free(first_two_digits);
     if (len == 1) {
@@ -171,8 +177,8 @@ char* find_remainder(char* code, long n) {
             }
             d = d/8;
             printf("current res: %s\n\n", result);
-            }
-    }  
+        }
+    }
     result[j++] =  '\0';
     printf("res: %s\n\n", result);
     return result;
@@ -185,12 +191,13 @@ char* convert_from_octal_to_binary(char* code, char* map[]) {
     res = malloc(len * 3);
     strcpy(res, "");
     for (int i = 0; i < len; i++) {
-        // printf("%d - %c\n", i, (char)code[i]);
+        printf("%d - %c\n", i, (char)code[i]);
         int c = code[i] - '0';
-        // printf("oct: %d; bin: %s\n", c, map[c]);
+        printf("oct: %d; bin: %s\n", c, map[c]);
         strcat(res, map[c]);
-        // printf("cur res: %s\n", res);
+        printf("cur res: %s\n", res);
     }
+    res[len * 3 + 1] = '\0';
     return res;
 }
 
@@ -215,27 +222,51 @@ unsigned long convert_to_2_in_32_system(char* code) {
 // Поскольку я заполняю структуры в направлении с конца в начало,
 // то при печати в направлении с начала в конец испольщуется PREV, а не NEXT
 // но это можно поправить и сделать наоборот, если критично.
-void print_Link(LINK* l){
+void print_Link(LINK* l, FILE* output){
     // printf("\nis link null:%u\n", l == NULL);
-    if (l != NULL) {
-        printf("%ld\n", PAIR(l).n);
-        print_Link(PREV(l));
+    if (output != NULL) {
+        if (l != NULL) {
+            char* digit = malloc(20);
+            sprintf(digit, "%ld", PAIR(l).n);
+            fputs(digit, output);
+            fputs("\n", output);
+            print_Link(PREV(l), output);
+        }
+    } else {
+        if (l != NULL) {
+            printf("%ld\n", PAIR(l).n);
+            print_Link(PREV(l), NULL);
+        }
     }
 }
 
-void print_Link_64(LINK* l) {
-    if (l != NULL && PREV(l) != NULL) {
-        unsigned long senior = l->pair.n;
-        unsigned long junior = l->prec->pair.n;
-        // printf("link: %ld\n", senior);
-        // printf("prev: %ld\n", junior);
-        char* macrodigit = malloc(40);
-        char* jun = malloc(20);
-        sprintf(macrodigit, "%ld", senior);
-        sprintf(jun, "%ld", junior);
-        strcat(macrodigit, jun);
-        printf("%s",macrodigit);
-        print_Link_64(l->prec->prec);
+void print_Link_64(LINK* l, FILE* output) {
+    if (output != NULL) {
+        if (l != NULL && PREV(l) != NULL) {
+            unsigned long senior = l->pair.n;
+            unsigned long junior = l->prec->pair.n;
+            char* macrodigit = malloc(40);
+            char* jun = malloc(20);
+            sprintf(macrodigit, "%ld", senior);
+            sprintf(jun, "%ld", junior);
+            strcat(macrodigit, jun);
+            fputs(macrodigit, output);
+            print_Link_64(l->prec->prec, output);
+        }
+    } else {
+        if (l != NULL && PREV(l) != NULL) {
+            unsigned long senior = l->pair.n;
+            unsigned long junior = l->prec->pair.n;
+            // printf("link: %ld\n", senior);
+            // printf("prev: %ld\n", junior);
+            char* macrodigit = malloc(40);
+            char* jun = malloc(20);
+            sprintf(macrodigit, "%ld", senior);
+            sprintf(jun, "%ld", junior);
+            strcat(macrodigit, jun);
+            printf("%s",macrodigit);
+            print_Link_64(l->prec->prec, NULL);
+        }
     }
 }
 
@@ -243,30 +274,35 @@ void print_Link_64(LINK* l) {
 char* convert_to_binary(LINK* l) {
     char* res;
     char* b;
-    long k = 0;
+    int i = 0;
+    unsigned long long length = 0;
     res = malloc(1 * sizeof(char));
     strcpy(res, "");
     while (l != NULL ) {
-        res = (char*)realloc(res, k + 32);
+        res = (char*)realloc(res, length + 32 + 1);
         unsigned long digit = l->pair.n;
-        // printf("digit is: %ld\n", digit);
+        printf("digit is: %ld\n", digit);
         if (digit == 0) {
             strcat(res, "0");
+            length++;
+            res[length + 1] = '\0';
         } else {
-            b = (char*)malloc(32 * sizeof(char));
-            for (int i = 0; digit > 0; i++) {    
+            b = (char*)malloc(33 * sizeof(char));
+            for (i = 0; digit > 0; i++) {    
                 b[i]= (digit % 2) + '0';    
-                digit = digit / 2;    
+                digit = digit / 2;
+                printf("digit: %ld, ost: %c\n", digit, (char)b[i]);    
             }
-            // printf("b: %s\n", b);
+            b[i] = '\0';
+            printf("b: %s\n", b);
             long s = strlen(b);
-            char* binary = (char*)malloc(s * sizeof(char));
+            char* binary = (char*)malloc((s + 1)* sizeof(char));
             binary[s] = '\0';
             for (int i = 0; i < s; i++) {
                 binary[i] = b[s - 1 - i];
             } 
             free(b);
-            // printf("current binary is: %s\n", binary);
+            printf("current binary is: %s\n", binary);
             long long len = strlen(binary);
             // printf("len: %lld\n", len);
             if (l->foll != NULL && l->foll->pair.n != 0) {
@@ -279,10 +315,12 @@ char* convert_to_binary(LINK* l) {
             } else {
                 binary = my_reverse(binary);
             }
-            // printf("binary is: %s\n", binary);
+            printf("binary is: %s\n", my_reverse(binary));
             strcat(res, binary);
+            length += len;
+            res[length + 1] = '\0';
         }   
-        // printf("current res: %s\n", res);
+        printf("current res: %s\n", res);
         l = l->foll;
     }
     return res;
@@ -321,6 +359,7 @@ char* convert_from_binary_to_octal(char* code, char* map[]) {
 
 // функция для сложения столбиком
 char* large_addition(char* num1, char* num2) {
+    printf("FIRST: %s\nSECOND %s\n", num1, num2);
     char* num_1;
     char* num_2;
     unsigned long len1 = strlen(num1);
@@ -405,10 +444,18 @@ char* large_addition(char* num1, char* num2) {
     return res;
 }
 
+unsigned long long my_pow(unsigned long base, unsigned long long deg) {
+    unsigned long long res = 1;
+    for (unsigned long i = 0; i < deg; i++) {
+        res *= base;
+    }
+    return res;
+}
+
 int main() {
     clock_t t;
     t = clock();
-    FILE * f = fopen("../tests/test2.txt", "rt");
+    FILE * f = fopen("../tests/test4.txt", "rt");
     char *code;
     char *res;
     char *code1;
@@ -431,26 +478,30 @@ int main() {
     while ((c = fgetc(f)) != EOF) {
         code[n++] = (char)c;
         code1[m++] = (char)c;
-        printf("char: %c\n", (char)c);
+        // printf("char: %c\n", (char)c);
     }
     code[n] = '\0'; 
     code1[m] = '\0'; 
 
-    res = find_remainder(code1, f_size);
+    res = convert_from_decimal_to_octal(code1, f_size);
     long s = strlen(res);
     char* result = my_reverse(res);
+    result[(strlen(result) + 1)] = '\0';
     fclose(f);
-    printf("\nRESULT\ndecimal number: %s\n", code);
+    printf("\ndecimal number: %s\n", code);
     printf("octal number: %s\n", result);
     FILE * o = fopen("output.txt", "w");
+    fputs("===IN===\ndecimal: ", o);
+    fputs(code, o);
+    fputs("\noctal: ", o);
     fputs(result, o);
-    fputs("\n", o);
     char* map[] = { "000", "001", "010", "011", "100", "101", "110", "111"};  
     code1 = convert_from_octal_to_binary(result, map);
     printf("binary: %s\n", code1);
+    fputs("\nbinary: ", o);
     fputs(code1, o);
-    fputs("\n", o);
     printf("2^32:\n");
+    fputs("\n\n2^32:\n", o);
     LINK* start_number = (LINK*)malloc(sizeof(LINK));
     LINK* end_number;
     LINK* prev_number;
@@ -505,17 +556,27 @@ int main() {
             start_number = prev_number;
         }
     }
-    print_Link(start_number);
-
+    print_Link(start_number, NULL);
+    print_Link(start_number, o);
     printf("\n2^64:\n");
-    print_Link_64(start_number);
+    fputs("\n2^64:\n", o);
+    print_Link_64(start_number, NULL);
+    print_Link_64(start_number, o);
     t = clock() - t;
     double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
     printf("\nin algorithm took %f seconds to execute \n", time_taken);
-
+    fputs("\nin algorithm took ", o);
+    char time_arr[100];
+    sprintf(time_arr, "%2.7f", time_taken);
+    fputs(time_arr, o);
+    fputs(" seconds to execute \n", o);
     printf("\n==== OUT ALGORITHM ====\n");
+    fputs("\n===OUT===\n2^64:\n", o);
+    print_Link_64(start_number, o);
+    fputs("\n\n2^32:\n", o);
+    print_Link(start_number, o);
     t = clock();
-     code1 = convert_to_binary(end_number);
+    code1 = convert_to_binary(end_number);
     long long l = strlen(code1);
     while (l % 3 != 0) {
        code1[l++] = '0';
@@ -523,34 +584,48 @@ int main() {
        l = strlen(code1);
     }
     code1 = my_reverse(code1);
+    fputs("\nbinary: ", o);
     printf("binary: %s\n", code1);
+    fputs(code1, o);
     code1 = convert_from_binary_to_octal(code1, map);
     printf("octal: %s\n", code1);
+    fputs("\noctal: ", o);
+    fputs(code1, o);
     size_t size = strlen(code1);
     printf("size: %ld\n", size);
-    int deg = 0;
+    int deg = 0, d = 0;
     unsigned long cur;
     char* dec = (char*) malloc((size + 1) * sizeof(char));
     for (int i = size - 1; i >= 0; i--) {
-        cur = (code1[i] - '0') * pow(8, deg);
-        // printf("\tcur: %ld, deg = %d\n", cur, deg);
+        d = code1[i] - '0';
+        printf("\td: %d\n", d);
+        printf("\tpow(8, deg): %lld\n", my_pow(8, deg));
+        cur = d * my_pow(8, deg);
+        printf("\tcur: %ld, deg = %d\n", cur, deg);
         char* num = (char*)malloc(size * sizeof(char));
         sprintf(num, "%ld", cur);
-        // printf("\tnum: %s\n", num);
+        printf("\tnum: %s\n", num);
         ++deg;
         dec = large_addition(dec, num); 
-        // printf("\tcurrent res: %s\n", dec);
+        printf("\t\tcurrent res: %s\n", dec);
         free(num);
     }
+    dec[strlen(dec) + 1] = '\0';
     printf("decimal: %s\n", dec);
+    fputs("\ndecimal: ", o);
+    fputs(dec, o);
     t = clock() - t;
     time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
     printf("\nout algorithm took %f seconds to execute \n", time_taken);
+    fputs("\nout algorithm took ", o);
+    sprintf(time_arr, "%2.7f", time_taken);
+    fputs(time_arr, o);
+    fputs(" seconds to execute \n", o);
     fclose(o);
     free(code);
     free(code1);
     free(res);
     free(result);
-    free(dec);
+    // free(dec);
     return 0;
 }

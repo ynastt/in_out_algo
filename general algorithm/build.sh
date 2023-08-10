@@ -1,2 +1,2 @@
 gcc -o gen general.c -lm
-./gen
+./gen > log.txt
