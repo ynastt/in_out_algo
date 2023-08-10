@@ -526,7 +526,7 @@ int main() {
     size_t n = 0, m = 0, k = 0;
     int c;
 
-    if( f == NULL ) {
+    if (f == NULL) {
         perror("Error: ");
         return(-1);
     }
