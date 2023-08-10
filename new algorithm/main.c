@@ -192,14 +192,17 @@ char* convert_to_binary(LINK* l) {
     char* res;
     char* b;
     long k = 0;
+    unsigned long long length = 0;
     res = malloc(1 * sizeof(char));
     strcpy(res, "");
     while (l != NULL ) {
-        res = (char*)realloc(res, k + 32);
+        res = (char*)realloc(res, length + 32 + 1);
         unsigned long digit = l->pair.n;
         printf("digit is: %ld\n", digit);
         if (digit == 0) {
             strcat(res, "0");
+            length++;
+            res[length + 1] = '\0';
         } else {
             b = (char*)malloc(32 * sizeof(char));
             for (int i = 0; digit > 0; i++) {    
@@ -229,6 +232,8 @@ char* convert_to_binary(LINK* l) {
             }
             printf("binary is: %s\n", binary);
             strcat(res, binary);
+            length += len;
+            res[length + 1] = '\0';
         }   
         printf("current res: %s\n", res);
         l = l->foll;
