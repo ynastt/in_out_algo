@@ -6,6 +6,7 @@
 void generate_test_number(unsigned long long len){
     char* number = (char*)malloc((len + 1) * sizeof(char));
     FILE* f = fopen("tests/test.txt", "w");
+    srand(time(NULL));
     for (unsigned long long i = 0; i < len; i++) {
         fprintf(f, "%d", rand()%10);
     }
