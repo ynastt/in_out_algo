@@ -444,18 +444,82 @@ char* large_addition(char* num1, char* num2) {
     return res;
 }
 
-unsigned long long my_pow(unsigned long base, unsigned long long deg) {
-    unsigned long long res = 1;
-    for (unsigned long i = 0; i < deg; i++) {
-        res *= base;
+char* large_mul_digit(int d, char* num) {
+    unsigned long long i, len = strlen(num);
+    printf("num: %s\n", num);
+    printf("d: %d\n", d);
+    printf("len: %lld\n", len);
+    long digit, dec, res, carry = 0;
+    int dd;
+    char* result = (char*)calloc((len + 2), sizeof(char));
+    for (i = 0; i < len + 2; i++) {
+        result[i] = '0';
     }
+    printf("cur res: %s, %ld\n", result, strlen(result));
+    for (i = len + 1; i > 1; i--) {
+        printf("\ti: %lld\n", i);
+        dd = num[i - 2] - '0';
+        printf("\tdd: %d\n", dd);
+        dd = d * dd;
+        printf("\tdd x d: %d\n", dd);
+        dec = dd / 10;
+        res = dd%10 + carry;
+        printf("\tdec %ld, res: %ld\n", dec, res);
+        if (res > 9) {
+            dec += res / 10;
+            result[i] = (res%10) + '0';
+        } else {
+            result[i] = res + '0';
+        }
+        printf("\tdec %ld, res: %ld\n", dec, res);
+        printf("\tcur res: %s\n", result);
+        if (dec > 0) {
+            carry = dec;
+        } else {
+            carry = 0;
+        }
+        printf("\tcarry %ld, ost: %d\n", dec, dd%10);
+    }
+    printf("\ni: %lld\n", i);
+    printf("\tcarry %ld\n", dec);
+    if (i == 1 && carry > 0) {
+        result[i] = (result[i] - '0') + carry + '0';
+        carry = 0;
+    }
+    printf("cur res: %s\n", result);
+    while (result[0] == '0') {
+        result++;
+    }
+    result[len + 2] = '\0';
+    return result;
+}
+
+char* my_pow(int base, unsigned long long deg) {
+    char* res = (char*)malloc((deg + 1)* sizeof(char));
+    unsigned long long i;
+    int dec, carry = 0, r;
+    int d = 0;
+    res[0] = '1';
+    if (deg != 0) {
+        for (int count = 1; count <= deg; count++) {
+            
+            printf("\n\tcount is: %d\n", count);
+            printf("====current res: %s======\n", res);
+            res[deg + 1] = '\0';
+            res = large_mul_digit(base, res);
+        }
+    }
+    while (res[0] == '0') {
+        res++;
+    }
+    res[deg + 1] = '\0';
     return res;
 }
 
 int main() {
     clock_t t;
     t = clock();
-    FILE * f = fopen("../tests/test4.txt", "rt");
+    FILE * f = fopen("../tests/test5.txt", "rt");
     char *code;
     char *res;
     char *code1;
@@ -594,21 +658,34 @@ int main() {
     size_t size = strlen(code1);
     printf("size: %ld\n", size);
     int deg = 0, d = 0;
-    unsigned long cur;
+
+    // //test
+    // char* num = (char*)malloc((15 + 1) * sizeof(char));
+    // num = large_mul_digit(2, "581474976710656");
+    // printf("\tnum: %s\n", num);
+
+    // printf("\n\npow(8, deg)\n");
+    // char* rr = my_pow(8, 16);
+    // printf("\tpow(8, 16): %s\n", rr);
+    // // end test 
+
+    // unsigned long cur;
     char* dec = (char*) malloc((size + 1) * sizeof(char));
     for (int i = size - 1; i >= 0; i--) {
         d = code1[i] - '0';
         printf("\td: %d\n", d);
-        printf("\tpow(8, deg): %lld\n", my_pow(8, deg));
-        cur = d * my_pow(8, deg);
-        printf("\tcur: %ld, deg = %d\n", cur, deg);
-        char* num = (char*)malloc(size * sizeof(char));
-        sprintf(num, "%ld", cur);
+        printf("\tpow(8, deg): %s\n", my_pow(8, deg));
+        // cur = d * pow(8, deg);
+        // printf("\tcur: %ld, deg = %d\n", cur, deg);
+        // char* num = (char*)malloc((size + 1) * sizeof(char));
+        // // sprintf(num, "%ld", cur);
+        char* num = large_mul_digit(d, my_pow(8, deg));
+        // num[strlen(num) + 1] = '\0';
         printf("\tnum: %s\n", num);
         ++deg;
         dec = large_addition(dec, num); 
         printf("\t\tcurrent res: %s\n", dec);
-        free(num);
+        // free(num);
     }
     dec[strlen(dec) + 1] = '\0';
     printf("decimal: %s\n", dec);
