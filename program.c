@@ -9,8 +9,8 @@ void generate_test_number(unsigned long long len){
     for (unsigned long long i = 0; i < len; i++) {
         fprintf(f, "%d", rand()%10);
     }
-    fprintf(f,"\n");
     fclose(f);
+    printf("tests/test.txt is created!\n");
 }
 
 
@@ -20,8 +20,12 @@ int main(int argc, char *argv[]) {
     if( argc == 3 ) {
         printf("Number of iterations: %s\n", argv[1]);
         printf("Length of generated test numbers: %s\n", argv[2]);
-        generate_test_number(atoi(argv[2]));
-
+        int iters = atoi(argv[1]);
+        for (int j = 1; j <= iters; j++) {
+            printf("===iteration %d===\n", j);
+            generate_test_number(atoi(argv[2]));
+            // call general and new algorithm and write results somewhere
+        }
     }
     else if( argc > 3 ) {
         printf("Too many arguments.\n");
