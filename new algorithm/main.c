@@ -138,6 +138,7 @@ char* convert_from_octal_to_binary(char* code, char* map[]) {
         strcat(res, map[c]);
         // printf("cur res: %s\n", res);
     }
+    res[len * 3 + 1] = '\0';
     return res;
 }
 
