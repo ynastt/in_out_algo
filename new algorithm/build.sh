@@ -1,2 +1,2 @@
 gcc -o main main.c -lm
-./main
+./main > log.txt

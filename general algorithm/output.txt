@@ -9,7 +9,7 @@ binary: 111001011111011000100000010000100101001001011000010000000101
 
 2^64:
 241132036623215621
-in algorithm took 0.0002800 seconds to execute 
+in algorithm took 0.0002050 seconds to execute 
 
 ===OUT===
 2^64:
@@ -22,5 +22,4 @@ in algorithm took 0.0002800 seconds to execute
 binary: 111001011111011000100000010000100101001001011000010000000101
 octal: 71373040204511302005
 decimal: 1035654209261110277
-out algorithm took 0.0013620 seconds to execute 
-
+out algorithm took 0.0013480 seconds to execute 

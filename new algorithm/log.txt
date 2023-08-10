@@ -1,0 +1,153 @@
+==== IN ALGORITHM ====
+size of file: 20
+
+decimal number: 36292838737373543621
+octal number: 134240642544713440625
+binary: 001011100010100000110100010101100100111001011100100000110010101
+2^32:
+387193387
+657342869
+
+2^64:
+387193387657342869
+in algorithm took 0.000451 seconds to execute 
+
+==== OUT ALGORITHM ====
+digit is: 657342869
+digit: 328671434, ost: 1
+digit: 164335717, ost: 0
+digit: 82167858, ost: 1
+digit: 41083929, ost: 0
+digit: 20541964, ost: 1
+digit: 10270982, ost: 0
+digit: 5135491, ost: 0
+digit: 2567745, ost: 1
+digit: 1283872, ost: 1
+digit: 641936, ost: 0
+digit: 320968, ost: 0
+digit: 160484, ost: 0
+digit: 80242, ost: 0
+digit: 40121, ost: 0
+digit: 20060, ost: 1
+digit: 10030, ost: 0
+digit: 5015, ost: 0
+digit: 2507, ost: 1
+digit: 1253, ost: 1
+digit: 626, ost: 1
+digit: 313, ost: 0
+digit: 156, ost: 1
+digit: 78, ost: 0
+digit: 39, ost: 0
+digit: 19, ost: 1
+digit: 9, ost: 1
+digit: 4, ost: 1
+digit: 2, ost: 0
+digit: 1, ost: 0
+digit: 0, ost: 1
+b: 101010011000001001110100111001
+current binary is: 100111001011100100000110010101
+binary is: 00100111001011100100000110010101
+current res: 10101001100000100111010011100100
+digit is: 387193387
+digit: 193596693, ost: 1
+digit: 96798346, ost: 1
+digit: 48399173, ost: 0
+digit: 24199586, ost: 1
+digit: 12099793, ost: 0
+digit: 6049896, ost: 1
+digit: 3024948, ost: 0
+digit: 1512474, ost: 0
+digit: 756237, ost: 0
+digit: 378118, ost: 1
+digit: 189059, ost: 0
+digit: 94529, ost: 1
+digit: 47264, ost: 1
+digit: 23632, ost: 0
+digit: 11816, ost: 0
+digit: 5908, ost: 0
+digit: 2954, ost: 0
+digit: 1477, ost: 0
+digit: 738, ost: 1
+digit: 369, ost: 0
+digit: 184, ost: 1
+digit: 92, ost: 0
+digit: 46, ost: 0
+digit: 23, ost: 0
+digit: 11, ost: 1
+digit: 5, ost: 1
+digit: 2, ost: 1
+digit: 1, ost: 0
+digit: 0, ost: 1
+b: 11010100010110000010100011101
+current binary is: 10111000101000001101000101011
+binary is: 10111000101000001101000101011
+current res: 1010100110000010011101001110010011010100010110000010100011101
+binary: 001011100010100000110100010101100100111001011100100000110010101
+binary: 001011100010100000110100010101100100111001011100100000110010101
+i: 63
+101 - 5
+cur res: 5
+i: 60
+010 - 2
+cur res: 52
+i: 57
+110 - 6
+cur res: 526
+i: 54
+000 - 0
+cur res: 5260
+i: 51
+100 - 4
+cur res: 52604
+i: 48
+100 - 4
+cur res: 526044
+i: 45
+011 - 3
+cur res: 5260443
+i: 42
+001 - 1
+cur res: 52604431
+i: 39
+111 - 7
+cur res: 526044317
+i: 36
+100 - 4
+cur res: 5260443174
+i: 33
+100 - 4
+cur res: 52604431744
+i: 30
+101 - 5
+cur res: 526044317445
+i: 27
+010 - 2
+cur res: 5260443174452
+i: 24
+100 - 4
+cur res: 52604431744524
+i: 21
+110 - 6
+cur res: 526044317445246
+i: 18
+000 - 0
+cur res: 5260443174452460
+i: 15
+100 - 4
+cur res: 52604431744524604
+i: 12
+010 - 2
+cur res: 526044317445246042
+i: 9
+100 - 4
+cur res: 5260443174452460424
+i: 6
+011 - 3
+cur res: 52604431744524604243
+i: 3
+001 - 1
+cur res: 526044317445246042431
+octal: 134240642544713440625
+decimal: 1662982935049814421
+
+out algorithm took 0.000043 seconds to execute 

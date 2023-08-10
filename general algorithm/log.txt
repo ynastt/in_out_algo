@@ -1011,7 +1011,7 @@ binary: 111001011111011000100000010000100101001001011000010000000101
 
 2^64:
 241132036623215621
-in algorithm took 0.000280 seconds to execute 
+in algorithm took 0.000205 seconds to execute 
 
 ==== OUT ALGORITHM ====
 digit is: 623215621
@@ -22543,4 +22543,4 @@ SECOND 1008806316530991104
 		current res: 1035654209261110277
 decimal: 1035654209261110277
 
-out algorithm took 0.001362 seconds to execute 
+out algorithm took 0.001348 seconds to execute 

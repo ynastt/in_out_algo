@@ -703,6 +703,6 @@ int main() {
     free(code1);
     free(res);
     free(result);
-    // free(dec);
+    free(dec);
     return 0;
 }
