@@ -139,7 +139,7 @@ int main(int argc, char *argv[]) {
                 fputs(res2, o);
                 return(-1);
             } else {
-                printf("everything is ok, continue");
+                fputs("everything is ok, continue", o);
                 // find time taken and summarize;
             }
         }
