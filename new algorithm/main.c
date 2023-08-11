@@ -333,7 +333,7 @@ char* my_decimal_sub(char* code1, char* code2, long n) {
 int main() {
     clock_t t;
     t = clock();
-    FILE * f = fopen("../tests/test4.txt", "rt");
+    FILE * f = fopen("../tests/test.txt", "rt");
     char *code;
     char *code1;
     size_t n = 0, m = 1;
