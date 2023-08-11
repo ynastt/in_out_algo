@@ -43,21 +43,21 @@ char* my_reverse(char* code) {
 }
 
 char* mul_x_2(char* code, long n) {
-    // printf("\nMULX2: code %s\n", code );
+    printf("\nMULX2: code %s\n", code );
     char c;
+    int i;
     char* code1;
     code1 = malloc(n + 1);
     long digit, dec, res;
     long carry = 0;
     code1[0] = '0';
-    for (int i = n - 1; i >= 0; i--) {
+    for (i = n - 1; i >= 0; i--) {
         c = code[i];
-        // printf("\tchar: %c\n", c);
         char *pChar = &c;
         digit = (long)atoi(pChar); 
-        // printf("\tdigit %ld\n", digit);
+        printf("\tdigit %ld\n", digit);
         digit = digit * 2;
-        // printf("\tdigitx2 %ld\n", digit);
+        printf("\tdigitx2 %ld\n", digit);
         dec = digit / 10;
         res = digit%10 + carry;
         if (res > 9) {
@@ -66,16 +66,20 @@ char* mul_x_2(char* code, long n) {
         } else {
             code1[i + 1] = res + '0';
         }
-        // printf("\tdigit code %c\n", code1[i]);
+        printf("\tdigit code %c\n", code1[i]);
         if (dec > 0) {
             carry = dec;
         } else {
             carry = 0;
         }
-        // printf("\tcarry %ld, ost: %ld\n", dec, digit%10);
+        printf("\tcarry %ld, ost: %ld\n", dec, digit%10);
+    }
+    if (i == -1 && carry > 0) {
+        printf("PLUS CARRY\n");
+        code1[0] = (long)(code1[0] - '0') + carry + '0';
     }
     code1[n+1] = '\0';
-    // printf("\tcode %s\n", code1);
+    printf("\tcode %s\n", code1);
     return code1;
 }
 
@@ -84,22 +88,22 @@ char* my_octal_add(char* code1, char* code2, long n) {
     char c1, c2;
     int digit, digit1, digit2, sd, dec, res, carry = 0;
     code = malloc(n);
-    // printf("\nOCTAL ADD: first: %s\n", code1);
-    // printf("OCTAL ADD: second: %s\n", code2);
+    printf("\nOCTAL ADD: first: %s\n", code1);
+    printf("OCTAL ADD: second: %s\n", code2);
     c1 = code1[0];
-    // printf("OCTAL ADD: first char from start: %c\n", c1);
+    printf("OCTAL ADD: first char from start: %c\n", c1);
     sd = c1-'0';
-    // printf("\tfirst digit from start: %d\n", sd);  
+    printf("\tfirst digit from start: %d\n", sd);  
     code[0] = sd + '0';
     for (int i = n - 1; i > 0; i--) {
         c1 = code1[i];
-        // printf("OCTAL ADD: first char: %c\n", c1);
+        printf("OCTAL ADD: first char: %c\n", c1);
         c2 = code2[i - 1];
-        // printf("OCTAL ADD: second char: %c\n", c2);
+        printf("OCTAL ADD: second char: %c\n", c2);
         digit1 = c1-'0'; 
         digit2 = c2-'0'; 
-        // printf("\tfirst digit: %d\n", digit1);
-        // printf("\tsecond digit: %d\n", digit2);
+        printf("\tfirst digit: %d\n", digit1);
+        printf("\tsecond digit: %d\n", digit2);
         digit = digit1 + digit2;
         dec = digit / 8;
         res = digit%8 + carry;
@@ -109,19 +113,19 @@ char* my_octal_add(char* code1, char* code2, long n) {
         } else {
             code[i] = res + '0';
         }
-        // printf("\tdigit code %c\n", code[i]);
+        printf("\tdigit code %c\n", code[i]);
         if (dec > 0) {
             carry = dec;
         } else {
             carry = 0;
         }
-        // printf("\tcarry %d, ost: %d\n", dec, digit%8);
+        printf("\tcarry %d, ost: %d\n", dec, digit%8);
         if (dec > 0 && i == 1) {
             code[0] = sd + carry + '0';
         }
     } 
     code[n] = '\0';
-    // printf("\tcode %s\n", code);
+    printf("\tcode %s\n", code);
     return code;
 }
 
@@ -491,7 +495,7 @@ int main() {
     }
     code1 = my_reverse(code1);
     printf("binary: %s\n", code1);
-    printf("binary: %s\n", code1);
+    fputs("\nbinary: ", o);
     fputs(code1, o);
     code1 = convert_from_binary_to_octal(code1, map);
     printf("octal: %s\n", code1);

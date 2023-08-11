@@ -168,8 +168,7 @@ char* convert_from_decimal_to_octal(char* code, long n) {
             printf("last digit: %d\n", d);
             if (d < 8) {
                 result[j++] = d +'0';   
-            }
-            if (d == 8) {
+            } else {
                 quot = d / 8;
                 rem = d % 8;
                 printf("quot and rem: %ld, %ld\n", quot, rem);
