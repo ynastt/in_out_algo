@@ -37,14 +37,17 @@ int main(int argc, char *argv[]) {
             // printf("GENERAL ALGORITHM\n");
             system("sh build.sh");
             // read the output.txt & find result number for future comparison;
-            regex_t rx;
-            int d1;
+            regex_t rx, rxt;
+            int d1, d2;
             d1 = regcomp(&rx, "octal: ", 0);
+            d2 = regcomp(&rxt, "in algorithm took [0-9]\\.[0-9]* seconds to execute", 0);
             FILE *f; 
             char str[1000];
             char *estr;
             char* res1 = (char*)malloc((iters + 1)* sizeof(char));
+            char* time1 = (char*)malloc((iters + 46)* sizeof(char));
             char* res2 = (char*)malloc((iters + 1)* sizeof(char));
+            char* time2 = (char*)malloc((iters + 46)* sizeof(char));
             f = fopen("output.txt", "rt");
             if (f == NULL) {
                 perror("Error: Opening output gen algorithm");
@@ -61,12 +64,19 @@ int main(int argc, char *argv[]) {
                         break;
                     }
                 }
-                // printf("  %s", str);
+                printf("  %s", str);
                 d1 = regexec(&rx, str, 0, NULL, 0);
+                d2 = regexec(&rxt, str, 0, NULL, 0);
                 if (d1 == 0) {
                     // printf("Pattern matched\n");
                     strncpy(res1, str + 7, strlen(str));
                     // printf("%s\n", res1);
+                    // break;
+                }
+                if (d2 == 0) {
+                    printf("Pattern matched\n");
+                    strncpy(time1, str + 18, 10);
+                    printf("%s\n", time1);
                     break;
                 }
                 // else if (d1 == REG_NOMATCH) {
@@ -105,10 +115,17 @@ int main(int argc, char *argv[]) {
                 }
                 // printf("  %s", str);
                 d1 = regexec(&rx, str, 0, NULL, 0);
+                d2 = regexec(&rxt, str, 0, NULL, 0);
                 if (d1 == 0) {
                     // printf("Pattern matched\n");
                     strncpy(res2, str + 7, strlen(str));
-                    // printf("%s\n", res2);
+                    // printf("%s\n", res1);
+                    // break;
+                }
+                if (d2 == 0) {
+                    printf("Pattern matched\n");
+                    strncpy(time2, str + 18, 10);
+                    printf("%s\n", time2);
                     break;
                 }
                 // else if (d1 == REG_NOMATCH) {
@@ -139,9 +156,15 @@ int main(int argc, char *argv[]) {
                 fputs(res2, o);
                 return(-1);
             } else {
-                fputs("everything is ok, continue", o);
-                // find time taken and summarize;
+                fputs("\neverything is ok, continue", o);
+                // find time taken and write;
+                fputs("\n\ngeneral algorithm time: ", o);
+                fputs(time1, o);
+                fputs("\nnew algorithm time: ", o);
+                fputs(time2, o);
+                // sum ??
             }
+
         }
     }
     else if( argc > 3 ) {
