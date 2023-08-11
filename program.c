@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
 
 void generate_test_number(unsigned long long len){
     char* number = (char*)malloc((len + 1) * sizeof(char));
@@ -26,6 +27,12 @@ int main(int argc, char *argv[]) {
             printf("===iteration %d===\n", j);
             generate_test_number(atoi(argv[2]));
             // call general and new algorithm and write results somewhere
+            
+            if (chdir("general algorithm") != 0) {
+                perror("chdir() to /general algorithm failed");
+            }
+            
+            system("sh build.sh");
         }
     }
     else if( argc > 3 ) {
