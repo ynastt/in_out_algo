@@ -16,12 +16,16 @@ void generate_test_number(unsigned long long len){
     printf("tests/test.txt is created!\n");
 }
 
+// how to run the program:
 // gcc program.c
 // ./a.out num1 num2
 int main(int argc, char *argv[]) {
     if( argc == 3 ) {
+        FILE* o = fopen("result.txt", "w");
         printf("Number of iterations: %s\n", argv[1]);
         printf("Length of generated test numbers: %s\n", argv[2]);
+        fputs("Length of test numbers: ", o);
+        fputs(argv[2], o);
         int iters = atoi(argv[1]);
         for (int j = 1; j <= iters; j++) {
             printf("===iteration %d===\n", j);
@@ -75,6 +79,7 @@ int main(int argc, char *argv[]) {
             if (chdir("..") != 0) {
                 perror("chdir() to .. failed");
             }
+
             // call new algorithm  & write results in "general algorithm/output.txt"
             if (chdir("new algorithm") != 0) {
                 perror("chdir() to /new algorithm failed");
@@ -118,17 +123,20 @@ int main(int argc, char *argv[]) {
             }
             int verdict = strcmp(res1, res2);
             if (verdict != 0) {
-                printf("ERROR: RESULTS ARE DIFFERENT");
-                printf("\n\nTEST DATA:\n");
+                fputs("\n\nERROR: RESULTS ARE DIFFERENT", o);
+                fputs("\n\nTEST:\n", o);
                 FILE* t = fopen("tests/test.txt", "r");
                 if (t == NULL) {
                     perror("Error: Opening test");
                     return(-1);
                 }
                 estr = fgets(str, sizeof(str), f);
-                printf("number: %s\n", str);
-                printf("general algorithm result: %s", res1);
-                printf("new algorithm result %s\n", res2);
+                fputs("number: ", o);
+                fputs(str, o);
+                fputs("\ngeneral algorithm result: ", o);
+                fputs(res1, o);
+                fputs("new algorithm result: ", o);
+                fputs(res2, o);
                 return(-1);
             } else {
                 printf("everything is ok, continue");

@@ -1,0 +1,8 @@
+Length of test numbers: 4
+
+ERROR: RESULTS ARE DIFFERENT
+
+TEST:
+number: 7725
+general algorithm result: 17055
+new algorithm result: 12125
