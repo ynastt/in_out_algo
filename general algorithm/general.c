@@ -519,7 +519,7 @@ char* my_pow(int base, unsigned long long deg) {
 int main() {
     clock_t t;
     t = clock();
-    FILE * f = fopen("../tests/test5.txt", "rt");
+    FILE * f = fopen("../tests/test.txt", "rt");
     char *code;
     char *res;
     char *code1;
