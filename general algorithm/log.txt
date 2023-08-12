@@ -1,154 +1,129 @@
 ==== IN ALGORITHM ====
 size of file: 4
 
-first two digits: 77
-first 2 digits: 77
-quot and rem: 9, 5
+first two digits: 20
+first 2 digits: 20
+quot and rem: 2, 4
 here11
 here22
 i: 1
 next digit: 2
-check quot and rem: 9, 5
- next 2 digits: 52
- quot and rem: 6, 4
+check quot and rem: 2, 4
+ next 2 digits: 42
+ quot and rem: 5, 2
 i: 3
-next digit: 5
-check quot and rem: 6, 4
- next 2 digits: 45
- quot and rem: 5, 5
-current res: 5
+next digit: 3
+check quot and rem: 5, 2
+ next 2 digits: 23
+ quot and rem: 2, 7
+current res: 7
 
 k: 3
----current number: 965---
+---current number: 252---
 old len: 4
 len: 3
-first 1 digit: 9
-quot and rem: 1, 1
+
+first 2 digits: 25
+quot and rem: 3, 1
 here11
 here22
 i: 1
-next digit: 6
-check quot and rem: 1, 1
- next 2 digits: 16
- quot and rem: 2, 0
-i: 2
-next digit: 5
-check quot and rem: 2, 0
- next 1 digit: 5
- quot and rem: 0, 5
-current res: 55
-
-k: 3
----current number: 120---
-old len: 3
-len: 3
-
-first 2 digits: 12
-quot and rem: 1, 4
-here11
-here22
-i: 1
-next digit: 0
-check quot and rem: 1, 4
- next 2 digits: 40
- quot and rem: 5, 0
-current res: 550
+next digit: 2
+check quot and rem: 3, 1
+ next 2 digits: 12
+ quot and rem: 1, 4
+current res: 74
 
 k: 2
----current number: 15---
+---current number: 31---
 old len: 3
 len: 2
 
-first 2 digits: 15
-quot and rem: 1, 7
+first 2 digits: 31
+quot and rem: 3, 7
 here11
 here22
 i: 1
 here
-current res: 5507
+current res: 747
 
 k: 1
----current number: 1---
+---current number: 3---
 old len: 2
 len: 1
-last digit: 1
-current res: 55071
+last digit: 3
+current res: 7473
 
-res: 55071
+res: 7473
 
 
-decimal number: 7725
-octal number: 17055
-0 - 1
-oct: 1; bin: 001
-cur res: 001
+decimal number: 2023
+octal number: 3747
+0 - 3
+oct: 3; bin: 011
+cur res: 011
 1 - 7
 oct: 7; bin: 111
-cur res: 001111
-2 - 0
-oct: 0; bin: 000
-cur res: 001111000
-3 - 5
-oct: 5; bin: 101
-cur res: 001111000101
-4 - 5
-oct: 5; bin: 101
-cur res: 001111000101101
-binary: 001111000101101
+cur res: 011111
+2 - 4
+oct: 4; bin: 100
+cur res: 011111100
+3 - 7
+oct: 7; bin: 111
+cur res: 011111100111
+binary: 011111100111
 2^32:
 0
-7725
+2023
 
 2^64:
-07725
-in algorithm took 0.000257 seconds to execute 
+02023
+in algorithm took 0.000147 seconds to execute 
 
 ==== OUT ALGORITHM ====
-digit is: 7725
-digit: 3862, ost: 1
-digit: 1931, ost: 0
-digit: 965, ost: 1
-digit: 482, ost: 1
-digit: 241, ost: 0
-digit: 120, ost: 1
-digit: 60, ost: 0
-digit: 30, ost: 0
-digit: 15, ost: 0
+digit is: 2023
+digit: 1011, ost: 1
+digit: 505, ost: 1
+digit: 252, ost: 1
+digit: 126, ost: 0
+digit: 63, ost: 0
+digit: 31, ost: 1
+digit: 15, ost: 1
 digit: 7, ost: 1
 digit: 3, ost: 1
 digit: 1, ost: 1
 digit: 0, ost: 1
-b: 1011010001111
-current binary is: 1111000101101
-binary is: 1111000101101
-current res: 1011010001111
+b: 11100111111
+current binary is: 11111100111
+binary is: 11111100111
+current res: 11100111111
 digit is: 0
-current res: 10110100011110
-binary: 001111000101101
-octal: 17055
-size: 5
-	d: 5
+current res: 111001111110
+binary: 011111100111
+octal: 3747
+size: 4
+	d: 7
 	pow(8, deg): 1
 num: 1
-d: 5
+d: 7
 len: 1
 cur res: 000, 3
 	i: 2
 	dd: 1
-	dd x d: 5
-	dec 0, res: 5
-	dec 0, res: 5
-	cur res: 005
-	carry 0, ost: 5
+	dd x d: 7
+	dec 0, res: 7
+	dec 0, res: 7
+	cur res: 007
+	carry 0, ost: 7
 
 i: 1
 	carry 0
-cur res: 005
-	num: 5
+cur res: 007
+	num: 7
 FIRST: 
-SECOND 5
-		current res: 5
-	d: 5
+SECOND 7
+		current res: 7
+	d: 4
 
 	count is: 1
 ====current res: 1======
@@ -187,25 +162,25 @@ i: 1
 	carry 0
 cur res: 008
 num: 8
-d: 5
+d: 4
 len: 1
 cur res: 000, 3
 	i: 2
 	dd: 8
-	dd x d: 40
-	dec 4, res: 0
-	dec 4, res: 0
-	cur res: 000
-	carry 4, ost: 0
+	dd x d: 32
+	dec 3, res: 2
+	dec 3, res: 2
+	cur res: 002
+	carry 3, ost: 2
 
 i: 1
-	carry 4
-cur res: 040
-	num: 40
-FIRST: 5
-SECOND 40
-		current res: 45
-	d: 0
+	carry 3
+cur res: 032
+	num: 32
+FIRST: 7
+SECOND 32
+		current res: 39
+	d: 7
 
 	count is: 1
 ====current res: 1======
@@ -280,32 +255,32 @@ i: 1
 	carry 6
 cur res: 064
 num: 64
-d: 0
+d: 7
 len: 2
 cur res: 0000, 4
 	i: 3
 	dd: 4
-	dd x d: 0
-	dec 0, res: 0
-	dec 0, res: 0
-	cur res: 0000
-	carry 0, ost: 0
+	dd x d: 28
+	dec 2, res: 8
+	dec 2, res: 8
+	cur res: 0008
+	carry 2, ost: 8
 	i: 2
 	dd: 6
-	dd x d: 0
-	dec 0, res: 0
-	dec 0, res: 0
-	cur res: 0000
-	carry 0, ost: 0
+	dd x d: 42
+	dec 4, res: 4
+	dec 4, res: 4
+	cur res: 0048
+	carry 4, ost: 2
 
 i: 1
-	carry 0
-cur res: 0000
-	num: 
-FIRST: 45
-SECOND 
-		current res: 45
-	d: 7
+	carry 4
+cur res: 0448
+	num: 448
+FIRST: 39
+SECOND 448
+		current res: 487
+	d: 3
 
 	count is: 1
 ====current res: 1======
@@ -430,266 +405,38 @@ i: 1
 	carry 5
 cur res: 0512
 num: 512
-d: 7
+d: 3
 len: 3
 cur res: 00000, 5
 	i: 4
 	dd: 2
-	dd x d: 14
-	dec 1, res: 4
-	dec 1, res: 4
-	cur res: 00004
-	carry 1, ost: 4
-	i: 3
-	dd: 1
-	dd x d: 7
-	dec 0, res: 8
-	dec 0, res: 8
-	cur res: 00084
-	carry 0, ost: 7
-	i: 2
-	dd: 5
-	dd x d: 35
-	dec 3, res: 5
-	dec 3, res: 5
-	cur res: 00584
-	carry 3, ost: 5
-
-i: 1
-	carry 3
-cur res: 03584
-	num: 3584
-FIRST: 45
-SECOND 3584
-		current res: 3629
-	d: 1
-
-	count is: 1
-====current res: 1======
-num: 1
-d: 8
-len: 1
-cur res: 000, 3
-	i: 2
-	dd: 1
-	dd x d: 8
-	dec 0, res: 8
-	dec 0, res: 8
-	cur res: 008
-	carry 0, ost: 8
-
-i: 1
-	carry 0
-cur res: 008
-
-	count is: 2
-====current res: 8======
-num: 8
-d: 8
-len: 1
-cur res: 000, 3
-	i: 2
-	dd: 8
-	dd x d: 64
-	dec 6, res: 4
-	dec 6, res: 4
-	cur res: 004
-	carry 6, ost: 4
-
-i: 1
-	carry 6
-cur res: 064
-
-	count is: 3
-====current res: 64======
-num: 64
-d: 8
-len: 2
-cur res: 0000, 4
-	i: 3
-	dd: 4
-	dd x d: 32
-	dec 3, res: 2
-	dec 3, res: 2
-	cur res: 0002
-	carry 3, ost: 2
-	i: 2
-	dd: 6
-	dd x d: 48
-	dec 4, res: 11
-	dec 5, res: 11
-	cur res: 0012
-	carry 5, ost: 8
-
-i: 1
-	carry 5
-cur res: 0512
-
-	count is: 4
-====current res: 512======
-num: 512
-d: 8
-len: 3
-cur res: 00000, 5
-	i: 4
-	dd: 2
-	dd x d: 16
-	dec 1, res: 6
-	dec 1, res: 6
-	cur res: 00006
-	carry 1, ost: 6
-	i: 3
-	dd: 1
-	dd x d: 8
-	dec 0, res: 9
-	dec 0, res: 9
-	cur res: 00096
-	carry 0, ost: 8
-	i: 2
-	dd: 5
-	dd x d: 40
-	dec 4, res: 0
-	dec 4, res: 0
-	cur res: 00096
-	carry 4, ost: 0
-
-i: 1
-	carry 4
-cur res: 04096
-	pow(8, deg): 4096
-
-	count is: 1
-====current res: 1======
-num: 1
-d: 8
-len: 1
-cur res: 000, 3
-	i: 2
-	dd: 1
-	dd x d: 8
-	dec 0, res: 8
-	dec 0, res: 8
-	cur res: 008
-	carry 0, ost: 8
-
-i: 1
-	carry 0
-cur res: 008
-
-	count is: 2
-====current res: 8======
-num: 8
-d: 8
-len: 1
-cur res: 000, 3
-	i: 2
-	dd: 8
-	dd x d: 64
-	dec 6, res: 4
-	dec 6, res: 4
-	cur res: 004
-	carry 6, ost: 4
-
-i: 1
-	carry 6
-cur res: 064
-
-	count is: 3
-====current res: 64======
-num: 64
-d: 8
-len: 2
-cur res: 0000, 4
-	i: 3
-	dd: 4
-	dd x d: 32
-	dec 3, res: 2
-	dec 3, res: 2
-	cur res: 0002
-	carry 3, ost: 2
-	i: 2
-	dd: 6
-	dd x d: 48
-	dec 4, res: 11
-	dec 5, res: 11
-	cur res: 0012
-	carry 5, ost: 8
-
-i: 1
-	carry 5
-cur res: 0512
-
-	count is: 4
-====current res: 512======
-num: 512
-d: 8
-len: 3
-cur res: 00000, 5
-	i: 4
-	dd: 2
-	dd x d: 16
-	dec 1, res: 6
-	dec 1, res: 6
-	cur res: 00006
-	carry 1, ost: 6
-	i: 3
-	dd: 1
-	dd x d: 8
-	dec 0, res: 9
-	dec 0, res: 9
-	cur res: 00096
-	carry 0, ost: 8
-	i: 2
-	dd: 5
-	dd x d: 40
-	dec 4, res: 0
-	dec 4, res: 0
-	cur res: 00096
-	carry 4, ost: 0
-
-i: 1
-	carry 4
-cur res: 04096
-num: 4096
-d: 1
-len: 4
-cur res: 000000, 6
-	i: 5
-	dd: 6
 	dd x d: 6
 	dec 0, res: 6
 	dec 0, res: 6
-	cur res: 000006
+	cur res: 00006
 	carry 0, ost: 6
-	i: 4
-	dd: 9
-	dd x d: 9
-	dec 0, res: 9
-	dec 0, res: 9
-	cur res: 000096
-	carry 0, ost: 9
 	i: 3
-	dd: 0
-	dd x d: 0
-	dec 0, res: 0
-	dec 0, res: 0
-	cur res: 000096
-	carry 0, ost: 0
+	dd: 1
+	dd x d: 3
+	dec 0, res: 3
+	dec 0, res: 3
+	cur res: 00036
+	carry 0, ost: 3
 	i: 2
-	dd: 4
-	dd x d: 4
-	dec 0, res: 4
-	dec 0, res: 4
-	cur res: 004096
-	carry 0, ost: 4
+	dd: 5
+	dd x d: 15
+	dec 1, res: 5
+	dec 1, res: 5
+	cur res: 00536
+	carry 1, ost: 5
 
 i: 1
-	carry 0
-cur res: 004096
-	num: 4096
-FIRST: 3629
-SECOND 4096
-		current res: 7725
-decimal: 7725
+	carry 1
+cur res: 01536
+	num: 1536
+FIRST: 487
+SECOND 1536
+		current res: 2023
+decimal: 2023
 
-out algorithm took 0.000161 seconds to execute 
+out algorithm took 0.000040 seconds to execute 

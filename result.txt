@@ -1,8 +1,13 @@
-Length of test numbers: 4
+Number of iterations: 1
+Length of test numbers: 3
 
-ERROR: RESULTS ARE DIFFERENT
+===iteration 1===
+SUCCESS: RESULTS ARE OK
 
-TEST:
-number: 7725
-general algorithm result: 17055
-new algorithm result: 12125
+general algorithm time: 0.0001470 
+new algorithm time: 0.0001050 
+
+
+AVERAGE EXECUTION TIME:
+new algorithm: 0.000147
+general algorithm: 0.000105

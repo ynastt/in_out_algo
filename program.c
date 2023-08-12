@@ -22,13 +22,17 @@ void generate_test_number(unsigned long long len){
 int main(int argc, char *argv[]) {
     if( argc == 3 ) {
         FILE* o = fopen("result.txt", "w");
-        printf("Number of iterations: %s\n", argv[1]);
-        printf("Length of generated test numbers: %s\n", argv[2]);
-        fputs("Length of test numbers: ", o);
+        fputs("Number of iterations: ", o);
+        fputs(argv[1], o);
+        fputs("\nLength of test numbers: ", o);
         fputs(argv[2], o);
+        fputs("\n", o);
         int iters = atoi(argv[1]);
+        double sum1 = 0, sum2 = 0;
         for (int j = 1; j <= iters; j++) {
-            printf("===iteration %d===\n", j);
+            char line[30];
+            sprintf(line, "\n===iteration %d===", j);
+            fputs(line, o);
             generate_test_number(atoi(argv[2]));
             // call general algorithm & write results in "general algorithm/output.txt"
             if (chdir("general algorithm") != 0) {
@@ -46,6 +50,7 @@ int main(int argc, char *argv[]) {
             char *estr;
             char* res1 = (char*)malloc((iters + 1)* sizeof(char));
             char* time1 = (char*)malloc((iters + 46)* sizeof(char));
+            double t1 = 0, t2 = 0;
             char* res2 = (char*)malloc((iters + 1)* sizeof(char));
             char* time2 = (char*)malloc((iters + 46)* sizeof(char));
             f = fopen("output.txt", "rt");
@@ -64,7 +69,7 @@ int main(int argc, char *argv[]) {
                         break;
                     }
                 }
-                printf("  %s", str);
+                // printf("  %s", str);
                 d1 = regexec(&rx, str, 0, NULL, 0);
                 d2 = regexec(&rxt, str, 0, NULL, 0);
                 if (d1 == 0) {
@@ -74,9 +79,9 @@ int main(int argc, char *argv[]) {
                     // break;
                 }
                 if (d2 == 0) {
-                    printf("Pattern matched\n");
+                    // printf("Pattern matched\n");
                     strncpy(time1, str + 18, 10);
-                    printf("%s\n", time1);
+                    // printf("%s\n", time1);
                     break;
                 }
                 // else if (d1 == REG_NOMATCH) {
@@ -123,9 +128,9 @@ int main(int argc, char *argv[]) {
                     // break;
                 }
                 if (d2 == 0) {
-                    printf("Pattern matched\n");
+                    // printf("Pattern matched\n");
                     strncpy(time2, str + 18, 10);
-                    printf("%s\n", time2);
+                    // printf("%s\n", time2);
                     break;
                 }
                 // else if (d1 == REG_NOMATCH) {
@@ -140,7 +145,7 @@ int main(int argc, char *argv[]) {
             }
             int verdict = strcmp(res1, res2);
             if (verdict != 0) {
-                fputs("\n\nERROR: RESULTS ARE DIFFERENT", o);
+                fputs("\nERROR: RESULTS ARE DIFFERENT", o);
                 fputs("\n\nTEST:\n", o);
                 FILE* t = fopen("tests/test.txt", "r");
                 if (t == NULL) {
@@ -156,16 +161,28 @@ int main(int argc, char *argv[]) {
                 fputs(res2, o);
                 return(-1);
             } else {
-                fputs("\neverything is ok, continue", o);
-                // find time taken and write;
+                fputs("\nSUCCESS: RESULTS ARE OK", o);
+                // find execution time and write;
                 fputs("\n\ngeneral algorithm time: ", o);
                 fputs(time1, o);
+                t1 = strtod(time1, &time1);
                 fputs("\nnew algorithm time: ", o);
                 fputs(time2, o);
-                // sum ??
+                t2 = strtod(time2, &time2);
+                // sum
+                sum1 += t1;
+                sum2 += t2; 
             }
-
         }
+        // average execution time
+        fputs("\n\n\nAVERAGE EXECUTION TIME:\n", o);
+        fputs("new algorithm: ", o);
+        char average[100];
+        sprintf(average, "%f", sum1/iters);
+        fputs(average, o);
+        fputs("\ngeneral algorithm: ", o);
+        sprintf(average, "%f", sum2/iters);
+        fputs(average, o);
     }
     else if( argc > 3 ) {
         printf("Too many arguments.\n");
