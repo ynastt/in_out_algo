@@ -61,6 +61,47 @@ char* mul_x_2(char* code, long n) {
         dec = digit / 10;
         res = digit%10 + carry;
         if (res > 9) {
+            dec = res / 10;
+            code1[i + 1] = (res%10) + '0';
+        } else {
+            code1[i + 1] = res + '0';
+        }
+        printf("\tdigit code %c\n", code1[i]);
+        if (dec > 0) {
+            carry = dec;
+        } else {
+            carry = 0;
+        }
+        printf("\tcarry %ld, ost: %ld\n", dec, digit%10);
+    }
+    if (i == -1 && carry > 0) {
+        printf("PLUS CARRY\n");
+        code1[0] = (long)(code1[0] - '0') + carry + '0';
+    }
+    code1[n+1] = '\0';
+    printf("\tcode %s\n", code1);
+    return code1;
+}
+
+char* mul_x_2_octal(char* code, long n) {
+    printf("\nMULX2: code %s\n", code );
+    char c;
+    int i;
+    char* code1;
+    code1 = malloc(n + 1);
+    long digit, dec, res;
+    long carry = 0;
+    code1[0] = '0';
+    for (i = n - 1; i >= 0; i--) {
+        c = code[i];
+        char *pChar = &c;
+        digit = (long)atoi(pChar); 
+        printf("\tdigit %ld\n", digit);
+        digit = digit * 2;
+        printf("\tdigitx2 %ld\n", digit);
+        dec = digit / 8;
+        res = digit%8 + carry;
+        if (res > 9) {
             dec = res /8;
             code1[i + 1] = (res%10) + '0';
         } else {
@@ -90,12 +131,20 @@ char* my_octal_add(char* code1, char* code2, long n) {
     code = malloc(n);
     printf("\nOCTAL ADD: first: %s\n", code1);
     printf("OCTAL ADD: second: %s\n", code2);
+    unsigned long long i, len1 = strlen(code1), len2 = strlen(code2);
     c1 = code1[0];
     printf("OCTAL ADD: first char from start: %c\n", c1);
     sd = c1-'0';
     printf("\tfirst digit from start: %d\n", sd);  
+    printf("len1: %lld\n", len1);
+    printf("len2: %lld\n", len2);
     code[0] = sd + '0';
-    for (int i = n - 1; i > 0; i--) {
+    for (i = n - 1; i > len2; i--) {
+        code[i] = code1[i];
+        printf("code[i]: %c\n", (char)code1[i]);
+    }
+    for (i = len2; i > 0; i--) {
+        printf("i: %lld\n", i);
         c1 = code1[i];
         printf("OCTAL ADD: first char: %c\n", c1);
         c2 = code2[i - 1];
@@ -374,7 +423,7 @@ int main() {
         slice(code1, todigits, 1, cursor);
         todigits[cursor] = '\0';
         // printf("%s\n", code1);
-        // printf("%s\n", todigits);
+        printf("tidigits: %s\n", todigits);
         if (cursor == f_size + 1) {
             if (code1[0] == '0') {
                 code1++;
@@ -383,7 +432,7 @@ int main() {
         }
         char* tmp;
         tmp = malloc(f_size);
-        tmp = mul_x_2(todigits, f_size - 1);
+        tmp = mul_x_2_octal(todigits, strlen(todigits));
         // printf("tmp: %s\n", tmp);
         
         code1 = my_octal_add(code1, tmp, f_size + 1);
