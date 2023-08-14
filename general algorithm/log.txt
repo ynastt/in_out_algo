@@ -1,129 +1,149 @@
 ==== IN ALGORITHM ====
 size of file: 4
 
-first two digits: 20
-first 2 digits: 20
-quot and rem: 2, 4
+first two digits: 62
+first 2 digits: 62
+quot and rem: 7, 6
 here11
 here22
 i: 1
-next digit: 2
-check quot and rem: 2, 4
- next 2 digits: 42
- quot and rem: 5, 2
+next digit: 9
+check quot and rem: 7, 6
+ next 2 digits: 69
+ quot and rem: 8, 5
 i: 3
-next digit: 3
-check quot and rem: 5, 2
- next 2 digits: 23
- quot and rem: 2, 7
-current res: 7
+next digit: 7
+check quot and rem: 8, 5
+ next 2 digits: 57
+ quot and rem: 7, 1
+current res: 1
 
 k: 3
----current number: 252---
+---current number: 787---
 old len: 4
 len: 3
 
-first 2 digits: 25
-quot and rem: 3, 1
+first 2 digits: 78
+quot and rem: 9, 6
 here11
 here22
 i: 1
-next digit: 2
-check quot and rem: 3, 1
- next 2 digits: 12
- quot and rem: 1, 4
-current res: 74
+next digit: 7
+check quot and rem: 9, 6
+ next 2 digits: 67
+ quot and rem: 8, 3
+current res: 13
 
 k: 2
----current number: 31---
+---current number: 98---
 old len: 3
 len: 2
+first 1 digit: 9
+quot and rem: 1, 1
+here11
+here22
+i: 1
+next digit: 8
+check quot and rem: 1, 1
+ next 2 digits: 18
+ quot and rem: 2, 2
+current res: 132
 
-first 2 digits: 31
-quot and rem: 3, 7
+k: 2
+---current number: 12---
+old len: 2
+len: 2
+
+first 2 digits: 12
+quot and rem: 1, 4
 here11
 here22
 i: 1
 here
-current res: 747
+current res: 1324
 
 k: 1
----current number: 3---
+---current number: 1---
 old len: 2
 len: 1
-last digit: 3
-current res: 7473
+last digit: 1
+current res: 13241
 
-res: 7473
+res: 13241
 
 
-decimal number: 2023
-octal number: 3747
-0 - 3
-oct: 3; bin: 011
-cur res: 011
-1 - 7
-oct: 7; bin: 111
-cur res: 011111
-2 - 4
+decimal number: 6297
+octal number: 14231
+0 - 1
+oct: 1; bin: 001
+cur res: 001
+1 - 4
 oct: 4; bin: 100
-cur res: 011111100
-3 - 7
-oct: 7; bin: 111
-cur res: 011111100111
-binary: 011111100111
+cur res: 001100
+2 - 2
+oct: 2; bin: 010
+cur res: 001100010
+3 - 3
+oct: 3; bin: 011
+cur res: 001100010011
+4 - 1
+oct: 1; bin: 001
+cur res: 001100010011001
+binary: 001100010011001
 2^32:
 0
-2023
+6297
 
 2^64:
-02023
+06297
 in algorithm took 0.000147 seconds to execute 
 
 ==== OUT ALGORITHM ====
-digit is: 2023
-digit: 1011, ost: 1
-digit: 505, ost: 1
-digit: 252, ost: 1
-digit: 126, ost: 0
-digit: 63, ost: 0
-digit: 31, ost: 1
-digit: 15, ost: 1
-digit: 7, ost: 1
-digit: 3, ost: 1
+digit is: 6297
+digit: 3148, ost: 1
+digit: 1574, ost: 0
+digit: 787, ost: 0
+digit: 393, ost: 1
+digit: 196, ost: 1
+digit: 98, ost: 0
+digit: 49, ost: 0
+digit: 24, ost: 1
+digit: 12, ost: 0
+digit: 6, ost: 0
+digit: 3, ost: 0
 digit: 1, ost: 1
 digit: 0, ost: 1
-b: 11100111111
-current binary is: 11111100111
-binary is: 11111100111
-current res: 11100111111
+b: 1001100100011
+current binary is: 1100010011001
+binary is: 1100010011001
+current res: 1001100100011
 digit is: 0
-current res: 111001111110
-binary: 011111100111
-octal: 3747
-size: 4
-	d: 7
+current res: 10011001000110
+binary: 001100010011001
+octal: 14231
+size: 5
+	d: 1
 	pow(8, deg): 1
 num: 1
-d: 7
+d: 1
 len: 1
 cur res: 000, 3
 	i: 2
 	dd: 1
-	dd x d: 7
-	dec 0, res: 7
-	dec 0, res: 7
-	cur res: 007
-	carry 0, ost: 7
+	dd x d: 1
+	dec 0, res: 1
+	dec 0, res: 1
+	cur res: 001
+	carry 0, ost: 1
 
 i: 1
 	carry 0
-cur res: 007
-	num: 7
+cur res: 001
+	num: 1
 FIRST: 
-SECOND 7
-		current res: 7
-	d: 4
+SECOND 1
+		current res: 1
+	d: 3
 
 	count is: 1
 ====current res: 1======
@@ -162,25 +182,25 @@ i: 1
 	carry 0
 cur res: 008
 num: 8
-d: 4
+d: 3
 len: 1
 cur res: 000, 3
 	i: 2
 	dd: 8
-	dd x d: 32
-	dec 3, res: 2
-	dec 3, res: 2
-	cur res: 002
-	carry 3, ost: 2
+	dd x d: 24
+	dec 2, res: 4
+	dec 2, res: 4
+	cur res: 004
+	carry 2, ost: 4
 
 i: 1
-	carry 3
-cur res: 032
-	num: 32
-FIRST: 7
-SECOND 32
-		current res: 39
-	d: 7
+	carry 2
+cur res: 024
+	num: 24
+FIRST: 1
+SECOND 24
+		current res: 25
+	d: 2
 
 	count is: 1
 ====current res: 1======
@@ -255,32 +275,32 @@ i: 1
 	carry 6
 cur res: 064
 num: 64
-d: 7
+d: 2
 len: 2
 cur res: 0000, 4
 	i: 3
 	dd: 4
-	dd x d: 28
-	dec 2, res: 8
-	dec 2, res: 8
+	dd x d: 8
+	dec 0, res: 8
+	dec 0, res: 8
 	cur res: 0008
-	carry 2, ost: 8
+	carry 0, ost: 8
 	i: 2
 	dd: 6
-	dd x d: 42
-	dec 4, res: 4
-	dec 4, res: 4
-	cur res: 0048
-	carry 4, ost: 2
+	dd x d: 12
+	dec 1, res: 2
+	dec 1, res: 2
+	cur res: 0028
+	carry 1, ost: 2
 
 i: 1
-	carry 4
-cur res: 0448
-	num: 448
-FIRST: 39
-SECOND 448
-		current res: 487
-	d: 3
+	carry 1
+cur res: 0128
+	num: 128
+FIRST: 25
+SECOND 128
+		current res: 153
+	d: 4
 
 	count is: 1
 ====current res: 1======
@@ -405,38 +425,266 @@ i: 1
 	carry 5
 cur res: 0512
 num: 512
-d: 3
+d: 4
 len: 3
 cur res: 00000, 5
 	i: 4
 	dd: 2
+	dd x d: 8
+	dec 0, res: 8
+	dec 0, res: 8
+	cur res: 00008
+	carry 0, ost: 8
+	i: 3
+	dd: 1
+	dd x d: 4
+	dec 0, res: 4
+	dec 0, res: 4
+	cur res: 00048
+	carry 0, ost: 4
+	i: 2
+	dd: 5
+	dd x d: 20
+	dec 2, res: 0
+	dec 2, res: 0
+	cur res: 00048
+	carry 2, ost: 0
+
+i: 1
+	carry 2
+cur res: 02048
+	num: 2048
+FIRST: 153
+SECOND 2048
+		current res: 2201
+	d: 1
+
+	count is: 1
+====current res: 1======
+num: 1
+d: 8
+len: 1
+cur res: 000, 3
+	i: 2
+	dd: 1
+	dd x d: 8
+	dec 0, res: 8
+	dec 0, res: 8
+	cur res: 008
+	carry 0, ost: 8
+
+i: 1
+	carry 0
+cur res: 008
+
+	count is: 2
+====current res: 8======
+num: 8
+d: 8
+len: 1
+cur res: 000, 3
+	i: 2
+	dd: 8
+	dd x d: 64
+	dec 6, res: 4
+	dec 6, res: 4
+	cur res: 004
+	carry 6, ost: 4
+
+i: 1
+	carry 6
+cur res: 064
+
+	count is: 3
+====current res: 64======
+num: 64
+d: 8
+len: 2
+cur res: 0000, 4
+	i: 3
+	dd: 4
+	dd x d: 32
+	dec 3, res: 2
+	dec 3, res: 2
+	cur res: 0002
+	carry 3, ost: 2
+	i: 2
+	dd: 6
+	dd x d: 48
+	dec 4, res: 11
+	dec 5, res: 11
+	cur res: 0012
+	carry 5, ost: 8
+
+i: 1
+	carry 5
+cur res: 0512
+
+	count is: 4
+====current res: 512======
+num: 512
+d: 8
+len: 3
+cur res: 00000, 5
+	i: 4
+	dd: 2
+	dd x d: 16
+	dec 1, res: 6
+	dec 1, res: 6
+	cur res: 00006
+	carry 1, ost: 6
+	i: 3
+	dd: 1
+	dd x d: 8
+	dec 0, res: 9
+	dec 0, res: 9
+	cur res: 00096
+	carry 0, ost: 8
+	i: 2
+	dd: 5
+	dd x d: 40
+	dec 4, res: 0
+	dec 4, res: 0
+	cur res: 00096
+	carry 4, ost: 0
+
+i: 1
+	carry 4
+cur res: 04096
+	pow(8, deg): 4096
+
+	count is: 1
+====current res: 1======
+num: 1
+d: 8
+len: 1
+cur res: 000, 3
+	i: 2
+	dd: 1
+	dd x d: 8
+	dec 0, res: 8
+	dec 0, res: 8
+	cur res: 008
+	carry 0, ost: 8
+
+i: 1
+	carry 0
+cur res: 008
+
+	count is: 2
+====current res: 8======
+num: 8
+d: 8
+len: 1
+cur res: 000, 3
+	i: 2
+	dd: 8
+	dd x d: 64
+	dec 6, res: 4
+	dec 6, res: 4
+	cur res: 004
+	carry 6, ost: 4
+
+i: 1
+	carry 6
+cur res: 064
+
+	count is: 3
+====current res: 64======
+num: 64
+d: 8
+len: 2
+cur res: 0000, 4
+	i: 3
+	dd: 4
+	dd x d: 32
+	dec 3, res: 2
+	dec 3, res: 2
+	cur res: 0002
+	carry 3, ost: 2
+	i: 2
+	dd: 6
+	dd x d: 48
+	dec 4, res: 11
+	dec 5, res: 11
+	cur res: 0012
+	carry 5, ost: 8
+
+i: 1
+	carry 5
+cur res: 0512
+
+	count is: 4
+====current res: 512======
+num: 512
+d: 8
+len: 3
+cur res: 00000, 5
+	i: 4
+	dd: 2
+	dd x d: 16
+	dec 1, res: 6
+	dec 1, res: 6
+	cur res: 00006
+	carry 1, ost: 6
+	i: 3
+	dd: 1
+	dd x d: 8
+	dec 0, res: 9
+	dec 0, res: 9
+	cur res: 00096
+	carry 0, ost: 8
+	i: 2
+	dd: 5
+	dd x d: 40
+	dec 4, res: 0
+	dec 4, res: 0
+	cur res: 00096
+	carry 4, ost: 0
+
+i: 1
+	carry 4
+cur res: 04096
+num: 4096
+d: 1
+len: 4
+cur res: 000000, 6
+	i: 5
+	dd: 6
 	dd x d: 6
 	dec 0, res: 6
 	dec 0, res: 6
-	cur res: 00006
+	cur res: 000006
 	carry 0, ost: 6
+	i: 4
+	dd: 9
+	dd x d: 9
+	dec 0, res: 9
+	dec 0, res: 9
+	cur res: 000096
+	carry 0, ost: 9
 	i: 3
-	dd: 1
-	dd x d: 3
-	dec 0, res: 3
-	dec 0, res: 3
-	cur res: 00036
-	carry 0, ost: 3
+	dd: 0
+	dd x d: 0
+	dec 0, res: 0
+	dec 0, res: 0
+	cur res: 000096
+	carry 0, ost: 0
 	i: 2
-	dd: 5
-	dd x d: 15
-	dec 1, res: 5
-	dec 1, res: 5
-	cur res: 00536
-	carry 1, ost: 5
+	dd: 4
+	dd x d: 4
+	dec 0, res: 4
+	dec 0, res: 4
+	cur res: 004096
+	carry 0, ost: 4
 
 i: 1
-	carry 1
-cur res: 01536
-	num: 1536
-FIRST: 487
-SECOND 1536
-		current res: 2023
-decimal: 2023
+	carry 0
+cur res: 004096
+	num: 4096
+FIRST: 2201
+SECOND 4096
+		current res: 6297
+decimal: 6297
 
-out algorithm took 0.000040 seconds to execute 
+out algorithm took 0.000062 seconds to execute 

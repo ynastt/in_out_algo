@@ -1,26 +1,26 @@
 ===IN===
-decimal: 158
-octal: 236
-binary: 010011110
+decimal: 6297
+octal: 12231
+binary: 001010010011001
 
 
 2^32:
 0
-158
+5273
 
 2^64:
-0158
-in algorithm took 0.0000840 seconds to execute 
+05273
+in algorithm took 0.0003840 seconds to execute 
 
 ===OUT===
 2^64:
-0158
+05273
 
 2^32:
 0
-158
+5273
 
-binary: 010011110
-octal: 236
-decimal: 158
-out algorithm took 0.0000070 seconds to execute 
+binary: 001010010011001
+octal: 12231
+decimal: 5273
+out algorithm took 0.0000160 seconds to execute 
