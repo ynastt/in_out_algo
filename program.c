@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
             char line[30];
             sprintf(line, "\n\n===iteration %d===", j);
             fputs(line, o);
-            generate_test_number(length);
+            // generate_test_number(length);
             // call general algorithm & write results in "general algorithm/output.txt"
             if (chdir("general algorithm") != 0) {
                 perror("chdir() to /general algorithm failed");

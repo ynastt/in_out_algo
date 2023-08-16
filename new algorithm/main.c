@@ -414,29 +414,55 @@ int main() {
 
     code[n] = '\0'; 
     code1[m] = '\0'; 
-    int cursor = 0;
-    for (int i = 1; i < f_size + 1; i++) {
+    unsigned long cursor = 0;
+    unsigned long long ll = 0, l = 0;
+    bool flag = false;
+    for (unsigned long i = 1; i < f_size; i++) {
         cursor = i + 1;
-        // printf("\ncurrent digit char: %c\n", code1[i]);
         char* todigits;
         todigits = malloc(f_size);
-        slice(code1, todigits, 1, cursor);
-        todigits[cursor] = '\0';
-        // printf("%s\n", code1);
-        printf("tidigits: %s\n", todigits);
-        if (cursor == f_size + 1) {
-            if (code1[0] == '0') {
-                code1++;
-            }
-            break;
+        if (l > ll) {
+            ll = l;
+            flag = true;
+            cursor += 1;
+            char* help = (char*)malloc((l + 1) * sizeof(char));
+            memcpy(help, code1, l + 1);
+            printf("help: %s\n", help);
+            code1 = (char*)realloc(code1, l + 1);
+            memcpy(code1, help, l + 1);
+            free(help);
+            slice(code1, todigits, 0, cursor - 1);
+            todigits[cursor - 1] = '\0';
+        } else if (flag) {
+            cursor += 1;
+            slice(code1, todigits, 0, cursor - 1);
+            todigits[cursor - 1] = '\0';
+        } else {
+            slice(code1, todigits, 1, cursor);
+            todigits[cursor] = '\0';
         }
-        char* tmp;
-        tmp = malloc(f_size);
-        tmp = mul_x_2_octal(todigits, strlen(todigits));
-        // printf("tmp: %s\n", tmp);
+        printf("cursor: %ld\n", cursor);
         
+        printf("code: %s\n", code1);
+        printf("tidigits: %s\n", todigits);
+        if (code1[0] != '0') {
+            ll = strlen(code1);
+        } else {
+            ll = strlen(code1) - 1;
+        }
+        printf("old: %lld, new: %lld\n", ll, l);
+        char* tmp = malloc(f_size);
+        tmp = mul_x_2_octal(todigits, strlen(todigits));
+        printf("tmp: %s\n", tmp);
+        while (tmp[0] == '0') tmp++;
         code1 = my_octal_add(code1, tmp, f_size + 1);
+        if (code1[0] != '0') {
+            l = strlen(code1);
+        } else {
+            l = strlen(code1) - 1;
+        }
         free(todigits);
+        printf("old: %lld, new: %lld\n", ll, l);
     }
      
     fclose(f);
@@ -519,7 +545,7 @@ int main() {
     fputs("\n2^64:\n", o);
     print_Link_64(start_number, NULL);
     print_Link_64(start_number, o);
-
+    l = 0;
     // printf("\nend number: %ld\n", end_number->pair.n);
     t = clock() - t;
     double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
@@ -536,7 +562,7 @@ int main() {
     print_Link(start_number, o);
     t = clock();
     code1 = convert_to_binary(end_number);
-    long long l = strlen(code1);
+    l = strlen(code1);
     while (l % 3 != 0) {
        code1[l++] = '0';
        code1[l++] = '\0';

@@ -1,26 +1,25 @@
-Number of iterations: 2
-Length of test numbers: 4
+Number of iterations: 1
+Length of test numbers: 1
 
 
 ===iteration 1===
 SUCCESS: RESULTS ARE OK
 
 10 -> 2^64
-general algorithm time: 0.0001540 
-new algorithm time: 0.0001420 
+general algorithm time: 0.0001560 
+new algorithm time: 0.0001170 
 2^64 -> 10
-general algorithm time: 0.0000510 
-new algorithm time: 0.0000090 
+general algorithm time: 0.0000520 
+new algorithm time: 0.0000380 
 
-===iteration 2===
-ERROR: RESULTS ARE DIFFERENT
 
-TEST:
-number: 6297
-10 -> 2^64
-general algorithm result: 14231
-new algorithm result: 12231
 
-2^64 -> 10
-general algorithm result: 6297
-new algorithm result: 6297
+AVERAGE EXECUTION TIME:
+
+		10 -> 2^64
+general algorithm: 0.000156
+new algorithm: 0.000117
+
+		2^64 -> 10
+general algorithm: 0.000052
+new algorithm: 0.000038

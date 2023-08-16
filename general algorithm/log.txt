@@ -96,7 +96,7 @@ binary: 001100010011001
 
 2^64:
 06297
-in algorithm took 0.000147 seconds to execute 
+in algorithm took 0.000156 seconds to execute 
 
 ==== OUT ALGORITHM ====
 digit is: 6297
@@ -687,4 +687,4 @@ SECOND 4096
 		current res: 6297
 decimal: 6297
 
-out algorithm took 0.000062 seconds to execute 
+out algorithm took 0.000052 seconds to execute 
