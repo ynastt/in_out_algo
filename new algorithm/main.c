@@ -30,6 +30,7 @@ typedef struct link {
 void slice(const char* str, char* result, size_t start, size_t end)
 {
     strncpy(result, str + start, end - start);
+    result[end - start] = '\0';
 }
 
 char* my_reverse(char* code) {
@@ -139,6 +140,48 @@ char* my_octal_add(char* code1, char* code2, long n) {
     printf("len1: %lld\n", len1);
     printf("len2: %lld\n", len2);
     code[0] = sd + '0';
+    if (len1 == len2) {
+        for (i = len1 - 1; i > 0; i--) {
+            printf("i: %lld\n", i);
+            c1 = code1[i];
+            printf("OCTAL ADD: first char: %c\n", c1);
+            c2 = code2[i];
+            printf("OCTAL ADD: second char: %c\n", c2);
+            digit1 = c1-'0'; 
+            digit2 = c2-'0'; 
+            printf("\tfirst digit: %d\n", digit1);
+            printf("\tsecond digit: %d\n", digit2);
+            digit = digit1 + digit2;
+            dec = digit / 8;
+            res = digit%8 + carry;
+            if (res > 7) {
+                dec = res /8;
+                code[i] = (res%8) + '0';
+            } else {
+                code[i] = res + '0';
+            }
+            printf("\tdigit code %c\n", (char)code[i]);
+            if (dec > 0) {
+                carry = dec;
+            } else {
+                carry = 0;
+            }
+            printf("\tcarry %d, ost: %d\n", dec, digit%8);
+            if (dec > 0 && i == 1) {
+                code[0] = sd + carry + '0';
+            }
+        } 
+        if (sd != 0) {
+            printf("i: %lld\n", i);
+            printf("OCTAL ADD: first char: %c\n", sd + '0');
+            printf("OCTAL ADD: second char: %c\n", (char)code2[0]);
+            code[0] = sd + (code2[0] - '0') + carry + '0';
+        }
+        code[n] = '\0';
+        printf("\tcode %s\n", code);
+        return code;
+    }
+
     for (i = n - 1; i > len2; i--) {
         code[i] = code1[i];
         printf("code[i]: %c\n", (char)code1[i]);
@@ -162,7 +205,7 @@ char* my_octal_add(char* code1, char* code2, long n) {
         } else {
             code[i] = res + '0';
         }
-        printf("\tdigit code %c\n", code[i]);
+        printf("\tdigit code %c\n", (char)code[i]);
         if (dec > 0) {
             carry = dec;
         } else {
@@ -188,7 +231,7 @@ char* convert_from_octal_to_binary(char* code, char* map[]) {
         // printf("%d - %c\n", i, (char)code[i]);
         int c = code[i] - '0';
         // printf("oct: %d; bin: %s\n", c, map[c]);
-        strcat(res, map[c]);
+        strncat(res, map[c], 3);
         // printf("cur res: %s\n", res);
     }
     res[len * 3 + 1] = '\0';
@@ -269,11 +312,11 @@ char* convert_to_binary(LINK* l) {
     char* res;
     char* b;
     int i = 0;
-    unsigned long long length = 0;
+    unsigned long long length = 1;
     res = malloc(1 * sizeof(char));
     strcpy(res, "");
     while (l != NULL ) {
-        res = (char*)realloc(res, length + 32 + 1);
+        res = (char*)realloc(res, length + 32);
         unsigned long digit = l->pair.n;
         printf("digit is: %ld\n", digit);
         if (digit == 0) {
@@ -310,8 +353,10 @@ char* convert_to_binary(LINK* l) {
                 binary = my_reverse(binary);
             }
             printf("binary is: %s\n", my_reverse(binary));
-            strcat(res, binary);
+            strncat(res, binary, len);
+            printf("current res: %s\n", res);
             length += len;
+            // printf("current res1: %s\n", res);
             res[length + 1] = '\0';
         }   
         printf("current res: %s\n", res);
@@ -454,7 +499,9 @@ int main() {
         char* tmp = malloc(f_size);
         tmp = mul_x_2_octal(todigits, strlen(todigits));
         printf("tmp: %s\n", tmp);
-        while (tmp[0] == '0') tmp++;
+        if (flag) {
+            while (tmp[0] == '0') tmp++;
+        }
         code1 = my_octal_add(code1, tmp, f_size + 1);
         if (code1[0] != '0') {
             l = strlen(code1);
