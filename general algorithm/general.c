@@ -30,10 +30,11 @@ typedef struct link {
 
 void slice(const char* str, char* result, size_t start, size_t end) {
     strncpy(result, str + start, end - start);
+    result[end - start] = '\0';
+    printf("result: %s\n", result);
 }
 
-unsigned int my_strlen(const char *s)
-{
+unsigned int my_strlen(const char *s) {
     unsigned int count = 0;
     while(*s!='\0') {
         if (isdigit(*s)) count++;
@@ -45,21 +46,21 @@ unsigned int my_strlen(const char *s)
 char* my_reverse(char* code) {
     long s = strlen(code);
     char* result = malloc(s);
-    result[s] = '\0';
     for (int i = 0; i < s; i++) {
         result[i] = code[s - 1 - i];
     }
+    result[s] = '\0';
     return result;
 }
 
 char* convert_from_decimal_to_octal(char* code, long n) {
     bool new_step = false;
     char* result;
-    result = (char*)malloc((n + 1) * sizeof(char));
+    result = (char*)malloc((n + 2) * sizeof(char));
     int j = 0, d;
-    char* code1;
+    char* code2;
     char* first_two_digits;
-    first_two_digits = malloc(2);
+    first_two_digits = malloc(3);
     long digits, rem, quot, len = n;
     int first_digit = code[0] - '0', flag = 0;
     if (first_digit < 8) {
@@ -93,7 +94,7 @@ char* convert_from_decimal_to_octal(char* code, long n) {
                 rem = digits - quot * 8;
                 printf("quot and rem: %ld, %ld\n", quot, rem);
                 flag = 1;
-                free(code1);
+                free(code2);
             } else {
                 printf("first 1 digit: %d\n", first_digit);
                 quot = first_digit / 8; // 1;
@@ -104,9 +105,9 @@ char* convert_from_decimal_to_octal(char* code, long n) {
         }
         int k = 0;
         printf("here11\n");
-        code1 = malloc(len);
+        code2 = malloc(len + 1);
         printf("here22\n");
-        code1[k++] = (int)quot + '0';
+        code2[k++] = (int)quot + '0';
         for (int i = 1; i < len; i++) {
             printf("i: %d\n", i);
             if (flag == 1) {
@@ -129,9 +130,9 @@ char* convert_from_decimal_to_octal(char* code, long n) {
                 // flag = 1;
             } else {
                 if (d < 8 && i != len - 1) {
-                    code1[k++] = '0';
+                    code2[k++] = '0';
                     slice(code, first_two_digits, i, i + 2);
-                    first_two_digits[i+2] = '\0';
+                    first_two_digits[2] = '\0';
                     digits = atol(first_two_digits);
                     printf(" next 2 digits: %ld\n", digits);
                     quot = digits / 8;
@@ -147,15 +148,15 @@ char* convert_from_decimal_to_octal(char* code, long n) {
                     // flag = 0; 
                 }  
             }
-            code1[k++] = (int)quot + '0';
+            code2[k++] = (int)quot + '0';
         }
         result[j++] =  (int)rem + '0';
         new_step = true;
         printf("current res: %s\n\n", result);
-        code1[k] = '\0';
+        code2[k] = '\0';
         printf("k: %d\n", k);
-        memcpy(code, code1, k);
-        printf("---current number: %s---\n", code1);
+        memcpy(code, code2, k);
+        printf("---current number: %s---\n", code2);
         printf("old len: %ld\n", len);
         len = k;
         printf("len: %ld\n", len);
@@ -180,6 +181,7 @@ char* convert_from_decimal_to_octal(char* code, long n) {
     }
     result[j++] =  '\0';
     printf("res: %s\n\n", result);
+    free(code2);
     return result;
 }
 
@@ -187,16 +189,17 @@ char* convert_from_decimal_to_octal(char* code, long n) {
 char* convert_from_octal_to_binary(char* code, char* map[]) {
     char* res;
     int len = strlen(code);
-    res = malloc(len * 3);
+    res = malloc(len * 3 + 1);
     strcpy(res, "");
     for (int i = 0; i < len; i++) {
         printf("%d - %c\n", i, (char)code[i]);
         int c = code[i] - '0';
         printf("oct: %d; bin: %s\n", c, map[c]);
-        strcat(res, map[c]);
+        strncat(res, map[c], 3);
         printf("cur res: %s\n", res);
     }
     res[len * 3 + 1] = '\0';
+    printf("bin_res: %s\n", res);
     return res;
 }
 
@@ -274,11 +277,11 @@ char* convert_to_binary(LINK* l) {
     char* res;
     char* b;
     int i = 0;
-    unsigned long long length = 0;
+    unsigned long long length = 1;
     res = malloc(1 * sizeof(char));
     strcpy(res, "");
     while (l != NULL ) {
-        res = (char*)realloc(res, length + 32 + 1);
+        res = (char*)realloc(res, length + 32);
         unsigned long digit = l->pair.n;
         printf("digit is: %ld\n", digit);
         if (digit == 0) {
@@ -315,7 +318,7 @@ char* convert_to_binary(LINK* l) {
                 binary = my_reverse(binary);
             }
             printf("binary is: %s\n", my_reverse(binary));
-            strcat(res, binary);
+            strncat(res, binary, len);
             length += len;
             res[length + 1] = '\0';
         }   
@@ -433,7 +436,7 @@ char* large_addition(char* num1, char* num2) {
     }
     if (res[0] == '0') {
         len = strlen(res);
-        help = (char*)malloc(len * sizeof(char));
+        help = (char*)malloc((len + 1) * sizeof(char));
         help[len - 1] = '\0';
         for (j = 1; j < len; j++) {
             help[j - 1] = res[j];
@@ -521,9 +524,15 @@ int main() {
     FILE * f = fopen("../tests/test.txt", "rt");
     char *code;
     char *res;
-    char *code1;
+    char *code2;
     size_t n = 0, m = 0, k = 0;
     int c;
+    LINK* start_number = (LINK*)malloc(sizeof(LINK));
+    LINK* end_number;
+    LINK* prev_number;
+    prev_number = NULL;
+    bool flag_chetn = false;
+    unsigned long long old_len, len;
 
     if (f == NULL) {
         perror("Error: ");
@@ -535,20 +544,22 @@ int main() {
     printf("==== IN ALGORITHM ====\n");
     printf("size of file: %ld\n", f_size);
 
-    res = malloc(f_size);
-    code = malloc(f_size);
-    code1 = malloc(f_size);
+    
+    code = malloc(f_size + 1);
+    code2 = malloc(f_size + 1);
     while ((c = fgetc(f)) != EOF) {
         code[n++] = (char)c;
-        code1[m++] = (char)c;
+        code2[m++] = (char)c;
         // printf("char: %c\n", (char)c);
     }
     code[n] = '\0'; 
-    code1[m] = '\0'; 
+    code2[m] = '\0'; 
 
-    res = convert_from_decimal_to_octal(code1, f_size);
+    res = convert_from_decimal_to_octal(code2, f_size);
     long s = strlen(res);
     char* result = my_reverse(res);
+    free(res);
+    free(code2);
     result[(strlen(result) + 1)] = '\0';
     fclose(f);
     printf("\ndecimal number: %s\n", code);
@@ -556,21 +567,21 @@ int main() {
     FILE * o = fopen("output.txt", "w");
     fputs("===IN===\ndecimal: ", o);
     fputs(code, o);
+    free(code);
     fputs("\noctal: ", o);
     fputs(result, o);
     char* map[] = { "000", "001", "010", "011", "100", "101", "110", "111"};  
-    code1 = convert_from_octal_to_binary(result, map);
-    printf("binary: %s\n", code1);
+    code2 = convert_from_octal_to_binary(result, map);
+    free(result);
+    printf("\nbinary: %s\n", code2);
+    printf("len: %ld\n", strlen(code2));
+    code2[(strlen(code2) + 1)] = '\0';
     fputs("\nbinary: ", o);
-    fputs(code1, o);
+    fputs(code2, o);
     printf("2^32:\n");
     fputs("\n\n2^32:\n", o);
-    LINK* start_number = (LINK*)malloc(sizeof(LINK));
-    LINK* end_number;
-    LINK* prev_number;
-    prev_number = NULL;
-    bool flag_chetn = false;
-    unsigned long long old_len, len = strlen(code1);
+    len = strlen(code2);
+    printf("code: %s, len: %lld\n", code2, len);
     while (len > 0) {
         // printf("\nlen: %lld\n", len);
         LINK* number;
@@ -581,19 +592,21 @@ int main() {
         }
         TYPE(number) = 'd';
         PREV(number) = prev_number;
-        char* str = malloc(32 * sizeof(char));
+        char* str = malloc(33 * sizeof(char));
         old_len = len;
         if (len >= 32) {
-            slice(code1, str, len-32, len);
+            slice(code2, str, len-32, len);
             len -= 32;
         } else {
-            slice(code1, str, 0, len);
+            printf("code: %s, len: %ld\n", code2, strlen(code2));
+            slice(code2, str, 0, len);
             len -= len;
         }
         
-        // printf("str: %s\n", str);
+        printf("str: %s\n", str);
         PAIR(number).n = convert_to_2_in_32_system(str);
-        if (old_len == strlen(code1)) {
+        free(str);
+        if (old_len == strlen(code2)) {
             end_number = number;
         }
         // printf("link type: %c\n", number->ptype);
@@ -639,57 +652,45 @@ int main() {
     fputs("\n\n2^32:\n", o);
     print_Link(start_number, o);
     t = clock();
-    code1 = convert_to_binary(end_number);
-    long long l = strlen(code1);
+    free(code2);
+    code2 = convert_to_binary(end_number);
+    printf("code2: %s\n", code2);
+    long long l = strlen(code2);
     while (l % 3 != 0) {
-       code1[l++] = '0';
-       code1[l++] = '\0';
-       l = strlen(code1);
+       code2[l++] = '0';
+       code2[l++] = '\0';
+       l = strlen(code2);
     }
-    code1 = my_reverse(code1);
+    code2 = my_reverse(code2);
     fputs("\nbinary: ", o);
-    printf("binary: %s\n", code1);
-    fputs(code1, o);
-    code1 = convert_from_binary_to_octal(code1, map);
-    printf("octal: %s\n", code1);
+    printf("binary: %s\n", code2);
+    fputs(code2, o);
+    code2 = convert_from_binary_to_octal(code2, map);
+    printf("octal: %s\n", code2);
     fputs("\noctal: ", o);
-    fputs(code1, o);
-    size_t size = strlen(code1);
+    fputs(code2, o);
+    size_t size = strlen(code2);
     printf("size: %ld\n", size);
     int deg = 0, d = 0;
 
-    // //test
-    // char* num = (char*)malloc((15 + 1) * sizeof(char));
-    // num = large_mul_digit(2, "581474976710656");
-    // printf("\tnum: %s\n", num);
-
-    // printf("\n\npow(8, deg)\n");
-    // char* rr = my_pow(8, 16);
-    // printf("\tpow(8, 16): %s\n", rr);
-    // // end test 
-
-    // unsigned long cur;
     char* dec = (char*) malloc((size + 1) * sizeof(char));
     for (int i = size - 1; i >= 0; i--) {
-        d = code1[i] - '0';
+        d = code2[i] - '0';
         printf("\td: %d\n", d);
         printf("\tpow(8, deg): %s\n", my_pow(8, deg));
-        // cur = d * pow(8, deg);
-        // printf("\tcur: %ld, deg = %d\n", cur, deg);
-        // char* num = (char*)malloc((size + 1) * sizeof(char));
-        // // sprintf(num, "%ld", cur);
+
         char* num = large_mul_digit(d, my_pow(8, deg));
-        // num[strlen(num) + 1] = '\0';
+
         printf("\tnum: %s\n", num);
         ++deg;
         dec = large_addition(dec, num); 
         printf("\t\tcurrent res: %s\n", dec);
-        // free(num);
     }
     dec[strlen(dec) + 1] = '\0';
     printf("decimal: %s\n", dec);
     fputs("\ndecimal: ", o);
     fputs(dec, o);
+    free(dec);
     t = clock() - t;
     time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
     printf("\nout algorithm took %f seconds to execute \n", time_taken);
@@ -698,10 +699,6 @@ int main() {
     fputs(time_arr, o);
     fputs(" seconds to execute \n", o);
     fclose(o);
-    free(code);
-    free(code1);
-    free(res);
-    free(result);
-    free(dec);
+    free(code2);
     return 0;
 }
