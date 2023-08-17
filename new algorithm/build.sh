@@ -1,2 +1,2 @@
 gcc -o main main.c -lm
-./main > log.txt
+valgrind --leak-check=full ./main > log.txt

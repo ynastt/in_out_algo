@@ -35,7 +35,7 @@ void slice(const char* str, char* result, size_t start, size_t end)
 
 char* my_reverse(char* code) {
     long s = strlen(code);
-    char* result = malloc(s);
+    char* result = malloc(s + 1);
     result[s] = '\0';
     for (int i = 0; i < s; i++) {
         result[i] = code[s - 1 - i];
@@ -225,7 +225,7 @@ char* my_octal_add(char* code1, char* code2, long n) {
 char* convert_from_octal_to_binary(char* code, char* map[]) {
     char* res;
     int len = strlen(code);
-    res = malloc(len * 3);
+    res = malloc(len * 3 + 1);
     strcpy(res, "");
     for (int i = 0; i < len; i++) {
         // printf("%d - %c\n", i, (char)code[i]);
@@ -399,7 +399,7 @@ char* convert_from_binary_to_octal(char* code, char* map[]) {
 char* my_decimal_sub(char* code1, char* code2, long n) {
     char *code;
     int digit, digit1, digit2, sd, dec, res, carry = 0;
-    code = malloc(n);
+    code = malloc(n + 1);
     // printf("\nDEC SUB: first: %s\n", code1);
     // printf("DEC SUB: second: %s\n", code2);
     sd = code1[0] - '0';
@@ -448,8 +448,8 @@ int main() {
     printf("==== IN ALGORITHM ====\n");
     printf("size of file: %ld\n", f_size);
 
-    code = malloc(f_size);
-    code1 = malloc(f_size + 1);
+    code = malloc(f_size + 1);
+    code1 = malloc(f_size + 2);
     code1[0] = '0';
     while ((c = fgetc(f)) != EOF) {
         code[n++] = (char)c;
@@ -465,7 +465,7 @@ int main() {
     for (unsigned long i = 1; i < f_size; i++) {
         cursor = i + 1;
         char* todigits;
-        todigits = malloc(f_size);
+        todigits = malloc(f_size + 1);
         if (l > ll) {
             ll = l;
             flag = true;
@@ -496,7 +496,7 @@ int main() {
             ll = strlen(code1) - 1;
         }
         printf("old: %lld, new: %lld\n", ll, l);
-        char* tmp = malloc(f_size);
+        char* tmp = malloc(f_size + 1);
         tmp = mul_x_2_octal(todigits, strlen(todigits));
         printf("tmp: %s\n", tmp);
         if (flag) {
@@ -518,6 +518,7 @@ int main() {
     FILE * o = fopen("output.txt", "w");
     fputs("===IN===\ndecimal: ", o);
     fputs(code, o);
+    free(code);
     fputs("\noctal: ", o);
     fputs(code1, o);
     char* map[] = { "000", "001", "010", "011", "100", "101", "110", "111"};
@@ -548,7 +549,7 @@ int main() {
         }
         TYPE(number) = 'd';
         PREV(number) = prev_number;
-        char* str = malloc(32 * sizeof(char));
+        char* str = malloc(33 * sizeof(char));
         old_len = len;
         if (len >= 32) {
             slice(code1, str, len-32, len);
@@ -563,6 +564,7 @@ int main() {
         if (old_len == strlen(code1)) {
             end_number = number;
         }
+        free(str);
         // printf("link type: %c\n", number->ptype);
         // printf("link n:%ld\n", number->pair.n);
         // printf("link prec is null?:%u\n", number->prec == NULL);
@@ -603,11 +605,12 @@ int main() {
     fputs(time_arr, o);
     fputs(" seconds to execute \n", o);
     printf("\n==== OUT ALGORITHM ====\n");
+    t = clock();
     fputs("\n===OUT===\n2^64:\n", o);
     print_Link_64(start_number, o);
     fputs("\n\n2^32:\n", o);
     print_Link(start_number, o);
-    t = clock();
+    free(code1);
     code1 = convert_to_binary(end_number);
     l = strlen(code1);
     while (l % 3 != 0) {
@@ -632,12 +635,12 @@ int main() {
         }
         // printf("\ncurrent digit char: %c\n", code1[i]);
         char* todigits;
-        todigits = malloc(size);
+        todigits = malloc(size + 1);
         slice(code1, todigits, 0, cursor);
         todigits[cursor] = '\0';
         // printf("cur: %s\n", todigits);
         char* tmp;
-        tmp = malloc(size);
+        tmp = malloc(size + 1);
         tmp = mul_x_2(todigits, size - 1);
         // printf("tmp: %s\n", tmp);
         code1 = my_decimal_sub(code1, tmp, size);
@@ -652,6 +655,7 @@ int main() {
     printf("decimal: %s\n", dec);
     fputs("\ndecimal: ", o);
     fputs(dec, o);
+    free(dec);
     t = clock() - t;
     time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
     printf("\nout algorithm took %f seconds to execute \n", time_taken);
@@ -659,7 +663,6 @@ int main() {
     sprintf(time_arr, "%2.7f", time_taken);
     fputs(time_arr, o);
     fputs(" seconds to execute \n", o);
-    free(code);
     free(code1);
     fclose(o);
     return 0;

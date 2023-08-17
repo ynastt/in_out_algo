@@ -870,7 +870,7 @@ str: 1010111101110001010100
 
 2^64:
 28744521653732529
-in algorithm took 0.055553 seconds to execute 
+in algorithm took 0.049805 seconds to execute 
 
 ==== OUT ALGORITHM ====
 digit is: 1653732529
@@ -16975,4 +16975,4 @@ SECOND 11258999068426240
 		current res: 12345678987654321
 decimal: 12345678987654321
 
-out algorithm took 0.070560 seconds to execute 
+out algorithm took 0.106872 seconds to execute 

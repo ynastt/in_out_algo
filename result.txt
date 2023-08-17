@@ -6,20 +6,20 @@ Length of test numbers: 1
 SUCCESS: RESULTS ARE OK
 
 10 -> 2^64
-general algorithm time: 0.0001560 
-new algorithm time: 0.0001170 
+general algorithm time: 0.0498050 
+new algorithm time: 0.0690830 
 2^64 -> 10
-general algorithm time: 0.0000520 
-new algorithm time: 0.0000380 
+general algorithm time: 0.1068720 
+new algorithm time: 0.0173440 
 
 
 
 AVERAGE EXECUTION TIME:
 
 		10 -> 2^64
-general algorithm: 0.000156
-new algorithm: 0.000117
+general algorithm: 0.049805
+new algorithm: 0.069083
 
 		2^64 -> 10
-general algorithm: 0.000052
-new algorithm: 0.000038
+general algorithm: 0.106872
+new algorithm: 0.017344
