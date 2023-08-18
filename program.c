@@ -236,6 +236,14 @@ int main(int argc, char *argv[]) {
                 sum_2 += t4;
 
             }
+            free(res1);
+            free(res2);
+            free(res3);
+            free(res4);
+            free(time1);
+            free(time2);
+            free(time3);
+            free(time4);
         }
         // average execution time
         
@@ -255,6 +263,7 @@ int main(int argc, char *argv[]) {
         fputs("\nnew algorithm: ", o);
         sprintf(average, "%f", sum_2/iters);
         fputs(average, o);
+        
     } else if( argc > 3 ) {
         printf("Too many arguments.\n");
         printf("Write next command:   ./a.out <Iters> <In>\n");
