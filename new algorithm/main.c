@@ -223,16 +223,18 @@ char* my_octal_add(char* code1, char* code2, long n) {
 
 // из 8-й в 2-ю с.с 
 char* convert_from_octal_to_binary(char* code, char* map[]) {
+    printf("START BINARY\n");
+    printf("octal: %s\n", code);
     char* res;
     int len = strlen(code);
     res = malloc(len * 3 + 1);
     strcpy(res, "");
     for (int i = 0; i < len; i++) {
-        // printf("%d - %c\n", i, (char)code[i]);
+        printf("%d - %c\n", i, (char)code[i]);
         int c = code[i] - '0';
         // printf("oct: %d; bin: %s\n", c, map[c]);
         strncat(res, map[c], 3);
-        // printf("cur res: %s\n", res);
+        printf("cur res: %s\n", res);
     }
     res[len * 3 + 1] = '\0';
     return res;
@@ -430,7 +432,6 @@ char* my_decimal_sub(char* code1, char* code2, long n) {
 
 int main() {
     clock_t t;
-    t = clock();
     FILE * f = fopen("../tests/test.txt", "rt");
     char *code;
     char *code1;
@@ -446,6 +447,7 @@ int main() {
     long f_size = ftell(f);
     fseek(f, 0, SEEK_SET);
     printf("==== IN ALGORITHM ====\n");
+    t = clock();
     printf("size of file: %ld\n", f_size);
 
     code = malloc(f_size + 1);
@@ -502,7 +504,10 @@ int main() {
         if (flag) {
             while (tmp[0] == '0') tmp++;
         }
-        code1 = my_octal_add(code1, tmp, f_size + 1);
+        char* adds;
+        adds = my_octal_add(code1, tmp, f_size + 1);
+        memcpy(code1, adds, strlen(adds));
+        free(adds);
         if (code1[0] != '0') {
             l = strlen(code1);
         } else {
@@ -511,9 +516,11 @@ int main() {
         free(todigits);
         printf("old: %lld, new: %lld\n", ll, l);
     }
-     
     fclose(f);
     printf("\ndecimal number: %s\n", code);
+    if (code1[0] == '0') {
+        code1++;
+    }
     printf("octal number: %s\n", code1);
     FILE * o = fopen("output.txt", "w");
     fputs("===IN===\ndecimal: ", o);
@@ -526,10 +533,12 @@ int main() {
     // for (int i = 0; i < 8; i++) {
     //     printf("%d -> %s\n", i, map[i]);
     // }
-    code1 = convert_from_octal_to_binary(code1, map);
-    printf("binary: %s\n", code1);
+    char* binary;
+    binary = convert_from_octal_to_binary(code1, map);
+    free(code1);
+    printf("binary: %s\n", binary);
     fputs("\nbinary: ", o);
-    fputs(code1, o);
+    fputs(binary, o);
     fputs("\n", o);
     printf("2^32:\n");
     fputs("\n\n2^32:\n", o);
@@ -538,7 +547,7 @@ int main() {
     LINK* prev_number;
     prev_number = NULL;
     bool flag_chetn = false;
-    unsigned long long old_len, len = strlen(code1);
+    unsigned long long old_len, len = strlen(binary);
     while (len > 0) {
         // printf("\nlen: %lld\n", len);
         LINK* number;
@@ -552,16 +561,16 @@ int main() {
         char* str = malloc(33 * sizeof(char));
         old_len = len;
         if (len >= 32) {
-            slice(code1, str, len-32, len);
+            slice(binary, str, len-32, len);
             len -= 32;
         } else {
-            slice(code1, str, 0, len);
+            slice(binary, str, 0, len);
             len -= len;
         }
         
         // printf("str: %s\n", str);
         PAIR(number).n = convert_to_2_in_32_system(str);
-        if (old_len == strlen(code1)) {
+        if (old_len == strlen(binary)) {
             end_number = number;
         }
         free(str);
@@ -610,7 +619,7 @@ int main() {
     print_Link_64(start_number, o);
     fputs("\n\n2^32:\n", o);
     print_Link(start_number, o);
-    free(code1);
+    // free(code1);
     code1 = convert_to_binary(end_number);
     l = strlen(code1);
     while (l % 3 != 0) {
@@ -618,11 +627,16 @@ int main() {
        code1[l++] = '\0';
        l = strlen(code1);
     }
-    code1 = my_reverse(code1);
-    printf("binary: %s\n", code1);
+    char* result;
+    result = my_reverse(code1);
+    free(code1);
+    printf("binary: %s\n", result);
     fputs("\nbinary: ", o);
-    fputs(code1, o);
-    code1 = convert_from_binary_to_octal(code1, map);
+    fputs(result, o);
+    code1 = convert_from_binary_to_octal(result, map);
+    while (code1[0] == '0') {
+        code1++;
+    }
     printf("octal: %s\n", code1);
     fputs("\noctal: ", o);
     fputs(code1, o);

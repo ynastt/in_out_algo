@@ -10,7 +10,7 @@ void generate_test_number(unsigned long long len){
     FILE* f = fopen("tests/test.txt", "w");
     srand(time(NULL));
     for (unsigned long long i = 0; i < len; i++) {
-        fprintf(f, "%d", rand()%10);
+        fprintf(f, "%d", (rand() % 9) + 1);
     }
     fclose(f);
     printf("tests/test.txt is created!\n");
@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
             char line[30];
             sprintf(line, "\n\n===iteration %d===", j);
             fputs(line, o);
-            // generate_test_number(length);
+            generate_test_number(length);
             // call general algorithm & write results in "general algorithm/output.txt"
             if (chdir("general algorithm") != 0) {
                 perror("chdir() to /general algorithm failed");
@@ -125,7 +125,7 @@ int main(int argc, char *argv[]) {
             if (chdir("new algorithm") != 0) {
                 perror("chdir() to /new algorithm failed");
             }
-            printf("NEW ALGORITHM\n");
+            printf("\n\n\nNEW ALGORITHM\n");
             system("sh build.sh");
             // read the output.txt & find result number for future comparison;
             f = fopen("output.txt", "rt");

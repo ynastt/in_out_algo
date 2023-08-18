@@ -1,25 +1,15 @@
 Number of iterations: 1
-Length of test numbers: 1
+Length of test numbers: 36
 
 
 ===iteration 1===
-SUCCESS: RESULTS ARE OK
+ERROR: RESULTS ARE DIFFERENT
 
+TEST:
+number: 123456789876543217123456781215
 10 -> 2^64
-general algorithm time: 0.0498050 
-new algorithm time: 0.0690830 
+general algorithm result: 143564420113162322263525467205637
+new algorithm result: 
 2^64 -> 10
-general algorithm time: 0.1068720 
-new algorithm time: 0.0173440 
-
-
-
-AVERAGE EXECUTION TIME:
-
-		10 -> 2^64
-general algorithm: 0.049805
-new algorithm: 0.069083
-
-		2^64 -> 10
-general algorithm: 0.106872
-new algorithm: 0.017344
+general algorithm result: 123456789876543217123456781215
+new algorithm result: 
