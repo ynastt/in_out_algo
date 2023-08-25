@@ -7,7 +7,7 @@
 #include <ctype.h>
 
 
-/*** Refal structures. ***/
+/*** Refal structure. ***/
 typedef struct link {
     char ptype; /* type of the link */  
     union {
@@ -28,12 +28,19 @@ typedef struct link {
 #define TYPE(q)    ((q)->ptype)
 #define PAIR(q)    ((q)->pair)
 
+// Вспомогательная функция получения подстроки
+// str - исходная строка, result - возвращаемая подстрока,
+// start - индекс начала подстроки в строке, 
+// end - индекс конца подстроки в строке.
 void slice(const char* str, char* result, size_t start, size_t end) {
     strncpy(result, str + start, end - start);
     result[end - start] = '\0';
     printf("result: %s\n", result);
 }
 
+
+// Вспомогательная функция получения длины строки, 
+// с проверкой, что строка состоит только из цифр.
 unsigned int my_strlen(const char *s) {
     unsigned int count = 0;
     while(*s!='\0') {
@@ -43,6 +50,8 @@ unsigned int my_strlen(const char *s) {
     return count;
 }
 
+
+// Вспомогательная функция, возвращает перевернутую строку.
 char* my_reverse(char* code) {
     long s = strlen(code);
     char* result = malloc(s);
@@ -53,16 +62,23 @@ char* my_reverse(char* code) {
     return result;
 }
 
+
+// Функция стандартного алгоритма перевода десятичного числа, 
+// записанного в строку, в восьмиричную систему счисления.
+// Возвращает строку с восьмиричной записью числа.
+// алгоритм деления на 8 столбиком и сохранение остатков от деления
 char* convert_from_decimal_to_octal(char* code, long n) {
-    bool new_step = false;
-    char* result;
+    bool new_step = false; // флаг о том, что поменялось делимое (т.е один остаток найден, продолжаем деление)
+    char* result; // восьмириная запись числа
     result = (char*)malloc((n + 2) * sizeof(char));
-    int j = 0, d;
-    char* code2;
-    char* first_two_digits;
+    int j = 0, d; //j - счетчик длины восьмиричного числа, d - очередная десятичная цифра
+    char* code2; // вспомогательная строка для записи частных при делении на 8
+    char* first_two_digits; // строка для записи очередных двух чисел десятичного числа при делении столбиком
     first_two_digits = malloc(3);
-    long digits, rem, quot, len = n;
-    int first_digit = code[0] - '0', flag = 0;
+    long digits, rem, quot, len = n; // digits - очередные две цифры, rem - остаток от деления, quot - частное, len - длина десятичного числа
+    int first_digit = code[0] - '0', flag = 0; // first_digit - первая цифра десятичного числа, flag - флаг, о виде делимого (если = 0, значит цифра 8 или 9, если =1, значит меньше 8 и нужно брать две цифры) 
+    // если первая цифра меньше 8, значит берем первые две цифры и делим на 8
+    // если 8  или 9, делим на 8
     if (first_digit < 8) {
         slice(code, first_two_digits, 0, 2);
         first_two_digits[2] = '\0';
@@ -75,12 +91,14 @@ char* convert_from_decimal_to_octal(char* code, long n) {
         flag = 1;
     } else {
         printf("first one digit: %d\n", first_digit);
-        quot = first_digit / 8; // 1;
-        rem = first_digit - quot * 8; //0;
+        quot = first_digit / 8; 
+        rem = first_digit - quot * 8; 
         printf("quot and rem: %ld, %ld\n", quot, rem);
     }
-    // for (j = 0; j < n - 1; j++) {
-    while( len != 1) {    
+    // пока делимое не будет однозначным
+    while( len != 1) {   
+        // если найден остаток и поменялось делимое (началась новая итерация),
+        // делаем то же самое с проверкй первой цифры (первых двух цифр) 
         if (new_step) {
             new_step = false;
             first_digit = code[0] - '0',
@@ -103,17 +121,17 @@ char* convert_from_decimal_to_octal(char* code, long n) {
                 flag = 0;
             }
         }
-        int k = 0;
-        printf("here11\n");
+        int k = 0; // счетчик для строки частного
         code2 = malloc(len + 1);
-        printf("here22\n");
-        code2[k++] = (int)quot + '0';
+        code2[k++] = (int)quot + '0'; //записали частное от деления первой цифры(первых двух цифр)
+        // продолжаем процесс деления столбиком
         for (int i = 1; i < len; i++) {
             printf("i: %d\n", i);
+            // если были использованы две цифры, а не одна, увеличиваем счетчик i
             if (flag == 1) {
                 i++;
                 if (i == len) {
-                    printf("here\n");
+                    // если вдруг конец числа
                     break;
                 }
             } 
@@ -121,13 +139,14 @@ char* convert_from_decimal_to_octal(char* code, long n) {
             printf("next digit: %d\n", d);
             printf("check quot and rem: %ld, %ld\n", quot, rem);
             flag = 0;
+            // если остаток от предыдущего деления не ноль, значит спускаем следующую цифру
             if (rem != 0) {
                 digits = rem * 10 + d;
                 printf(" next 2 digits: %ld\n", digits);
                 quot = digits / 8;
                 rem = digits - quot * 8;
                 printf(" quot and rem: %ld, %ld\n", quot, rem);
-                // flag = 1;
+            // иначе проверяем брать одну следующую цифоу или две
             } else {
                 if (d < 8 && i != len - 1) {
                     code2[k++] = '0';
@@ -139,22 +158,22 @@ char* convert_from_decimal_to_octal(char* code, long n) {
                     rem = digits - quot * 8;
                     printf(" quot and rem: %ld, %ld\n", quot, rem);
                     i++;
-                    // flag = 1;
                 } else {
                     printf(" next 1 digit: %d\n", d);
-                    quot = d / 8; // 1;
-                    rem = d - quot * 8; //0;
+                    quot = d / 8; 
+                    rem = d - quot * 8;
                     printf(" quot and rem: %ld, %ld\n", quot, rem); 
-                    // flag = 0; 
                 }  
             }
             code2[k++] = (int)quot + '0';
         }
+        // приписываем полученный на итерации остаток
         result[j++] =  (int)rem + '0';
         new_step = true;
         printf("current res: %s\n\n", result);
         code2[k] = '\0';
         printf("k: %d\n", k);
+        // меняем делимое (старое частное -> новое делимое)
         memcpy(code, code2, k);
         printf("---current number: %s---\n", code2);
         printf("old len: %ld\n", len);
@@ -163,6 +182,8 @@ char* convert_from_decimal_to_octal(char* code, long n) {
               
     }
     free(first_two_digits);
+
+    // когда делимое стало однозначным
     if (len == 1) {
         d = code[0] - '0';
         while (d != 0) {
@@ -179,13 +200,19 @@ char* convert_from_decimal_to_octal(char* code, long n) {
             printf("current res: %s\n\n", result);
         }
     }
+    // перевернутая восьмиричная запись 
     result[j++] =  '\0';
     printf("res: %s\n\n", result);
     free(code2);
     return result;
 }
 
-// из 8-й в 2-ю с.с 
+
+// Функция перевода из восьмиричного числа, записанного 
+// в строку code, в двоичную систему счисления.
+// Возвращает строку res с двоичной записью числа.
+// map[] - это массив, где элемент соответствует двоичной строке индекса
+// т.е. map[0] = "000", map[1] = "001", ... , map[7] = "111".
 char* convert_from_octal_to_binary(char* code, char* map[]) {
     char* res;
     int len = strlen(code);
@@ -203,7 +230,10 @@ char* convert_from_octal_to_binary(char* code, char* map[]) {
     return res;
 }
 
-// аргументом функции является строка длинной <= 32 символа
+// Функция перевода двоичных строк длинной до 32 символов
+// в макро-цифры в системе счисления по основанию 2^32.
+// Аргументом функции является строка code длинной <= 32 символа.
+// Функция возвращает число res в системе по основанию 2^32.
 unsigned long convert_to_2_in_32_system(char* code) {
     unsigned long res = 0;
     unsigned long cur;
@@ -221,9 +251,8 @@ unsigned long convert_to_2_in_32_system(char* code) {
     return res;
 }
 
-// Поскольку я заполняю структуры в направлении с конца в начало,
-// то при печати в направлении с начала в конец испольщуется PREV, а не NEXT
-// но это можно поправить и сделать наоборот, если критично.
+// Функция печати макро-цифр в системе 2^32 
+// в файл (если указан аргумент не null), иначе в стандартный поток вывода
 void print_Link(LINK* l, FILE* output){
     // printf("\nis link null:%u\n", l == NULL);
     if (output != NULL) {
@@ -242,6 +271,8 @@ void print_Link(LINK* l, FILE* output){
     }
 }
 
+// Функция печати макро-цифр в системе 2^64 
+// в файл (если указан аргумент не null), иначе в стандартный поток вывода
 void print_Link_64(LINK* l, FILE* output) {
     if (output != NULL) {
         if (l != NULL && PREV(l) != NULL) {
@@ -519,49 +550,55 @@ char* my_pow(int base, unsigned long long deg) {
 }
 
 int main() {
-    clock_t t;
+    clock_t t;  // Переменная для отсчета времени выполнения алгоритмов.
     t = clock();
-    FILE * f = fopen("../tests/test.txt", "rt");
-    char *code;
-    char *res;
-    char *code2;
-    size_t n = 0, m = 0, k = 0;
-    int c;
-    LINK* start_number = (LINK*)malloc(sizeof(LINK));
-    LINK* end_number;
-    LINK* prev_number;
+    FILE * f = fopen("../tests/test.txt", "rt"); // f - указатель на тестовый файл.
+    char *code; // Строка для хранения десятичной записи числа.
+    char *res; // Вспомогательная строка для получения перевернутой восьмиричной записи числа.
+    char *code2; // Вспомогательная строка для хранения десятичной записи числа.
+    char* binary; // Строка для хранения двоичной записи числа
+    size_t n = 0, m = 0; // Счетчики для считывания файла и заполнения строк code и code2.
+    int c; // переменная для посимвольного считывания их файла
+    LINK* start_number = (LINK*)malloc(sizeof(LINK)); // первая макро-цифра
+    LINK* end_number;  // последняя макро-цифра
+    LINK* prev_number; // предыдущая макро-цифра - вспомогательная переменная
     prev_number = NULL;
-    bool flag_chetn = false;
-    unsigned long long old_len, len;
+    bool flag_chetn = false; // флаг четности для заполнения структур link в смысле 2^64
+    unsigned long long old_len, len; // old_len - длина бинарной записи числа, len - длина бинарной записис числа - вспомогательная
 
     if (f == NULL) {
-        perror("Error: ");
+        perror("Error: There is no such file or file has an error.");
         return(-1);
     }
+    // Установка указателя положения в файле на конец файла
     fseek(f, 0, SEEK_END);
-    long f_size = ftell(f);
+    // ftell(f) возвращает текущее значение указателя положения в файле 
+    // Таким образом, получаем длину файла = длине десятичного числа 
+    unsigned long f_size = ftell(f); // Длина входного десятичного числа
+    // Установка указателя положения в файле на начало файла
     fseek(f, 0, SEEK_SET);
+
     printf("==== IN ALGORITHM ====\n");
     printf("size of file: %ld\n", f_size);
-
     
     code = malloc(f_size + 1);
     code2 = malloc(f_size + 1);
     while ((c = fgetc(f)) != EOF) {
-        code[n++] = (char)c;
-        code2[m++] = (char)c;
-        // printf("char: %c\n", (char)c);
+        code[n++] = code2[m++] = (char)c;
     }
-    code[n] = '\0'; 
-    code2[m] = '\0'; 
+    code[n] = code2[m] = '\0';
+    fclose(f);
 
+    // перевод 10 -> 8
     res = convert_from_decimal_to_octal(code2, f_size);
     long s = strlen(res);
+    // поскольку res - перевернутая запись, делаем реверс
     char* result = my_reverse(res);
     free(res);
     free(code2);
     result[(strlen(result) + 1)] = '\0';
-    fclose(f);
+
+    // запись в файл и лог 10 и 8
     printf("\ndecimal number: %s\n", code);
     printf("octal number: %s\n", result);
     FILE * o = fopen("output.txt", "w");
@@ -570,54 +607,74 @@ int main() {
     free(code);
     fputs("\noctal: ", o);
     fputs(result, o);
-    char* map[] = { "000", "001", "010", "011", "100", "101", "110", "111"};  
-    code2 = convert_from_octal_to_binary(result, map);
+    
+    // массив для перевода 8 -> 2
+    // каждому индексу(цифре 8 с.с) соотвествует ее бинарная запись
+    char* map[] = {"000", "001", "010", "011", "100", "101", "110", "111"}; 
+    // перевод 8 -> 2
+    binary = convert_from_octal_to_binary(result, map);
     free(result);
-    printf("\nbinary: %s\n", code2);
-    printf("len: %ld\n", strlen(code2));
-    code2[(strlen(code2) + 1)] = '\0';
+    // запись в файл и лог 2
+    printf("\nbinary: %s\n", binary);
+    len = strlen(binary);
+    printf("len: %lld\n", len);
+    binary[(strlen(binary) + 1)] = '\0';
     fputs("\nbinary: ", o);
-    fputs(code2, o);
+    fputs(binary, o);
+
+    // перевод 2 -> 2^32
     printf("2^32:\n");
     fputs("\n\n2^32:\n", o);
-    len = strlen(code2);
-    printf("code: %s, len: %lld\n", code2, len);
+
+    // идем по строке (бинарной записи) числа, отщепляя с конца подстроки по 32 символа,
+    // поэтому макро-цифры записываются в порядке справа налево, т.е.
+    //              PREV
+    //              --->
+    // macro-digit2 <--- macro-digit1
+    //              NEXT
+
     while (len > 0) {
         // printf("\nlen: %lld\n", len);
-        LINK* number;
+        LINK* number; // очередная макро-цифра
         number = (LINK*)malloc(sizeof(LINK));
+        // если предыдущая макро-цифра была, значит создаем связь NEXT
         if (prev_number != NULL) {
             NEXT(prev_number) = number;
-            // printf("link nxt of prev: %ld\n", prev_number->foll->pair.n);
         }
+        // тип digit - 'd'
         TYPE(number) = 'd';
+        // создаем связь PREV
         PREV(number) = prev_number;
-        char* str = malloc(33 * sizeof(char));
+        char* str = malloc(33 * sizeof(char)); // строка в 32 символа
         old_len = len;
+        // если бинарная строка больше 32 символов или 32 символа
         if (len >= 32) {
-            slice(code2, str, len-32, len);
+            slice(binary, str, len-32, len);
             len -= 32;
+        // если бинарная строка меньше 32 символов
         } else {
-            printf("code: %s, len: %ld\n", code2, strlen(code2));
-            slice(code2, str, 0, len);
+            slice(binary, str, 0, len);
             len -= len;
         }
-        
         printf("str: %s\n", str);
+        // записываем макро-цифру в поле pair.n
+        // макро-цифра вычисляется с помощью перевода 2->2^32
         PAIR(number).n = convert_to_2_in_32_system(str);
         free(str);
-        if (old_len == strlen(code2)) {
+        
+        // сохраняем последнюю (первую с конца бинарной записи) макро-цифру,
+        // это необходимо для дальнейшего перевода 2^32 -> 2
+        if (old_len == strlen(binary)) {
             end_number = number;
         }
-        // printf("link type: %c\n", number->ptype);
-        // printf("link n:%ld\n", number->pair.n);
-        // printf("link prec is null?:%u\n", number->prec == NULL);
         prev_number = number;
-        // printf("\nis prev_link null_1:%u\n", prev_number == NULL);
-        
+        // меняем флаг четности
         flag_chetn = !flag_chetn;
     }
-    
+    // когда вся бинарная строка пройдена, делаем проверку. нужен ли незначащий ноль
+    // если нужен - добавляем
+    // отмечаем первую (последнюю с конца бинарной строки) макро-цифру
+    // это необходимо для функций print_Link, print_Link_64
     if (len == 0) {
         if (flag_chetn) {
             LINK* number = (LINK*)malloc(sizeof(LINK));
@@ -632,12 +689,15 @@ int main() {
             start_number = prev_number;
         }
     }
+    // печать макро-цифр 2^32
     print_Link(start_number, NULL);
     print_Link(start_number, o);
+    // печать макро-цифр 2^64
     printf("\n2^64:\n");
     fputs("\n2^64:\n", o);
     print_Link_64(start_number, NULL);
     print_Link_64(start_number, o);
+    // отмечаем время выполнения алгоритма
     t = clock() - t;
     double time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
     printf("\nin algorithm took %f seconds to execute \n", time_taken);
@@ -646,59 +706,62 @@ int main() {
     sprintf(time_arr, "%2.7f", time_taken);
     fputs(time_arr, o);
     fputs(" seconds to execute \n", o);
-    printf("\n==== OUT ALGORITHM ====\n");
-    fputs("\n===OUT===\n2^64:\n", o);
-    print_Link_64(start_number, o);
-    fputs("\n\n2^32:\n", o);
-    print_Link(start_number, o);
-    t = clock();
-    free(code2);
-    code2 = convert_to_binary(end_number);
-    printf("code2: %s\n", code2);
-    long long l = strlen(code2);
-    while (l % 3 != 0) {
-       code2[l++] = '0';
-       code2[l++] = '\0';
-       l = strlen(code2);
-    }
-    code2 = my_reverse(code2);
-    fputs("\nbinary: ", o);
-    printf("binary: %s\n", code2);
-    fputs(code2, o);
-    code2 = convert_from_binary_to_octal(code2, map);
-    printf("octal: %s\n", code2);
-    fputs("\noctal: ", o);
-    fputs(code2, o);
-    size_t size = strlen(code2);
-    printf("size: %ld\n", size);
-    int deg = 0, d = 0;
 
-    char* dec = (char*) malloc((size + 1) * sizeof(char));
-    for (int i = size - 1; i >= 0; i--) {
-        d = code2[i] - '0';
-        printf("\td: %d\n", d);
-        printf("\tpow(8, deg): %s\n", my_pow(8, deg));
 
-        char* num = large_mul_digit(d, my_pow(8, deg));
+    // printf("\n==== OUT ALGORITHM ====\n");
+    // fputs("\n===OUT===\n2^64:\n", o);
+    // print_Link_64(start_number, o);
+    // fputs("\n\n2^32:\n", o);
+    // print_Link(start_number, o);
+    // t = clock();
+    // free(binary);
+    // code2 = convert_to_binary(end_number);
+    // printf("code2: %s\n", code2);
+    // long long l = strlen(code2);
+    // while (l % 3 != 0) {
+    //    code2[l++] = '0';
+    //    code2[l++] = '\0';
+    //    l = strlen(code2);
+    // }
+    // code2 = my_reverse(code2);
+    // fputs("\nbinary: ", o);
+    // printf("binary: %s\n", code2);
+    // fputs(code2, o);
+    // code2 = convert_from_binary_to_octal(code2, map);
+    // printf("octal: %s\n", code2);
+    // fputs("\noctal: ", o);
+    // fputs(code2, o);
+    // size_t size = strlen(code2);
+    // printf("size: %ld\n", size);
+    // int deg = 0, d = 0;
 
-        printf("\tnum: %s\n", num);
-        ++deg;
-        dec = large_addition(dec, num); 
-        printf("\t\tcurrent res: %s\n", dec);
-    }
-    dec[strlen(dec) + 1] = '\0';
-    printf("decimal: %s\n", dec);
-    fputs("\ndecimal: ", o);
-    fputs(dec, o);
-    free(dec);
-    t = clock() - t;
-    time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
-    printf("\nout algorithm took %f seconds to execute \n", time_taken);
-    fputs("\nout algorithm took ", o);
-    sprintf(time_arr, "%2.7f", time_taken);
-    fputs(time_arr, o);
-    fputs(" seconds to execute \n", o);
+    // char* dec = (char*) malloc((size + 1) * sizeof(char));
+    // for (int i = size - 1; i >= 0; i--) {
+    //     d = code2[i] - '0';
+    //     printf("\td: %d\n", d);
+    //     printf("\tpow(8, deg): %s\n", my_pow(8, deg));
+
+    //     char* num = large_mul_digit(d, my_pow(8, deg));
+
+    //     printf("\tnum: %s\n", num);
+    //     ++deg;
+    //     dec = large_addition(dec, num); 
+    //     printf("\t\tcurrent res: %s\n", dec);
+    // }
+    // dec[strlen(dec) + 1] = '\0';
+    // printf("decimal: %s\n", dec);
+    // fputs("\ndecimal: ", o);
+    // fputs(dec, o);
+    // free(dec);
+    // t = clock() - t;
+    // time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
+    // printf("\nout algorithm took %f seconds to execute \n", time_taken);
+    // fputs("\nout algorithm took ", o);
+    // sprintf(time_arr, "%2.7f", time_taken);
+    // fputs(time_arr, o);
+    // fputs(" seconds to execute \n", o);
     fclose(o);
-    free(code2);
+    free(start_number);
+    // free(code2);
     return 0;
 }
