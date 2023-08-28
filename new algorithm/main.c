@@ -46,15 +46,17 @@ char* my_reverse(char* code) {
     return result;
 }
 
+// Функция умножения на 2 в десятичной арифметике
 char* mul_x_2(char* code, long n) {
     printf("\nMULX2: code %s\n", code );
-    char c;
-    int i;
-    char* code1;
+    char c; // очередная цифра (код символа)
+    int i; // счетчик по строке 
+    char* code1; // результат умножения на 2
     code1 = calloc(n + 1, sizeof(char));
-    long digit, dec, res;
-    long carry = 0;
-    code1[0] = '0';
+    long digit, dec, res; // очередная цифра, десяток, результат сложения
+    long carry = 0; // десяток на случай переноса в старший разряд
+    code1[0] = '0'; // в старший разряд пишем 0, если потом будет перенос, ноль заменится на цифру
+    // идем с конца строки
     for (i = n - 1; i >= 0; i--) {
         c = code[i];
         char *pChar = &c;
@@ -62,6 +64,7 @@ char* mul_x_2(char* code, long n) {
         printf("\tmul_x_2_>: digit %ld\n", digit);
         digit = digit * 2;
         printf("\tmul_x_2_>: digitx2 %ld\n", digit);
+        // если результат умножения на 2 больше 9, то делаем перенос в старший разряд
         dec = digit / 10;
         res = digit%10 + carry;
         if (res > 9) {
@@ -71,6 +74,7 @@ char* mul_x_2(char* code, long n) {
             code1[i + 1] = res + '0';
         }
         printf("\tmul_x_2_>: digit code %c\n", code1[i]);
+        // если перенос в старший разряд, то обновляем значение carry
         if (dec > 0) {
             carry = dec;
         } else {
@@ -78,6 +82,7 @@ char* mul_x_2(char* code, long n) {
         }
         printf("\tmul_x_2_>: carry %ld, ost: %ld\n", dec, digit%10);
     }
+    // когда дошли до коцна строки, проверяем, есть ли перенос в самый старший разряд
     if (i == -1 && carry > 0) {
         printf("mul_x_2_>: PLUS CARRY\n");
         code1[0] = (long)(code1[0] - '0') + carry + '0';
@@ -87,15 +92,17 @@ char* mul_x_2(char* code, long n) {
     return code1;
 }
 
+// Функция умножения на 2 в восьмиричной арифметике
 char* mul_x_2_octal(char* code, long n) {
     printf("\nMULX2: code %s\n", code );
-    char c;
-    int i;
-    char* code1;
+    char c; // очередная цифра (код символа)
+    int i; // счетчик по строке 
+    char* code1; // результат умножения на 2
     code1 = calloc(n + 1, sizeof(char));
-    long digit, dec, res;
-    long carry = 0;
-    code1[0] = '0';
+    long digit, dec, res; // очередная цифра, десяток, результат сложения
+    long carry = 0; // десяток на случай переноса в старший разряд
+    code1[0] = '0'; // в старший разряд пишем 0, если потом будет перенос, ноль заменится на цифру
+    // идем с конца строки
     for (i = n - 1; i >= 0; i--) {
         c = code[i];
         char *pChar = &c;
@@ -103,6 +110,8 @@ char* mul_x_2_octal(char* code, long n) {
         printf("\tdigit %ld\n", digit);
         digit = digit * 2;
         printf("\tdigitx2 %ld\n", digit);
+        // если результат умножения цифры на 2 больше 7, 
+        // то делаем перенос в старший разряд
         dec = digit / 8;
         res = digit%8 + carry;
         if (res > 9) {
@@ -112,6 +121,7 @@ char* mul_x_2_octal(char* code, long n) {
             code1[i + 1] = res + '0';
         }
         printf("\tdigit code %c\n", code1[i]);
+        // если перенос в старший разряд, то обновляем значение carry
         if (dec > 0) {
             carry = dec;
         } else {
@@ -119,6 +129,8 @@ char* mul_x_2_octal(char* code, long n) {
         }
         printf("\tcarry %ld, ost: %ld\n", dec, digit%10);
     }
+    // когда дошли до коцна строки, проверяем, 
+    // есть ли перенос в самый старший разряд
     if (i == -1 && carry > 0) {
         printf("PLUS CARRY\n");
         code1[0] = (long)(code1[0] - '0') + carry + '0';
@@ -128,14 +140,22 @@ char* mul_x_2_octal(char* code, long n) {
     return code1;
 }
 
+// Функция сложения в восьмиричной арифметике
 char* my_octal_add(char* code1, char* code2, long n) {
-    char *code;
-    char c1, c2;
+    char *code; // результат суммы
+    char c1, c2; // очередные цифры (коды символов) чисел
     int digit, digit1, digit2, sd, dec, res, carry = 0;
+    // digit - результат суммы цифр digit1 и digit2
+    // digit1 и digit2 - очередные цифры чисел code1 и code2, 
+    // sd -цифра в старшем разряде
+    // dec - десяток результата суммы двух цифр, 
+    //res - цифра в текущем разряде суммы, 
+    // carry - десяток, который переносится в старший разряд
     code = calloc(n+1, sizeof(char));
     printf("\nOCTAL ADD: first: %s\n", code1);
     printf("OCTAL ADD: second: %s\n", code2);
     unsigned long long i, len1 = strlen(code1), len2 = strlen(code2);
+    // i -счетчик по строке, len1 и len2 - длины чисел
     c1 = code1[0];
     printf("OCTAL ADD: first char from start: %c\n", c1);
     sd = c1-'0';
@@ -143,7 +163,9 @@ char* my_octal_add(char* code1, char* code2, long n) {
     printf("len1: %lld\n", len1);
     printf("len2: %lld\n", len2);
     code[0] = sd + '0';
+    // если числа равной длины
     if (len1 == len2) {
+        // идем с конца, складываем столбиком
         for (i = len1 - 1; i > 0; i--) {
             printf("i: %lld\n", i);
             c1 = code1[i];
@@ -155,8 +177,10 @@ char* my_octal_add(char* code1, char* code2, long n) {
             printf("\tfirst digit: %d\n", digit1);
             printf("\tsecond digit: %d\n", digit2);
             digit = digit1 + digit2;
+            // у результата суммы цифр берем десяток и остаток + перенос (если есть) с предыдущего разряда
             dec = digit / 8;
             res = digit%8 + carry;
+            // если результат больше 7, берем остаток от деления на 8
             if (res > 7) {
                 dec = res /8;
                 code[i] = (res%8) + '0';
@@ -164,17 +188,16 @@ char* my_octal_add(char* code1, char* code2, long n) {
                 code[i] = res + '0';
             }
             printf("\tdigit code %c\n", (char)code[i]);
+            // обновляем carry для переноса в следующий разряд
             if (dec > 0) {
                 carry = dec;
             } else {
                 carry = 0;
             }
             printf("\tcarry %d\n", dec);
+            // проверяем, если в старший разряд нужен перенос десятка
             if (dec > 0 && i == 1) {
                 code[0] = sd + carry + '0';
-                // res = (sd + carry)%8;
-                // code[0] = res + '0';
-                // carry = (sd + carry)/8;
             }
         } 
         if (sd != 0) {
@@ -185,6 +208,7 @@ char* my_octal_add(char* code1, char* code2, long n) {
             code[0] = sd + (code2[0] - '0') + carry + '0';
         }
         code[n] = '\0';
+        // если после всего carry не ноль, значит нужно увеличить память и сделать еще один перенос в старший разряд
         if (carry > 0) {
             char* new_code = calloc((n + 1), sizeof(char));
             new_code[0] = carry + '0';
@@ -199,12 +223,16 @@ char* my_octal_add(char* code1, char* code2, long n) {
         return code;
     }
 
+    // если числа не равны, значит len1 > len2
+    // цифры, не участвующие в сложении, просто переносим 
     for (i = n - 1; i > len2; i--) {
         code[i] = code1[i];
         printf("code[i]: %c\n", (char)code1[i]);
     }
+    // числа, которые участвуют в сложении
     for (i = len2; i > 0; i--) {
         printf("i: %lld\n", i);
+        // берем цифры двух чисел
         c1 = code1[i];
         printf("OCTAL ADD: first char: %c\n", c1);
         c2 = code2[i - 1];
@@ -213,9 +241,11 @@ char* my_octal_add(char* code1, char* code2, long n) {
         digit2 = c2-'0'; 
         printf("\tfirst digit: %d\n", digit1);
         printf("\tsecond digit: %d\n", digit2);
+        // складываем
         digit = digit1 + digit2;
         dec = digit / 8;
         res = digit%8 + carry;
+        // если больше 7, надо брать остаток от деления на 7 и делать перенос в старший разряд
         if (res > 7) {
             dec = res /8;
             code[i] = (res%8) + '0';
@@ -223,12 +253,14 @@ char* my_octal_add(char* code1, char* code2, long n) {
             code[i] = res + '0';
         }
         printf("\tdigit code %c\n", (char)code[i]);
+        // Обновляем  carry  для переноса в более старший разряд
         if (dec > 0) {
             carry = dec;
         } else {
             carry = 0;
         }
         printf("\tcarry %d\n", dec);
+        // перенос в самый старший разряд, если нужен 
         if (carry > 0 && i == 1) {
             printf("need extra first digit\n");
             res = (sd + carry)%8;
@@ -240,6 +272,8 @@ char* my_octal_add(char* code1, char* code2, long n) {
         }
     } 
     code[n] = '\0';
+    // если после всего carry не ноль, значит нужно увеличить память и 
+    // сделать еще один перенос в старший разряд
     if (carry > 0) {
         char* new_code = calloc((n + 1), sizeof(char));
         new_code[0] = carry + '0';
@@ -466,29 +500,33 @@ char* convert_from_binary_to_octal(char* code, char* map[]) {
     return res;
 }
 
+// Функция вычитания code2 из code1 в десятичной арифметике
 char* my_decimal_sub(char* code1, char* code2, long n) {
-    char *code;
+    char *code; // результат разности
     int digit, digit1, digit2, sd, dec, res, carry = 0;
     code = calloc(n + 1, sizeof(char));
     printf("\nDEC SUB: first: %s\n", code1);
     printf("DEC SUB: second: %s\n", code2);
-    sd = code1[0] - '0';
+    sd = code1[0] - '0'; // старший разряд первого числа
     printf("\tmy_decimal_sub_>: first digit from start: %d\n", sd);  
     code[0] = sd + '0';
+    // идем с конца и вычитаем столбиком
     for (int i = n - 1; i > 0; i--) {
         digit1 = code1[i]-'0'; 
         digit2 = code2[i]-'0'; 
         printf("\tmy_decimal_sub_>: first digit: %d\n", digit1);
         printf("\tmy_decimal_sub_>: second digit: %d\n", digit2);
         digit = digit1 - digit2 - carry;
+        // если разность меньше 0, значит надо занять десяток из старшего разряда
         if (digit < 0) {
-            carry = 1;
+            carry = 1; // отмечаем, что заняли десяток из разряда старше
             code[i] = (digit + 10) + '0';
         } else {
             carry = 0;
             code[i] = digit + '0';
         }
         printf("\tmy_decimal_sub_>: digit code %c\n", (char)code[i]);
+        // В старшем разряде не забываем вычесть carry, если занимали десяток
         if (carry != 0 && i == 1) {
             code[0] = sd - carry + '0';
         }
@@ -498,6 +536,7 @@ char* my_decimal_sub(char* code1, char* code2, long n) {
     return code;
 }
 
+// Функциягенерации псевдослучайных тестовых чисел длины len.
 void generate_test_number(unsigned long long len){
     FILE* f = fopen("../tests/test.txt", "w");
     srand(time(NULL));
@@ -548,18 +587,24 @@ int main() {
 
     code[n] = '\0'; 
     code1[m] = '\0'; 
-    unsigned long cursor = 0;
-    unsigned long long ll = 0, l = 0;
-    bool flag = false;
+    // перевод 10 -> 8
+    unsigned long cursor = 0; // точка, до которой берется число 
+    unsigned long long ll = 0, l = 0; // старая длина, новая длина
+    bool flag = false; // флаг, что изменилась длина
+    char* help; // вспомогательная строка для перевыделения памяти
+    char* adds; // строка для хранения суммы удвоенного с текущим числом
+
+    // идем по строке, двигая точку (курсор)
     for (unsigned long i = 1; i < f_size; i++) {
         cursor = i + 1;
-        char* todigits;
-        todigits = calloc(f_size + 1, sizeof(char));
+        char* todigits; // для записи числа до точки
+        todigits = calloc(f_size + 1, sizeof(char));        
         if (l > ll) {
+            // если после итерации поменялась длина, то выделяем больше памяти и двигаем курсор
             ll = l;
             flag = true;
             cursor += 1;
-            char* help = (char*)calloc((l + 1), sizeof(char));
+            help = (char*)calloc((l + 1), sizeof(char));
             memcpy(help, code1, l + 1);
             printf("help: %s\n", help);
             code1 = (char*)realloc(code1, l + 1);
@@ -568,10 +613,12 @@ int main() {
             slice(code1, todigits, 0, cursor - 1);
             todigits[cursor - 1] = '\0';
         } else if (flag) {
+            // если было изменение длины, flag = true, то на итерациях курсор сдвигается дальше
             cursor += 1;
             slice(code1, todigits, 0, cursor - 1);
             todigits[cursor - 1] = '\0';
         } else {
+            // иначе курсор не меняется, слайс берется как обычно
             slice(code1, todigits, 1, cursor);
             todigits[cursor] = '\0';
         }
@@ -579,22 +626,27 @@ int main() {
         
         printf("code: %s\n", code1);
         printf("tidigits: %s\n", todigits);
+        // сохраняем старую длину
         if (code1[0] != '0') {
             ll = strlen(code1);
         } else {
             ll = strlen(code1) - 1;
         }
         printf("old: %lld, new: %lld\n", ll, l);
+        // умножаем на 2 число до точки
+        // в восьмиричной системе
         char* tmp = calloc(f_size + 1, sizeof(char));
         tmp = mul_x_2_octal(todigits, strlen(todigits));
         printf("tmp: %s\n", tmp);
         if (flag) {
+            // убираем незначащие нули
             while (tmp[0] == '0') tmp++;
         }
-        char* adds;
+        // складываем в восьмиричной системе
         adds = my_octal_add(code1, tmp, f_size + 1);
         memcpy(code1, adds, strlen(adds));
         free(adds);
+        // сохраняем новую длину
         if (code1[0] != '0') {
             l = strlen(code1);
         } else {
@@ -757,24 +809,31 @@ int main() {
     size_t size = strlen(octal);
 
     // перевод из 8 в 10
+    char* todigits; // строка для хранения записи числа, которое будет удвоено
+    char* tmp; // строка с удвоенной записью числа
+    char* subs; // результат вычитания
     for (int i = 0; i < size; i++) {
         cursor = i + 1;
         if (cursor == size) {
             break;
         }
         // printf("\ncurrent digit char: %c\n", octal[i]);
-        char* todigits;
+
+        // записываем число до точки (курсора)
         todigits = calloc(size + 1, sizeof(char));
         slice(octal, todigits, 0, cursor);
         todigits[cursor] = '\0';
         // printf("cur: %s\n", todigits);
-        char* tmp;
+
+        // умножаем на 2 в десятичной арифметике
         tmp = calloc(size + 1, sizeof(char));
         tmp = mul_x_2(todigits, size - 1);
         // printf("tmp: %s\n", tmp);
-        char* subs;
+
+        // вычитаем из предыдущей записи в десятичной арифметике
         subs = my_decimal_sub(octal, tmp, size);
         subs[size + 1] = '\0';
+        // записываем результат шага в octal
         memcpy(octal, subs, size + 1);
         free(subs);
         free(todigits);
