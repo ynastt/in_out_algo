@@ -53,7 +53,7 @@ unsigned int my_strlen(const char *s) {
 // Вспомогательная функция, возвращает перевернутую строку.
 char* my_reverse(char* code) {
     long s = strlen(code);
-    char* result = malloc(s + 1);
+    char* result = calloc(s + 1, sizeof(char));
     for (int i = 0; i < s; i++) {
         result[i] = code[s - 1 - i];
     }
@@ -69,11 +69,11 @@ char* my_reverse(char* code) {
 char* convert_from_decimal_to_octal(char* code, long n) {
     bool new_step = false; // флаг о том, что поменялось делимое (т.е один остаток найден, продолжаем деление)
     char* result; // восьмириная запись числа
-    result = (char*)malloc((n + 2) * sizeof(char));
+    result = (char*)calloc((n + 2), sizeof(char));
     int j = 0, d; //j - счетчик длины восьмиричного числа, d - очередная десятичная цифра
     char* code2; // вспомогательная строка для записи частных при делении на 8
     char* first_two_digits; // строка для записи очередных двух чисел десятичного числа при делении столбиком
-    first_two_digits = malloc(3);
+    first_two_digits = calloc(3, sizeof(char));
     long digits, rem, quot, len = n; // digits - очередные две цифры, rem - остаток от деления, quot - частное, len - длина десятичного числа
     int first_digit = code[0] - '0', flag = 0; // first_digit - первая цифра десятичного числа, flag - флаг, о виде делимого (если = 0, значит цифра 8 или 9, если =1, значит меньше 8 и нужно брать две цифры) 
     // если первая цифра меньше 8, значит берем первые две цифры и делим на 8
@@ -94,11 +94,17 @@ char* convert_from_decimal_to_octal(char* code, long n) {
         rem = first_digit - quot * 8; 
         printf("quot and rem: %ld, %ld\n", quot, rem);
     }
+    int k = 0; // счетчик для строки частного
+    code2 = calloc(len + 2, sizeof(char));
+    //записали частное от деления первой цифры(первых двух цифр)
+    code2[k++] = (int)quot + '0';
     // пока делимое не будет однозначным
     while( len != 1) {   
         // если найден остаток и поменялось делимое (началась новая итерация),
         // делаем то же самое с проверкй первой цифры (первых двух цифр) 
         if (new_step) {
+            // free(code2);
+            code2 = calloc(len + 2, sizeof(char));
             new_step = false;
             first_digit = code[0] - '0',
             flag = 0;
@@ -111,7 +117,6 @@ char* convert_from_decimal_to_octal(char* code, long n) {
                 rem = digits - quot * 8;
                 printf("quot and rem: %ld, %ld\n", quot, rem);
                 flag = 1;
-                free(code2);
             } else {
                 printf("first 1 digit: %d\n", first_digit);
                 quot = first_digit / 8; // 1;
@@ -119,10 +124,10 @@ char* convert_from_decimal_to_octal(char* code, long n) {
                 printf("quot and rem: %ld, %ld\n", quot, rem);
                 flag = 0;
             }
+            k = 0;
+            //записали частное от деления первой цифры(первых двух цифр)
+            code2[k++] = (int)quot + '0';
         }
-        int k = 0; // счетчик для строки частного
-        code2 = malloc(len + 1);
-        code2[k++] = (int)quot + '0'; //записали частное от деления первой цифры(первых двух цифр)
         // продолжаем процесс деления столбиком
         for (int i = 1; i < len; i++) {
             printf("i: %d\n", i);
@@ -145,7 +150,7 @@ char* convert_from_decimal_to_octal(char* code, long n) {
                 quot = digits / 8;
                 rem = digits - quot * 8;
                 printf(" quot and rem: %ld, %ld\n", quot, rem);
-            // иначе проверяем брать одну следующую цифоу или две
+            // иначе проверяем брать одну следующую цифру или две цифры
             } else {
                 if (d < 8 && i != len - 1) {
                     code2[k++] = '0';
@@ -175,6 +180,7 @@ char* convert_from_decimal_to_octal(char* code, long n) {
         // меняем делимое (старое частное -> новое делимое)
         memcpy(code, code2, k);
         printf("---current number: %s---\n", code2);
+        free(code2);
         printf("old len: %ld\n", len);
         len = k;
         printf("len: %ld\n", len);
@@ -202,7 +208,6 @@ char* convert_from_decimal_to_octal(char* code, long n) {
     // перевернутая восьмиричная запись 
     result[j++] =  '\0';
     printf("res: %s\n\n", result);
-    free(code2);
     return result;
 }
 
@@ -215,7 +220,7 @@ char* convert_from_decimal_to_octal(char* code, long n) {
 char* convert_from_octal_to_binary(char* code, char* map[]) {
     char* res;
     int len = strlen(code);
-    res = malloc(len * 3 + 1);
+    res = calloc(len * 3 + len, sizeof(char));
     strcpy(res, "");
     for (int i = 0; i < len; i++) {
         printf("%d - %c\n", i, (char)code[i]);
@@ -224,7 +229,7 @@ char* convert_from_octal_to_binary(char* code, char* map[]) {
         strncat(res, map[c], 3);
         printf("cur res: %s\n", res);
     }
-    res[len * 3 + 1] = '\0';
+    res[strlen(res) + 1] = '\0';
     printf("bin_res: %s\n", res);
     return res;
 }
@@ -256,7 +261,7 @@ void print_Link(LINK* l, FILE* output){
     // printf("\nis link null:%u\n", l == NULL);
     if (output != NULL) {
         if (l != NULL) {
-            char* digit = malloc(20);
+            char* digit = calloc(30, sizeof(char));
             sprintf(digit, "%ld", PAIR(l).n);
             fputs(digit, output);
             fputs("\n", output);
@@ -277,8 +282,8 @@ void print_Link_64(LINK* l, FILE* output) {
         if (l != NULL && PREV(l) != NULL) {
             unsigned long senior = l->pair.n;
             unsigned long junior = l->prec->pair.n;
-            char* macrodigit = malloc(40);
-            char* jun = malloc(20);
+            char* macrodigit = calloc(60, sizeof(char));
+            char* jun = calloc(30, sizeof(char));
             sprintf(macrodigit, "%ld", senior);
             sprintf(jun, "%ld", junior);
             strcat(macrodigit, jun);
@@ -291,8 +296,8 @@ void print_Link_64(LINK* l, FILE* output) {
             unsigned long junior = l->prec->pair.n;
             // printf("link: %ld\n", senior);
             // printf("prev: %ld\n", junior);
-            char* macrodigit = malloc(40);
-            char* jun = malloc(20);
+            char* macrodigit = calloc(60, sizeof(char));
+            char* jun = calloc(30, sizeof(char));
             sprintf(macrodigit, "%ld", senior);
             sprintf(jun, "%ld", junior);
             strcat(macrodigit, jun);
@@ -310,7 +315,7 @@ char* convert_to_binary(LINK* l) {
     char* buffer; //  вспомогательный буфер для перевыделения памяти 
     int i = 0; //счетчик
     unsigned long long length = 1; // длина бинарной строки
-    res = malloc(1 * sizeof(char));
+    res = calloc(2, sizeof(char));
     strcpy(res, "");
     unsigned long digit; // цифра из структуры LINK
     int k = 0; // счетчик итераций
@@ -333,7 +338,7 @@ char* convert_to_binary(LINK* l) {
             res[length + 1] = '\0';
         } else {
             // если не ноль, берем остатки от деления на 2
-            b = (char*)malloc(33 * sizeof(char));
+            b = (char*)calloc(33, sizeof(char));
             for (i = 0; digit > 0; i++) {    
                 b[i]= (digit % 2) + '0';    
                 printf("digit: %ld, ost: %c\n", digit, (char)b[i]); 
@@ -343,7 +348,7 @@ char* convert_to_binary(LINK* l) {
             printf("b: %s\n", b);
             long s = strlen(b);
             // переворачиваем последовательность остатков от деления на 2
-            char* binary = (char*)malloc((s + 1)* sizeof(char));
+            char* binary = (char*)calloc((s + 1), sizeof(char));
             binary[s] = '\0';
             for (i = 0; i < s; i++) {
                 binary[i] = b[s - 1 - i];
@@ -419,7 +424,7 @@ char* convert_from_binary_to_octal(char* code, char* map[]) {
     return res;
 }
 
-// функция для сложения столбиком
+// вспомогательная функция для сложения столбиком двух чисел
 char* large_addition(char* num1, char* num2) {
     printf("FIRST: %s\nSECOND %s\n", num1, num2);
     char* num_1;
@@ -506,18 +511,19 @@ char* large_addition(char* num1, char* num2) {
     return res;
 }
 
+// Вспомогательная функция умножения числа num на цифру d
 char* large_mul_digit(int d, char* num) {
     unsigned long long i, len = strlen(num);
-    printf("num: %s\n", num);
-    printf("d: %d\n", d);
-    printf("len: %lld\n", len);
+    printf("\nlarge_mul_digit_>: num: %s\n", num);
+    printf("large_mul_digit_>: d: %d\n", d);
+    printf("large_mul_digit_>: len: %lld\n", len);
     long digit, dec, res, carry = 0;
     int dd;
     char* result = (char*)calloc((len + 2), sizeof(char));
     for (i = 0; i < len + 2; i++) {
         result[i] = '0';
     }
-    printf("cur res: %s, %ld\n", result, strlen(result));
+    printf("large_mul_digit_>: cur res: %s, %ld\n", result, strlen(result));
     for (i = len + 1; i > 1; i--) {
         printf("\ti: %lld\n", i);
         dd = num[i - 2] - '0';
@@ -548,7 +554,7 @@ char* large_mul_digit(int d, char* num) {
         result[i] = (result[i] - '0') + carry + '0';
         carry = 0;
     }
-    printf("cur res: %s\n", result);
+    printf("large_mul_digit_>: cur res: %s\n", result);
     while (result[0] == '0') {
         result++;
     }
@@ -556,17 +562,18 @@ char* large_mul_digit(int d, char* num) {
     return result;
 }
 
+// вспомогательная функция возведения base в степень deg
+//(используется при возведении основания с.с. 8 в степень при переводе 10 -> 8)
 char* my_pow(int base, unsigned long long deg) {
-    char* res = (char*)malloc((deg + 1)* sizeof(char));
+    char* res = (char*)calloc((deg + 1), sizeof(char));
     unsigned long long i;
     int dec, carry = 0, r;
     int d = 0;
     res[0] = '1';
     if (deg != 0) {
         for (int count = 1; count <= deg; count++) {
-            
-            printf("\n\tcount is: %d\n", count);
-            printf("====current res: %s======\n", res);
+            printf("\nmy_pow_>: count is: %d\n", count);
+            printf("my_pow_>:  current res: %s\n", res);
             res[deg + 1] = '\0';
             res = large_mul_digit(base, res);
         }
@@ -684,7 +691,7 @@ int main() {
         TYPE(number) = 'd';
         // создаем связь PREV
         PREV(number) = prev_number;
-        char* str = malloc(33 * sizeof(char)); // строка в 32 символа
+        char* str = calloc(33, sizeof(char)); // строка в 32 символа
         old_len = len;
         // если бинарная строка больше 32 символов или 32 символа
         if (len >= 32) {
@@ -768,46 +775,51 @@ int main() {
        binary2[l++] = '\0';
        l = strlen(binary2);
     }
-    code2 = my_reverse(binary2);
+    char* binary_code;
+    binary_code = my_reverse(binary2);
     fputs("\nbinary: ", o);
-    printf("binary: %s\n", code2);
-    fputs(code2, o);
+    printf("binary: %s\n", binary_code);
+    fputs(binary_code, o);
     // перевод из 2 в 8
     char* octal;
-    octal = convert_from_binary_to_octal(code2, map);
-    free(code2);
+    octal = convert_from_binary_to_octal(binary_code, map);
+    free(binary_code);
+    while (octal[0] == '0') octal++;
     printf("octal: %s\n", octal);
     fputs("\noctal: ", o);
     fputs(octal, o);
     size_t size = strlen(octal);
     printf("\nsize of octal: %ld\n\n", size);
     int deg = 0, d = 0; // deg - степень, d - текущая цифра
-    // перевод из 8 в 10
-    // char* dec = calloc((size + 1), sizeof(char));
-    // char* cur;
-    // char* pow;
-    // for (int i = size - 1; i >= 0; i--) {
-    //     d = octal[i] - '0';
-    //     printf("\n\td: %d\n", d);
-    //     pow = my_pow(8, deg);
-    //     printf("\tpow(8, deg): %s\n", pow);
+    // // перевод из 8 в 10
+    char* dec = calloc((size + 1), sizeof(char));
+    char* cur; // текущая сумма
+    char* pow; // 8 в степени deg
+    char* num; // результат умножения текущей цифры на 8 в соответствующей степени
+    for (int i = size - 1; i >= 0; i--) {
+        d = octal[i] - '0';
+        printf("\n\t octal_to_decimal_>: digit: %d\n", d);
+        pow = my_pow(8, deg);
+        printf("\t octal_to_decimal_>: pow(8, deg): %s\n", pow);
+        // умножаем цифру на 8 в соответствующей степени
+        // num = large_mul_digit(d, pow);
+        // printf("\t octal_to_decimal_>: num: %s\n", num);
+        ++deg;
+        // // прибавляем к сумме
+        // cur = large_addition(dec, num); 
+        // // сохраняем в результат dec
+        // memcpy(dec, cur, strlen(cur) + 1);
+        // free(cur);
+        // printf("\t octal_to_decimal_>: current res: %s\n", dec);
 
-    //     char* num = large_mul_digit(d, pow);
-
-    //     printf("\tnum: %s\n", num);
-    //     ++deg;
-    //     cur = large_addition(dec, num); 
-    //     memcpy(dec, cur, strlen(cur) + 1);
-    //     printf("\t\tcurrent res: %s\n", dec);
-
-    // }
+    }
     // dec[strlen(dec) + 1] = '\0';
     // printf("decimal: %s\n", dec);
     // fputs("\ndecimal: ", o);
     // fputs(dec, o);
     // free(octal);
     // free(dec);
-    // отмечаем время выполнения алгоритма 2664 -
+    // отмечаем время выполнения алгоритма 2^64 -> 10 
     t = clock() - t;
     time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
     printf("\nout algorithm took %f seconds to execute \n", time_taken);
