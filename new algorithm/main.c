@@ -548,7 +548,7 @@ void generate_test_number(unsigned long long len){
 }
 
 int main() {
-    generate_test_number(3);
+    generate_test_number(30);
     clock_t t;  // Переменная для отсчета времени выполнения алгоритмов.
     t = clock();
     FILE * f = fopen("../tests/test.txt", "rt"); // f - указатель на тестовый файл.
