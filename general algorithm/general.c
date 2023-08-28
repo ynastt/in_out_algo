@@ -34,7 +34,7 @@ typedef struct link {
 // end - индекс конца подстроки в строке.
 void slice(const char* str, char* result, size_t start, size_t end) {
     strncpy(result, str + start, end - start);
-    result[end - start] = '\0';
+    // result[end - start] = '\0';
 }
 
 
@@ -69,7 +69,8 @@ char* my_reverse(char* code) {
 char* convert_from_decimal_to_octal(char* code, long n) {
     bool new_step = false; // флаг о том, что поменялось делимое (т.е один остаток найден, продолжаем деление)
     char* result; // восьмириная запись числа
-    result = (char*)calloc((n + 2), sizeof(char));
+    printf("\nconvert_decimal_to_octal_>: n: %ld\n", n);
+    result = (char*)calloc((n + n), sizeof(char));
     int j = 0, d; //j - счетчик длины восьмиричного числа, d - очередная десятичная цифра
     char* code2; // вспомогательная строка для записи частных при делении на 8
     char* first_two_digits; // строка для записи очередных двух чисел десятичного числа при делении столбиком
@@ -172,9 +173,11 @@ char* convert_from_decimal_to_octal(char* code, long n) {
             code2[k++] = (int)quot + '0';
         }
         // приписываем полученный на итерации остаток
-        result[j++] =  (int)rem + '0';
+        printf("\nconvert_decimal_to_octal_>: j: %d\n", j);
+        result[j] =  (int)rem + '0';
+        j++;
         new_step = true;
-        printf("current res: %s\n\n", result);
+        // printf("current res: %s\n\n", result);
         code2[k] = '\0';
         printf("k: %d\n", k);
         // меняем делимое (старое частное -> новое делимое)
@@ -202,11 +205,12 @@ char* convert_from_decimal_to_octal(char* code, long n) {
                 result[j++] = (int)rem + '0';
             }
             d = d/8;
-            printf("current res: %s\n\n", result);
+            // printf("current res: %s\n\n", result);
         }
     }
     // перевернутая восьмиричная запись 
-    result[j++] =  '\0';
+    // j++;
+    result[n] =  '\0';
     printf("res: %s\n\n", result);
     return result;
 }
@@ -265,6 +269,7 @@ void print_Link(LINK* l, FILE* output){
             sprintf(digit, "%ld", PAIR(l).n);
             fputs(digit, output);
             fputs("\n", output);
+            free(digit);
             print_Link(PREV(l), output);
         }
     } else {
@@ -288,6 +293,8 @@ void print_Link_64(LINK* l, FILE* output) {
             sprintf(jun, "%ld", junior);
             strcat(macrodigit, jun);
             fputs(macrodigit, output);
+            free(macrodigit);
+            free(jun);
             print_Link_64(l->prec->prec, output);
         }
     } else {
@@ -302,10 +309,108 @@ void print_Link_64(LINK* l, FILE* output) {
             sprintf(jun, "%ld", junior);
             strcat(macrodigit, jun);
             printf("%s",macrodigit);
+            free(macrodigit);
+            free(jun);
             print_Link_64(l->prec->prec, NULL);
         }
     }
 }
+
+// // Функция перевода числа из 2^64 в 2-ю с.с
+// // На вход структура LINK последней макро-цифры, функция возвращает бинарную запись   
+// char* convert_to_binary(LINK* l) {
+//     printf("\nCONVERT TO BINARY\n"); getchar();
+//     char* res; // бинарная запись числа в 2^64
+//     char* b; // вспомогательная строка для записи остатков от деления на 2
+//     //char* buffer; //  вспомогательный буфер для перевыделения памяти 
+//     int i = 0; //счетчик
+//     unsigned long long length = 1; // длина бинарной строки
+//     res = calloc(1, sizeof(char));
+//     char* res1;
+//     strcpy(res, "");
+//     // unsigned long digit; // цифра из структуры LINK
+//     // int k = 0; // счетчик итераций
+//     // while (l != NULL ) {
+//     //     printf("\nconvert_to_binary_>: the start of iteration, was_res = %p\n",res);  //getchar();
+//     //     res1 = (char*)realloc(res, length + 33 * 2); // перевыделяем память для очередной макро-цифры 2^32
+//     //     if (res1 == NULL) {
+//     //         perror("Error: couldn`t reallocate memory for binary in convert_to_binary().");
+//     //         free(res);
+//     //         exit(1);
+//     //     } 
+//     //     res = res1;
+        
+//     //     // if (buffer == NULL) {
+//     //     //     perror("Error: realloc memory for binary in convert_to_binary().");
+//     //     // }
+//     //     // res = buffer;
+        
+//     //     printf("\nconvert_to_binary _>: res = %p\n",res); // getchar();
+//     //     digit = l->pair.n;
+        
+//     //     printf("\nconvert_to_binary _>: iteration %d\n",k++); // getchar();
+//     //     printf("\nconvert_to_binary _>: digit is: %ld\n", digit);
+//     //     //переводим макро-цифру в 2-ю систему
+//     //     if (digit == 0) {
+//     //         strcat(res, "0");
+//     //         length++;
+//     //         res[length + 1] = '\0';
+//     //     } else {
+//     //         // если не ноль, берем остатки от деления на 2
+//     //         b = (char*)calloc(33, sizeof(char));
+//     //         for (i = 0; digit > 0; i++) {    
+//     //             b[i]= (digit % 2) + '0';    
+//     //             printf("digit: %ld, ost: %c\n", digit, (char)b[i]); 
+//     //             digit = digit / 2;   
+//     //         }
+//     //         b[i] = '\0';
+//     //         printf("b: %s\n", b);
+//     //         long s = strlen(b);
+//     //         // переворачиваем последовательность остатков от деления на 2
+//     //         char* binary = (char*)calloc((s + 1), sizeof(char));
+//     //         binary[s] = '\0';
+//     //         for (i = 0; i < s; i++) {
+//     //             binary[i] = b[s - 1 - i];
+//     //         } 
+//     //         free(b);
+//     //         printf("current binary is: %s\n", binary);
+//     //         long long len = strlen(binary);
+//     //         char* bin_rev; // вспомогательная для перевернутой бинарной записи
+            
+//     //         //при необходиимости добавляем незначащие нули вначало
+//     //         char* bin_help = (char*)calloc(32 + 2, sizeof(char));
+//     //         if (l->foll != NULL && l->foll->pair.n != 0) {
+//     //             bin_rev = my_reverse(binary);
+//     //             strcpy(bin_help, bin_rev);
+//     //             while (len % 32 != 0) {
+//     //                 len++;
+//     //                 bin_help[len] = '0';
+//     //                 len++;
+//     //                 bin_help[len] = '\0';
+//     //                 len = strlen(bin_help);
+//     //             } 
+//     //             memcpy(binary, bin_help, strlen(bin_help) + 1);
+//     //             free(bin_rev);
+//     //         } else {
+//     //             bin_rev = my_reverse(binary);
+//     //             memcpy(binary, bin_rev, strlen(bin_rev) + 1);
+//     //             free(bin_rev);
+//     //         }
+//     //         free(bin_help);
+//     //         // printf("binary is: %s\n", my_reverse(binary));
+//     //         // добавляем к общей бинарной записи
+//     //         strncat(res, binary, len);
+//     //         free(binary);
+//     //         length += len;
+//     //         res[length + 1] = '\0';
+//     //     } 
+//     //     printf("current res: %s\n", res);
+//     //     // переходим к следующей макро-цифре
+//     //     l = l->foll;
+//     //     printf("\nconvert_to_binary_>: the end of the iteration, l = %p\n",l);  //getchar();
+//     // }
+//     return res;
+// }
 
 // Функция перевода числа из 2^64 в 2-ю с.с
 // На вход структура LINK последней макро-цифры, функция возвращает бинарную запись   
@@ -397,6 +502,7 @@ int octal_digit(char* map[], char* bin) {
 // Аргумент map[] - это массив, где элемент соответствует двоичной строке индекса
 // т.е. map[0] = "000", map[1] = "001", ... , map[7] = "111".
 // Используется вспомогательная функция octal_digit().
+// Возвращает перевернутую запись
 char* convert_from_binary_to_octal(char* code, char* map[]) {
     long bin_len = strlen(code), len; // длина бинарной записи
     len = bin_len / 3; // длина восьмиричной записи
@@ -406,10 +512,11 @@ char* convert_from_binary_to_octal(char* code, char* map[]) {
     printf("cur res: %s\n", octal);
     long j = 0;
     int d;
-    char bin[3];
+    char* bin = calloc(4, sizeof(char));
     for (long i = bin_len; i > 0; i -= 3) {
         printf("i: %ld\n", i);
         slice(code, bin, i - 3, i);
+        bin[3] = '\0';
         d = octal_digit(map, bin);
         printf("%s - %d\n", bin, d);
         char digit[2];
@@ -418,10 +525,12 @@ char* convert_from_binary_to_octal(char* code, char* map[]) {
         j++;
         printf("cur res: %s\n", octal);
     }
-    res = my_reverse(octal);
-    res[j] = '\0';
-    printf("res: %s\n", res);
-    return res;
+    free(bin);
+    // res = my_reverse(octal);
+    // free(octal);
+    // res[j++] = '\0';
+    printf("from_binary_to_octal_>: res: %s\n", octal);
+    return octal;
 }
 
 // вспомогательная функция для сложения столбиком двух чисел
@@ -519,11 +628,11 @@ char* large_mul_digit(int d, char* num) {
     printf("large_mul_digit_>: len: %lld\n", len);
     long digit, dec, res, carry = 0;
     int dd;
-    char* result = (char*)calloc((len + 2), sizeof(char));
-    for (i = 0; i < len + 2; i++) {
+    char* result = (char*)calloc((len + 4), sizeof(char));
+    for (i = 0; i < len + 1; i++) {
         result[i] = '0';
     }
-    printf("large_mul_digit_>: cur res: %s, %ld\n", result, strlen(result));
+    
     for (i = len + 1; i > 1; i--) {
         printf("\ti: %lld\n", i);
         dd = num[i - 2] - '0';
@@ -540,7 +649,7 @@ char* large_mul_digit(int d, char* num) {
             result[i] = res + '0';
         }
         printf("\tdec %ld, res: %ld\n", dec, res);
-        printf("\tcur res: %s\n", result);
+        // printf("\tcur res: %s\n", result);
         if (dec > 0) {
             carry = dec;
         } else {
@@ -554,11 +663,12 @@ char* large_mul_digit(int d, char* num) {
         result[i] = (result[i] - '0') + carry + '0';
         carry = 0;
     }
-    printf("large_mul_digit_>: cur res: %s\n", result);
+    
     while (result[0] == '0') {
         result++;
     }
-    result[len + 2] = '\0';
+    result[strlen(result) + 1] = '\0';
+    printf("large_mul_digit_>: cur res: %s\n", result);
     return result;
 }
 
@@ -570,21 +680,24 @@ char* my_pow(int base, unsigned long long deg) {
     int dec, carry = 0, r;
     int d = 0;
     res[0] = '1';
+    char* help;
     if (deg != 0) {
         for (int count = 1; count <= deg; count++) {
             printf("\nmy_pow_>: count is: %d\n", count);
             printf("my_pow_>:  current res: %s\n", res);
-            res[deg + 1] = '\0';
-            res = large_mul_digit(base, res);
+            res[deg] = '\0';
+            help = large_mul_digit(base, res);
+            memcpy(res, help, strlen(help)+1);
         }
     }
     while (res[0] == '0') {
         res++;
     }
-    res[deg + 1] = '\0';
+    res[deg] = '\0';
     return res;
 }
 
+// Функциягенерации псевдослучайных тестовых чисел длины len.
 void generate_test_number(unsigned long long len){
     FILE* f = fopen("../tests/test.txt", "w");
     srand(time(NULL));
@@ -596,7 +709,7 @@ void generate_test_number(unsigned long long len){
 }
 
 int main() {
-    // generate_test_number(40);
+    generate_test_number(40);
     clock_t t;  // Переменная для отсчета времени выполнения алгоритмов.
     t = clock();
     FILE * f = fopen("../tests/test.txt", "rt"); // f - указатель на тестовый файл.
@@ -606,7 +719,7 @@ int main() {
     char* binary; // Строка для хранения двоичной записи числа
     size_t n = 0, m = 0; // Счетчики для считывания файла и заполнения строк code и code2.
     int c; // переменная для посимвольного считывания их файла
-    LINK* start_number = (LINK*)malloc(sizeof(LINK)); // первая макро-цифра
+    LINK* start_number; // первая макро-цифра
     LINK* end_number;  // последняя макро-цифра
     LINK* prev_number; // предыдущая макро-цифра - вспомогательная переменная
     prev_number = NULL;
@@ -640,10 +753,11 @@ int main() {
     res = convert_from_decimal_to_octal(code2, f_size);
     long s = strlen(res);
     // поскольку res - перевернутая запись, делаем реверс
-    char* result = my_reverse(res);
+    char* result;
+    result = my_reverse(res);
     free(res);
     free(code2);
-    result[(strlen(result) + 1)] = '\0';
+    // result[(strlen(result) + 1)] = '\0';
 
     // запись в файл и лог 10 и 8
     printf("\ndecimal number: %s\n", code);
@@ -679,9 +793,9 @@ int main() {
     //              --->
     // macro-digit2 <--- macro-digit1
     //              NEXT
+    LINK* number; // очередная макро-цифра
     while (len > 0) {
         // printf("\nlen: %lld\n", len);
-        LINK* number; // очередная макро-цифра
         number = (LINK*)malloc(sizeof(LINK));
         // если предыдущая макро-цифра была, значит создаем связь NEXT
         if (prev_number != NULL) {
@@ -696,10 +810,12 @@ int main() {
         // если бинарная строка больше 32 символов или 32 символа
         if (len >= 32) {
             slice(binary, str, len-32, len);
+            str[32] = '\0';
             len -= 32;
         // если бинарная строка меньше 32 символов
         } else {
             slice(binary, str, 0, len);
+            str[strlen(str)] = '\0';
             len -= len;
         }
         printf("str: %s\n", str);
@@ -723,7 +839,7 @@ int main() {
     // это необходимо для функций print_Link, print_Link_64
     if (len == 0) {
         if (flag_chetn) {
-            LINK* number = (LINK*)malloc(sizeof(LINK));
+            number = (LINK*)malloc(sizeof(LINK));
             if (prev_number != NULL) {
                 NEXT(prev_number) = number;
             }
@@ -777,6 +893,7 @@ int main() {
     }
     char* binary_code;
     binary_code = my_reverse(binary2);
+    free(binary2);
     fputs("\nbinary: ", o);
     printf("binary: %s\n", binary_code);
     fputs(binary_code, o);
@@ -784,41 +901,50 @@ int main() {
     char* octal;
     octal = convert_from_binary_to_octal(binary_code, map);
     free(binary_code);
-    while (octal[0] == '0') octal++;
-    printf("octal: %s\n", octal);
+    char* oct_res; // чтобы перевернуть восьмиричную запись
+    oct_res = my_reverse(octal);
+    free(octal);
+    size_t octal_len = strlen(oct_res);
+    char* octal_code = calloc(octal_len + 1, sizeof(char)); // чтобы далее использовать
+    memcpy(octal_code, oct_res, octal_len + 1);
+    free(oct_res);
+    // убираем незначащие нули 
+    while (octal_code[0] == '0') octal_code++;
+    printf("octal: %s\n", octal_code);
     fputs("\noctal: ", o);
-    fputs(octal, o);
-    size_t size = strlen(octal);
+    fputs(octal_code, o);
+    size_t size = strlen(octal_code);
     printf("\nsize of octal: %ld\n\n", size);
     int deg = 0, d = 0; // deg - степень, d - текущая цифра
-    // // перевод из 8 в 10
+    // перевод из 8 в 10
     char* dec = calloc((size + 1), sizeof(char));
     char* cur; // текущая сумма
     char* pow; // 8 в степени deg
     char* num; // результат умножения текущей цифры на 8 в соответствующей степени
     for (int i = size - 1; i >= 0; i--) {
-        d = octal[i] - '0';
-        printf("\n\t octal_to_decimal_>: digit: %d\n", d);
+        d = octal_code[i] - '0';
+        printf("\n\toctal_to_decimal_>: digit: %d\n", d);
         pow = my_pow(8, deg);
-        printf("\t octal_to_decimal_>: pow(8, deg): %s\n", pow);
+        printf("\n\toctal_to_decimal_>: deg: %d, pow(8, deg): %s\n", deg, pow);
         // умножаем цифру на 8 в соответствующей степени
-        // num = large_mul_digit(d, pow);
-        // printf("\t octal_to_decimal_>: num: %s\n", num);
+        num = large_mul_digit(d, pow);
+        
+        printf("\n\toctal_to_decimal_>: num: %s\n", num);
         ++deg;
-        // // прибавляем к сумме
-        // cur = large_addition(dec, num); 
-        // // сохраняем в результат dec
-        // memcpy(dec, cur, strlen(cur) + 1);
-        // free(cur);
-        // printf("\t octal_to_decimal_>: current res: %s\n", dec);
-
+        // прибавляем к сумме
+        cur = large_addition(dec, num); 
+        printf("\n\toctal_to_decimal_>: current sum: %s\n", cur);
+        // сохраняем в результат dec
+        memcpy(dec, cur, strlen(cur) + 1);
+        printf("\t octal_to_decimal_>: current res: %s\n", dec);
+        free(pow);
     }
-    // dec[strlen(dec) + 1] = '\0';
-    // printf("decimal: %s\n", dec);
-    // fputs("\ndecimal: ", o);
-    // fputs(dec, o);
-    // free(octal);
-    // free(dec);
+    // dec[strlen(dec)] = '\0';
+    printf("decimal: %s\n", dec);
+    fputs("\ndecimal: ", o);
+    fputs(dec, o);
+    // free(octal_code);
+    free(dec);
     // отмечаем время выполнения алгоритма 2^64 -> 10 
     t = clock() - t;
     time_taken = ((double)t)/CLOCKS_PER_SEC; // in seconds
@@ -828,6 +954,13 @@ int main() {
     fputs(time_arr, o);
     fputs(" seconds to execute \n", o);
     fclose(o);
-    free(start_number);
+    
+    LINK* f_link = start_number;
+    LINK* help_link;
+    while(f_link != NULL) {
+        help_link = f_link;
+        f_link = PREV(f_link);
+        free(help_link);
+    }
     return 0;
 }
